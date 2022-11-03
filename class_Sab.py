@@ -10,4 +10,14 @@ class Carte(object):
         self.pos=pos
         self.typ=typ
 
-    table=[('(   )'),('( | )'),('(---)'),('( x )'),('(-+ )'),('( +-)')]
+class Chemin(Carte):
+    """Carte Chemin"""
+    def __init__(self,pos,typ,up,mi,do):
+        "up,mi et do determine le contenu des trois parties de la carte chemin"
+        table=[('(   )'),('( | )'),('(---)'),('( x )'),('(-x )'),('( x-'),('(-+ )'),('( +-)')]
+        Carte.__init__(self,pos,typ)
+        self.up=up
+        self.mi=mi
+        self.do=do
+        
+        
