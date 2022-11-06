@@ -1,6 +1,14 @@
 import class_Sab as sb
 import numpy as np
 
+#Fonction qui affiche le message de bienvenue
+def aff_wel():
+    print("+--------------------------------------------------------------------+")
+    print("| Welcome to SabOOtters, where dwarf otters look for gold in a mine! |")
+    print("+--------------------------------------------------------------------+")
+
+
+#Fonction qui affiche le plateau de jeu
 def affichePlateau(deck):
     #creation du plateau
     plateau=[[sb.Casevide for x in range(9)] for x in range(5)]

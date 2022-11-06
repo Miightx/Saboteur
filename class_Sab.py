@@ -51,6 +51,10 @@ class Cheminrand(Carte):
         if x==2:
             print(Cheminrand.table[self.typchem[2]],end = "")
 
+
+class Carteaction(Carte):
+
+
 class Casevide(object):
     """Case vide du plateau"""
     def affiche(x):
