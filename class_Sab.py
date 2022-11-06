@@ -52,7 +52,6 @@ class Cheminrand(Carte):
             print(Cheminrand.table[self.typchem[2]],end = "")
 
 
-class Carteaction(Carte):
 
 
 class Casevide(object):
