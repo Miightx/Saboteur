@@ -13,7 +13,7 @@ def affichePlateau(deck):
     #creation du plateau
     plateau=[[sb.Casevide for x in range(9)] for x in range(5)]
     for i in range(0,len(deck)):
-        plateau[deck[i].pos.x][deck[i].pos.y]=deck[i]
+        plateau[deck[i].pos[0]][deck[i].pos[1]]=deck[i]
     
     #affiche de la premiere ligne
     for i in range(0,10):
