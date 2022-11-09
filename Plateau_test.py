@@ -5,7 +5,7 @@ import fonc_affichage as aff
 
 
 deck=[]
-deck.append(sb.Carte(0))
+deck.append(sb.Carte(2))
 
 aff.affichePlateau(deck)
 
