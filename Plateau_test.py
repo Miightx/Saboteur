@@ -5,9 +5,18 @@ import fonc_affichage as aff
 
 
 deck=[]
-deck.append(sb.Carte(2))
+deck.append(sb.Carte(0))
+deck.append(sb.Carte(0))
+deck[0].etat=1
+deck[1].etat=1
+deck[1].pos=[3,6]
 
-aff.affichePlateau(deck)
+
+
+plateau=sb.Plateau()
+plateau.maj_cartes_posees(deck)
+
+plateau.affiche()
 
 
 
