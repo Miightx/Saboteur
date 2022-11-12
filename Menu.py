@@ -1,4 +1,5 @@
 import random
+import numpy as np
 class Menu():
     import random
 
@@ -11,6 +12,9 @@ class Menu():
         self.number=0
         self.personnage=[]
         self.total_personnage=[]
+        self.joueur=[]
+        self.bot=[]
+        self.total=[]
     def get_number(self):
         print("How many players?")
         etat=False
@@ -23,7 +27,14 @@ class Menu():
                 print("Please choose a number between 3 and 10")
                 etat=False
     def players(self):
-        print('Please enter the name of player 1 and its status (IA: 0, Human: 1):',self.name
+        for k in range(self.number):
+            print('Please enter the name of player',k+1,' and its status (IA: 0, Human: 1):')
+            print('')
+            self.joueur=input()
+            self.total.append('self.joueur')
+            print('The name of the player is:',self.joueur[k])
+            print('Press 0 if the player is an IA and Press 1 if the player is an Human')
+            self.bot=int(input())
     def cartes_roles(self):
         if(self.number==3):
             self.personnage=['S','C','C','C']
@@ -55,4 +66,4 @@ class Menu():
 Menu.aff_wel()
 menu = Menu()
 menu.get_number()
-menu.cartes_roles()
+menu.players()
