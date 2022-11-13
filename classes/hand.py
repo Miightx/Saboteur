@@ -8,11 +8,18 @@ class Hand:
         else:
             self.hand_size = 4
 
-    def display_hand(self):
+    def display_hand(self): #montrer la main
         for i in range(len(self.cards)):
             print(self.cards[i], end=" ")
     
-    def add_card(self, card):
+    def add_card(self, card): #ajouter une carte
         if len(self.cards)==self.hand_size:
             return
         self.cards.append(card)
+
+    def remove_card(self, card): #enlever une carte
+        self.cards.remove(card)
+    
+    def use_card(self, card): #utiiliser une carte
+        self.remove_card(card)
+        #card.use()        

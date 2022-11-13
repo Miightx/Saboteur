@@ -1,17 +1,10 @@
-from random import randint
+from hand import Hand
 class Player:
-    def __init__(self,name, role, hand):
+    def __init__(self,name,role, nb_players):
         self.name = name
-        self.role = role
-        self.hand = hand
-        
-    def attrib_role(nb_joueur):
-        rolej = []
-        if nb_joueur < 3:
-            print("entrez ")
-            for i in range(nb_joueur-1):
-                a = randint(0,1)
-        
+        self.role = role    #le role c'est de la classe menu.personnage[i]
+        self.hand = Hand(nb_players) #pour afficher la main: player.hand.display_hand()
+
 
 
 
