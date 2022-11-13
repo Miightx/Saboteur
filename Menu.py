@@ -47,7 +47,7 @@ class Menu:
             self.joueur = input()
             self.total_nom.append(self.joueur)
             print('The name of the player is:', self.total_nom[k])
-            print('Please press 0 if the player is an IA and press 1 if the player is an Human')
+            print('Please press 0 if the player is an AI and press 1 if the player is an Human')
             etat = False
             while (etat == False):
                 self.bot = input()
@@ -56,13 +56,13 @@ class Menu:
                     etat = True
 
                 elif (self.bot == '0'):
-                    self.total_bot.append("IA")
+                    self.total_bot.append("AI")
                     etat = True
                 else:
-                    print("Veuillez saisir 0 (IA) ou 1 (Human):")
+                    print("Please select 0 (AI) or 1 (Human):")
                     etat = False
 
-    def cartes_roles(self):  # Saboteur ou Mineur
+    def cartes_roles(self):  # Saboteur or Digger
         if (self.number == 3):
             self.personnage = ['S', 'C', 'C', 'C']
             self.total_personnage = self.random.sample(self.personnage, 3)
@@ -95,8 +95,7 @@ class Menu:
         self.total = ' '.join(self.total)
         print('---------------------')
         print('The', self.number, 'players are:', self.total)
-menu = Menu()
-menu.aff_wel()
-menu.get_number()
-menu.players()
-menu.affichage_debut_fin()
+
+    @property
+    def game_start(self):
+        return self.aff_wel(), self.get_number(), self.players(), self.affichage_debut_fin()
