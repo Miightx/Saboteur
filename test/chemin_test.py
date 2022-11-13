@@ -1,4 +1,4 @@
-import class_Sab as sb
+import classes.map as sb
 import numpy as np
 
 #Creation de 9 cartes chemin

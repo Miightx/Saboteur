@@ -1,4 +1,4 @@
-import class_Sab as sb
+import class.map as sb
 import numpy as np
 import fonc_affichage as aff
 

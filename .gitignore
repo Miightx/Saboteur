@@ -1,0 +1,2 @@
+#ça sert  à exclure certains fichiers de mon git
+__pycache__

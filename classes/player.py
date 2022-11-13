@@ -1,5 +1,6 @@
-class player:
-    def __init_(self,name, role, hand):
+from random import randint
+class Player:
+    def __init__(self,name, role, hand):
         self.name = name
         self.role = role
         self.hand = hand
@@ -9,7 +10,7 @@ class player:
         if nb_joueur < 3:
             print("entrez ")
             for i in range(nb_joueur-1):
-            a = randint(0,1)
+                a = randint(0,1)
         
 
 
