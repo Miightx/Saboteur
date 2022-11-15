@@ -2,12 +2,6 @@ import random
 
 class Menu(object):
 
-
-    def aff_wel(self):  # Affichage du début
-        print("+--------------------------------------------------------------------+")
-        print("| Welcome to SabOOtters, where dwarf otters look for gold in a mine! |")
-        print("+--------------------------------------------------------------------+")
-
     def __init__(self):  # Property
         self.__number = 0
         self.__noms = []
@@ -15,6 +9,10 @@ class Menu(object):
         self.__roles = []
     
     #Methodes
+    def __aff_wel(self):  # Affichage du début
+        print("+--------------------------------------------------------------------+")
+        print("| Welcome to SabOOtters, where dwarf otters look for gold in a mine! |")
+        print("+--------------------------------------------------------------------+")
 
     def __get_number(self):  # Nombre de joueurs
         print("How many players?")
@@ -95,6 +93,11 @@ class Menu(object):
         print('---------------------')
         print('The', self.__number, 'players are:', total)
 
+    def start_game(self):
+        self.__aff_wel() 
+        self.__get_number() 
+        self.__players() 
+        self.__affichage_debut_fin()
 
     @property
     def number(self):
@@ -112,10 +115,6 @@ class Menu(object):
     def roles(self):
         return self.__roles
 
-    def game_start(self):
-        self.__aff_wel() 
-        self.__get_number() 
-        self.__players() 
-        self.__affichage_debut_fin()
+    
 
 
