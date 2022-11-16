@@ -1,9 +1,12 @@
-from hand import Hand
+import sys
+sys.path.insert(0,"../PROJETPYTHON")
+import classes.hand as sb
+
 class Player:
     def __init__(self,name,role, nb_players):
         self.name = name
         self.role = role    #le role c'est de la classe menu.personnage[i]
-        self.hand = Hand(nb_players) #pour afficher la main: player.hand.display_hand()
+        self.hand = sb.Hand(nb_players) #pour afficher la main: player.hand.display_hand()
 
 
 
