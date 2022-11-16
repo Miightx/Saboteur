@@ -18,7 +18,7 @@ class Carte(object):
 
     def __init__(self,typ):
         #On defini une position par default
-        self.__pos=[0,0]
+        self.__pos = [0,0] 
         #On defini le type de carte
         self.__typ=typ
         #On defini un etat par default de la carte, etat neutre dans la pile de carte "0"
@@ -50,6 +50,12 @@ class Carte(object):
             #Carte pierre
             self.__vectapparence=Carte.matchemin[16]
             self.__vectrecto=Carte.matrecto[1]
+
+    # @ classmethod
+    # def typ_only ( cls , typ ) :
+    #     pos = [0,0] 
+    #     return cls ( typ , pos )
+
 
     def affiche(self,x):
         #On affiche la partie de la carte que l'on souhaite afficher
@@ -130,13 +136,21 @@ class Plateau(object):
         self.__cases_vides=np.zeros((5,9),int)
         self.__cartes_posees=[]
 
-    def maj_cartes_posees(self,deck):
+    def add_carte(self,carte,pos):
+        if not isinstance ( carte , Carte ) :
+            print("Erreur: uniquement des cartes peuvent être posee sur le plateau")
+        
+        if carte.typ != 4 and carte.typ != 5:
+            carte.face=1
+        carte.etat=1
+        carte.pos=pos
+
+        self.__cartes_posees.append(carte)
+        self.__cases_vides[carte.pos[0]][carte.pos[1]]=1
+    
+    def reset_plateau(self):
         self.__cases_vides=np.zeros((5,9),int)
         self.__cartes_posees=[]
-        for i in range(0,len(deck)):
-            if deck[i].etat==1:
-                self.__cartes_posees.append(deck[i])
-                self.__cases_vides[deck[i].pos[0]][deck[i].pos[1]]=1
 
     def affiche(self):
         #Fonction qui affiche le plateau de jeu   
@@ -179,6 +193,16 @@ class Plateau(object):
             else:
                print("-----",end = "")
         print("")
+
+    @property
+    def cartes_posees(self) : return self.__cartes_posees
+
+    @property
+    def cases_vides(self) : return self.__cases_vides
+
+    @cartes_posees.setter
+    def cartes_posees(self,cartes):
+        self.__cartes_posees=cartes
     
 #-----------------------------------------------------------------------------------
 
@@ -304,7 +328,19 @@ class Player(object):
     def __init__(self,name,role,nb_players):
         self.__name = name
         self.__role = role    #le role c'est de la classe menu.personnage[i]
-        self.__hand = sb.Hand(nb_players) #pour afficher la main: player.hand.display_hand()
+        self.__hand = Hand(nb_players) #pour afficher la main: player.hand.display_hand()
+
+    @property
+    def name(self):
+        return self.__name
+
+    @property
+    def role(self):
+        return self.__role
+
+    @property
+    def hand(self):
+        return self.__hand
 
 
 
@@ -350,64 +386,106 @@ class Hand(object):
 
 #-----------------------------------------------------------------------------------
 
-# class Deck(object):
-#     def __init__(self):
-#         self.__cartes=[]
-#         self.__cartes.append(Carte(3))
-#         self.__cartes.append(Carte(4))
-#         for i in range(2):
-#             self.__cartes.append(Carte(5))
-#         for i in range(40):
-#             self.__cartes.append(Carte(0))
-#         for i in range(26):
-#             self.__cartes.append(Carte(1))
-#         self.__cartes.append(Carte(2))
+class Deck(object):
+    #On cree les cartes du deck
+    def __init__(self):
+        self.__cartes=[]
+        self.__cartes.append(Carte(3))
+        self.__cartes.append(Carte(4))
+        for i in range(2):
+            self.__cartes.append(Carte(5))
+        for i in range(40):
+            self.__cartes.append(Carte(0))
+        for i in range(26):
+            self.__cartes.append(Carte(1))
+        self.__cartes.append(Carte(2))
 
-#     def random_cartes(self):
-#         self.__cartes=random.sample(self.__cartes, len(self.__cartes))
+    #fonction qui permet de melanger les cartes
+    def random_cartes(self):
+        self.__cartes=random.sample(self.__cartes, len(self.__cartes))
 
-#     def affiche(self):
-#         for i in range(0,len(self.__cartes)):
-#             self.__cartes[i].face=1
+    def affiche(self):
+        for i in range(0,len(self.__cartes)):
+            self.__cartes[i].face=1
 
-#         for i in range(0,8):
-#             for x in range(0,3):
-#                 for j in range(0,8):
-#                     self.__cartes[j+(i-1)*8].affiche(x)
-#                 print("")
-#         for i in range(0,len(self.__cartes)):
-#             self.__cartes[i].face=0
+        for i in range(0,8):
+            for x in range(0,3):
+                for j in range(0,8):
+                    self.__cartes[j+(i-1)*8].affiche(x)
+                print("")
+        for i in range(0,len(self.__cartes)):
+            self.__cartes[i].face=0
 
-#     @property
-#     def cartes(self) : return self.__cartes
+    @property
+    def cartes(self) : return self.__cartes
 
-#     @cartes.setter
-#     def cartes(self,cartes):
-#         self.__cartes=cartes
+    @cartes.setter
+    def cartes(self,cartes):
+        self.__cartes=cartes
 
 #-----------------------------------------------------------------------------------
 
 
 class SABOOTERS(object):
     def __init__(self):
-        self.__menu=sb.Menu()
-        self.__deck=Deck
+        self.__menu=Menu()
+        self.__deck=Deck()
+        self.pioche=[]
+        self.__defausse=[]
         self.__joueurs=[]
-        self.__plateau=sb.Plateau()
+        self.plateau=Plateau()
 
     def initpartie(self):
+        #initialisation du menu
         self.__menu.start_game()
+
+        for i in range(0,menu.number):
+            self.__joueurs.append(Player(menu.players_name[i], menu.roles[i], menu.number))
+
+
+    def initmanche(self):
+        #initialisation de la manche
+
+        #On melange les cartes
         self.__deck.random_cartes()
-        for i in range(0,self.__menu.number):
-            self.__joueurs
+
+        #On defini les positions des cartes "END"
+        set_pos_gold=random.sample([[0,8],[2,8],[4,8]], 3)
+
+        #repartition des cartes
+        k=0
+        for i in range(0,len(self.__deck.cartes)):
+            #On place les cartes arrive/depart sur le plateau
+            if self.__deck.cartes[i].typ == 3 or self.__deck.cartes[i].typ == 4 or self.__deck.cartes[i].typ == 5:
+                if self.__deck.cartes[i].typ==3:
+                    self.plateau.add_carte(self.__deck.cartes[i],[2,0])
+                else:
+                    self.plateau.add_carte(self.__deck.cartes[i],set_pos_gold[k])
+                    k=k+1
+            #On cree la pioche avec les cartes action et chemin
+            else :
+                self.pioche.append(self.__deck.cartes[i])
+
+        
 
 
-deck=Deck()
-deck.cartes[0].face=1
-print(deck.cartes[0].face)
-#deck.affiche()
-# print("")
-# deck.random_cartes()
-# deck.affiche()
+        
+
+
+
+
+
+        # for i in range(0,self.__menu.number):
+        #     self.__joueurs
+
+
+
+
+
+jeu=SABOOTERS()
+jeu.initmanche()
+
+jeu.plateau.affiche()
+
 
 

@@ -1,6 +1,7 @@
 import sys
 sys.path.insert(0,"../PROJETPYTHON")
-import classes.SABOOTTERSGAME as sb
+import classes.classes as sb
 
 jeu=sb.SABOOTERS()
 jeu.initpartie()
+jeu.initmanche()
