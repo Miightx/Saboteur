@@ -547,24 +547,6 @@ class SABOOTERS(object):
         
 
 
-
-
-        
-
-
-        
-
-
-
-
-
-        # for i in range(0,self.__menu.number):
-        #     self.__joueurs
-
-
-
-
-
 jeu=SABOOTERS()
 jeu.initpartie()
 
