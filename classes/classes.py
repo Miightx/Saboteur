@@ -300,11 +300,11 @@ class Menu(object):
 
 #-----------------------------------------------------------------------------------
 
-class Player:
-    def __init__(self,name,role, nb_players):
-        self.name = name
-        self.role = role    #le role c'est de la classe menu.personnage[i]
-        self.hand = sb.Hand(nb_players) #pour afficher la main: player.hand.display_hand()
+class Player(object):
+    def __init__(self,name,role,nb_players):
+        self.__name = name
+        self.__role = role    #le role c'est de la classe menu.personnage[i]
+        self.__hand = sb.Hand(nb_players) #pour afficher la main: player.hand.display_hand()
 
 
 
@@ -322,7 +322,7 @@ class Player:
 
 #-----------------------------------------------------------------------------------
 
-class Hand:
+class Hand(object):
     def __init__(self, nb_players):
         self.cards = []
         if nb_players <= 5:
@@ -350,40 +350,40 @@ class Hand:
 
 #-----------------------------------------------------------------------------------
 
-class Deck(object):
-    def __init__(self):
-        self.__cartes=[]
-        self.__cartes.append(Carte(3))
-        self.__cartes.append(Carte(4))
-        for i in range(2):
-            self.__cartes.append(Carte(5))
-        for i in range(40):
-            self.__cartes.append(Carte(0))
-        for i in range(26):
-            self.__cartes.append(Carte(1))
-        self.__cartes.append(Carte(2))
+# class Deck(object):
+#     def __init__(self):
+#         self.__cartes=[]
+#         self.__cartes.append(Carte(3))
+#         self.__cartes.append(Carte(4))
+#         for i in range(2):
+#             self.__cartes.append(Carte(5))
+#         for i in range(40):
+#             self.__cartes.append(Carte(0))
+#         for i in range(26):
+#             self.__cartes.append(Carte(1))
+#         self.__cartes.append(Carte(2))
 
-    def random_cartes(self):
-        self.__cartes=random.sample(self.__cartes, len(self.__cartes))
+#     def random_cartes(self):
+#         self.__cartes=random.sample(self.__cartes, len(self.__cartes))
 
-    def affiche(self):
-        for i in range(0,len(self.__cartes)):
-            self.__cartes[i].face=1
+#     def affiche(self):
+#         for i in range(0,len(self.__cartes)):
+#             self.__cartes[i].face=1
 
-        for i in range(0,8):
-            for x in range(0,3):
-                for j in range(0,8):
-                    self.__cartes[j+(i-1)*8].affiche(x)
-                print("")
-        for i in range(0,len(self.__cartes)):
-            self.__cartes[i].face=0
+#         for i in range(0,8):
+#             for x in range(0,3):
+#                 for j in range(0,8):
+#                     self.__cartes[j+(i-1)*8].affiche(x)
+#                 print("")
+#         for i in range(0,len(self.__cartes)):
+#             self.__cartes[i].face=0
 
-    @property
-    def cartes(self) : return self.__cartes
+#     @property
+#     def cartes(self) : return self.__cartes
 
-    @cartes.setter
-    def cartes(self,cartes):
-        self.__cartes=cartes
+#     @cartes.setter
+#     def cartes(self,cartes):
+#         self.__cartes=cartes
 
 #-----------------------------------------------------------------------------------
 
@@ -398,10 +398,12 @@ class SABOOTERS(object):
     def initpartie(self):
         self.__menu.start_game()
         self.__deck.random_cartes()
+        for i in range(0,self.__menu.number):
+            self.__joueurs
+
 
 deck=Deck()
 deck.cartes[0].face=1
-deck.cartes[0].face=9
 print(deck.cartes[0].face)
 #deck.affiche()
 # print("")
