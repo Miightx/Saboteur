@@ -1,5 +1,6 @@
 import numpy as np
 import random
+import os
 
 
 
@@ -153,7 +154,8 @@ class Plateau(object):
         self.__cartes_posees=[]
 
     def affiche(self):
-        #Fonction qui affiche le plateau de jeu   
+        #Fonction qui affiche le plateau de jeu 
+        os.system("cls")  #efface le contenue de la console, valable que sur windows
             #affiche de la premiere ligne
         for i in range(0,10):
             if i==0 :
@@ -304,6 +306,7 @@ class Menu(object):
         self.__aff_wel() 
         self.__get_number() 
         self.__players() 
+        self.__cartes_roles()
         self.__affichage_debut_fin()
 
     @property
@@ -330,6 +333,11 @@ class Player(object):
         self.__role = role    #le role c'est de la classe menu.personnage[i]
         self.__hand = Hand(nb_players) #pour afficher la main: player.hand.display_hand()
 
+    def piocher_carte(self,pioche):
+        pioche[0].face=1
+        self.__hand.cards.append(pioche[0])
+        pioche.remove(pioche[0])
+
     @property
     def name(self):
         return self.__name
@@ -341,6 +349,10 @@ class Player(object):
     @property
     def hand(self):
         return self.__hand
+
+    @hand.setter
+    def hand(self,hand):
+        self.__hand=hand
 
 
 
@@ -360,29 +372,57 @@ class Player(object):
 
 class Hand(object):
     def __init__(self, nb_players):
-        self.cards = []
+        self.__cards = []
         if nb_players <= 5:
-            self.hand_size = 6
+            self.__hand_size = 6
         elif nb_players <= 7:
-            self.hand_size = 5
+            self.__hand_size = 5
         else:
-            self.hand_size = 4
+            self.__hand_size = 4
 
-    def display_hand(self): #montrer la main
-        for i in range(len(self.cards)):
-            print(self.cards[i], end=" ")
+    def affiche(self):
+        #Fonction qui affiche la main du joueur   
+
+        for x in range(0,3):
+            for i in range(2*self.__hand_size):
+                if x==1 and i%2==0:
+                    print((i//2)+1,end = "")
+                    print(": ",end = "")
+                elif i%2==0:
+                    print("   ",end = "")
+                elif i%2 != 0 and x==1:
+                    self.__cards[(i-1)//2].affiche(x)
+                    print(", ",end = "")
+                elif i%2 != 0:
+                    self.__cards[(i-1)//2].affiche(x)
+                    print("  ",end = "")
+            print("")
+
+
     
     def add_card(self, card): #ajouter une carte
-        if len(self.cards)==self.hand_size:
+        if len(self.__cards)==self.__hand_size:
             return
-        self.cards.append(card)
+        self.__cards.append(card)
 
     def remove_card(self, card): #enlever une carte
-        self.cards.remove(card)
+        self.__cards.remove(card)
     
-    def use_card(self, card): #utiiliser une carte
+    def use_card(self, card): #utiliser une carte
         self.remove_card(card)
-        #card.use()    
+        card.use() 
+
+    @property
+    def hand_size(self):
+        return self.__hand_size
+
+    @property
+    def cards(self):
+        return self.__cards
+
+    @cards.setter
+    def cards(self,cards):
+        self.__cards=cards   
 
 #-----------------------------------------------------------------------------------
 
@@ -430,7 +470,7 @@ class SABOOTERS(object):
     def __init__(self):
         self.__menu=Menu()
         self.__deck=Deck()
-        self.pioche=[]
+        self.__pioche=[]
         self.__defausse=[]
         self.__joueurs=[]
         self.plateau=Plateau()
@@ -439,8 +479,8 @@ class SABOOTERS(object):
         #initialisation du menu
         self.__menu.start_game()
 
-        for i in range(0,menu.number):
-            self.__joueurs.append(Player(menu.players_name[i], menu.roles[i], menu.number))
+        for i in range(0,self.__menu.number):
+            self.__joueurs.append(Player(self.__menu.players_name[i], self.__menu.roles[i], self.__menu.number))
 
 
     def initmanche(self):
@@ -464,7 +504,50 @@ class SABOOTERS(object):
                     k=k+1
             #On cree la pioche avec les cartes action et chemin
             else :
-                self.pioche.append(self.__deck.cartes[i])
+                self.__pioche.append(self.__deck.cartes[i])
+        
+        #Les joueurs piochent leurs cartes
+        for i in range(self.__menu.number):
+            for j in range(self.__joueurs[i].hand.hand_size):
+                self.__joueurs[i].piocher_carte(self.__pioche)
+
+    def tourjoueur(self,x):
+        self.plateau.affiche()
+        print("It is{0} turn:".format(self.__joueurs[x].name))
+        self.__joueurs[x].hand.affiche()
+        #Le joueur choisi une action
+        print("What action do you want to take?")
+        print("1) Use a card")
+        print("2) Passing your turn and throw away a card")
+        choix_action=int(input())
+        
+        self.plateau.affiche()
+        print("It is {0} turn:".format(self.__joueurs[x].name))
+        self.__joueurs[x].hand.affiche()
+
+        if choix_action == 1:
+            no_carte=int(input("What card would you like to play (1 to {0})?".format(self.__joueurs[x].hand.hand_size)))-1
+            choix_carte=self.__joueurs[x].hand.cards[no_carte]
+            pos=[]
+            pos.append(int(input("Where do you want to place your card (x value)?")))
+            pos.append(int(input("(y value)?")))
+            self.plateau.add_carte(choix_carte,pos)
+            self.__joueurs[x].hand.remove_card(choix_carte)
+            self.__joueurs[x].piocher_carte(self.__pioche)
+
+        if choix_action == 2:
+            no_carte=int(input("Which card do you want to throw away (1 to {0})?".format(self.__joueurs[x].hand.hand_size)))-1
+            choix_carte=self.__joueurs[x].hand.cards[no_carte]
+            self.__joueurs[x].hand.remove_card(choix_carte)
+            self.__joueurs[x].piocher_carte(self.__pioche)
+
+    def tour_pour_rien(self):
+        for i in range(3):
+            self.tourjoueur(0)
+        
+
+
+
 
         
 
@@ -483,9 +566,15 @@ class SABOOTERS(object):
 
 
 jeu=SABOOTERS()
-jeu.initmanche()
+jeu.initpartie()
 
-jeu.plateau.affiche()
+jeu.initmanche()
+jeu.tour_pour_rien()
+
+
+
+
+
 
 
 
