@@ -473,12 +473,13 @@ class SABOOTERS(object):
         self.__pioche=[]
         self.__defausse=[]
         self.__joueurs=[]
-        self.plateau=Plateau()
+        self.__plateau=Plateau()
 
     def initpartie(self):
         #initialisation du menu
         self.__menu.start_game()
 
+        #initialisation des joueurs
         for i in range(0,self.__menu.number):
             self.__joueurs.append(Player(self.__menu.players_name[i], self.__menu.roles[i], self.__menu.number))
 
@@ -498,9 +499,9 @@ class SABOOTERS(object):
             #On place les cartes arrive/depart sur le plateau
             if self.__deck.cartes[i].typ == 3 or self.__deck.cartes[i].typ == 4 or self.__deck.cartes[i].typ == 5:
                 if self.__deck.cartes[i].typ==3:
-                    self.plateau.add_carte(self.__deck.cartes[i],[2,0])
+                    self.__plateau.add_carte(self.__deck.cartes[i],[2,0])
                 else:
-                    self.plateau.add_carte(self.__deck.cartes[i],set_pos_gold[k])
+                    self.__plateau.add_carte(self.__deck.cartes[i],set_pos_gold[k])
                     k=k+1
             #On cree la pioche avec les cartes action et chemin
             else :
@@ -512,26 +513,52 @@ class SABOOTERS(object):
                 self.__joueurs[i].piocher_carte(self.__pioche)
 
     def tourjoueur(self,x):
-        self.plateau.affiche()
+        #affichage du plateau et de la main du joueur dont c'est la tour
+        self.__plateau.affiche()
         print("It is{0} turn:".format(self.__joueurs[x].name))
         self.__joueurs[x].hand.affiche()
+
         #Le joueur choisi une action
         print("What action do you want to take?")
         print("1) Use a card")
         print("2) Passing your turn and throw away a card")
         choix_action=int(input())
+
+        #On s'assure que le joueur choisi une action parmis les actions possibles
+        while choix_action !=1 and choix_action !=2:
+            print("Please, don't do anything else and just play!")
+            print("1) Use a card")
+            print("2) Passing your turn and throw away a card")
+            choix_action=int(input())
         
-        self.plateau.affiche()
+
+        #On rafraichi l'etat du jeu
+        self.__plateau.affiche()
         print("It is {0} turn:".format(self.__joueurs[x].name))
         self.__joueurs[x].hand.affiche()
 
         if choix_action == 1:
             no_carte=int(input("What card would you like to play (1 to {0})?".format(self.__joueurs[x].hand.hand_size)))-1
+
+            #On s'assure que le joueur choisisse une de ses cartes
+            while no_carte < 0 or no_carte > self.__joueurs[x].hand.hand_size-1:
+                print("Please, do not steal a card from your neighbour!")
+                no_carte=int(input("What card would you like to play (1 to {0})?".format(self.__joueurs[x].hand.hand_size)))-1
+
             choix_carte=self.__joueurs[x].hand.cards[no_carte]
             pos=[]
             pos.append(int(input("Where do you want to place your card (x value)?")))
             pos.append(int(input("(y value)?")))
-            self.plateau.add_carte(choix_carte,pos)
+            
+            #On s'assure que le joueur pose bien la carte sur le plateau
+            while pos[0] < 0 or pos[0] > 4 or pos[1] < 0 or pos[1] >8 :
+                print("Please place the card on the board (0<=x<=4) (0<=y<=8)")
+                pos=[]
+                pos.append(int(input("Where do you want to place your card (x value)?")))
+                pos.append(int(input("(y value)?")))
+                
+
+            self.__plateau.add_carte(choix_carte,pos)
             self.__joueurs[x].hand.remove_card(choix_carte)
             self.__joueurs[x].piocher_carte(self.__pioche)
 
