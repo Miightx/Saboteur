@@ -337,6 +337,20 @@ class Player(object):
         pioche[0].face=1
         self.__hand.cards.append(pioche[0])
         pioche.remove(pioche[0])
+    
+    def choix_pos(self,plateau):
+        pos=[]
+        pos.append(int(input("Where do you want to place your card (x value)?")))
+        pos.append(int(input("(y value)?")))
+            
+        #On s'assure que le joueur pose bien la carte sur le plateau
+        while pos[0] < 0 or pos[0] > 4 or pos[1] < 0 or pos[1] >8 :
+            print("Please place the card on the board (0<=x<=4) (0<=y<=8)")
+            pos=[]
+            pos.append(int(input("Where do you want to place your card (x value)?")))
+            pos.append(int(input("(y value)?")))
+        return pos
+
 
     @property
     def name(self):
@@ -538,6 +552,7 @@ class SABOOTERS(object):
         self.__joueurs[x].hand.affiche()
 
         if choix_action == 1:
+            #On demande au joueur quel carte il veut jouer
             no_carte=int(input("What card would you like to play (1 to {0})?".format(self.__joueurs[x].hand.hand_size)))-1
 
             #On s'assure que le joueur choisisse une de ses cartes
@@ -545,25 +560,37 @@ class SABOOTERS(object):
                 print("Please, do not steal a card from your neighbour!")
                 no_carte=int(input("What card would you like to play (1 to {0})?".format(self.__joueurs[x].hand.hand_size)))-1
 
+            #On recupere la carte que le joueur a choisi
             choix_carte=self.__joueurs[x].hand.cards[no_carte]
-            pos=[]
-            pos.append(int(input("Where do you want to place your card (x value)?")))
-            pos.append(int(input("(y value)?")))
             
-            #On s'assure que le joueur pose bien la carte sur le plateau
-            while pos[0] < 0 or pos[0] > 4 or pos[1] < 0 or pos[1] >8 :
-                print("Please place the card on the board (0<=x<=4) (0<=y<=8)")
-                pos=[]
-                pos.append(int(input("Where do you want to place your card (x value)?")))
-                pos.append(int(input("(y value)?")))
-                
+            #On demande au joueur ou il veut poser sa carte
 
+            pos=self.__joueurs[x].choix_pos(self.__plateau)
+            
+            # pos=[]
+            # pos.append(int(input("Where do you want to place your card (x value)?")))
+            # pos.append(int(input("(y value)?")))
+            
+            # #On s'assure que le joueur pose bien la carte sur le plateau
+            # while pos[0] < 0 or pos[0] > 4 or pos[1] < 0 or pos[1] >8 :
+            #     print("Please place the card on the board (0<=x<=4) (0<=y<=8)")
+            #     pos=[]
+            #     pos.append(int(input("Where do you want to place your card (x value)?")))
+            #     pos.append(int(input("(y value)?")))
+                
+            #La carte est placee sur le plateau et le joueur pioche une nouvelle carte
             self.__plateau.add_carte(choix_carte,pos)
             self.__joueurs[x].hand.remove_card(choix_carte)
             self.__joueurs[x].piocher_carte(self.__pioche)
 
         if choix_action == 2:
             no_carte=int(input("Which card do you want to throw away (1 to {0})?".format(self.__joueurs[x].hand.hand_size)))-1
+
+            #On s'assure que le joueur choisisse une de ses cartes
+            while no_carte < 0 or no_carte > self.__joueurs[x].hand.hand_size-1:
+                print("Please, do not steal a card from your neighbour!")
+                no_carte=int(input("What card would you like to play (1 to {0})?".format(self.__joueurs[x].hand.hand_size)))-1
+                
             choix_carte=self.__joueurs[x].hand.cards[no_carte]
             self.__joueurs[x].hand.remove_card(choix_carte)
             self.__joueurs[x].piocher_carte(self.__pioche)
