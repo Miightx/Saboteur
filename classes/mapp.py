@@ -1,5 +1,6 @@
 import numpy as np
-
+import random
+import os
 
 class Carte(object):
     """Carte du jeu SABOOTERS"""
@@ -16,7 +17,7 @@ class Carte(object):
 
     def __init__(self,typ):
         #On defini une position par default
-        self.__pos=[0,0]
+        self.__pos = [0,0] 
         #On defini le type de carte
         self.__typ=typ
         #On defini un etat par default de la carte, etat neutre dans la pile de carte "0"
@@ -49,6 +50,12 @@ class Carte(object):
             self.__vectapparence=Carte.matchemin[16]
             self.__vectrecto=Carte.matrecto[1]
 
+    # @ classmethod
+    # def typ_only ( cls , typ ) :
+    #     pos = [0,0] 
+    #     return cls ( typ , pos )
+
+
     def affiche(self,x):
         #On affiche la partie de la carte que l'on souhaite afficher
         if self.__face==1:
@@ -74,6 +81,12 @@ class Carte(object):
             if x==2:
                 print(Carte.tablerecto[self.__vectrecto[2]],end = "")
 
+    def affiche_carte_entiere(self):
+        for x in range(0,3):
+            print(Carte.tablechemin[self.__vectapparence[x]])
+        
+            
+
     @property
     def pos(self) : return self.__pos
     @property
@@ -89,7 +102,6 @@ class Carte(object):
 
     @face.setter
     def face(self,face):
-        self.__face=0
         if face>=0 and face<=1:
             self.__face=face
     @etat.setter
@@ -105,23 +117,58 @@ class Carte(object):
             if pos[0]>=0 and pos[0]<=4 and pos[1]>=0 and pos[1]<=8:
                 self.__pos=pos
 
+
+"""
+• Type 0 : Carte chemin
+• Type 1 : Carte action
+• Type 2 : Carte map
+• Type 3 : Carte start
+• Type 4 : Carte gold
+• Type 5 : Carte pierre 
+"""
+
+#-----------------------------------------------------------------------------------
+
 class Plateau(object):
     """Plateau du jeu SABOOTERS"""
     def __init__(self):
+        #tableau binaire qui determine si une carte a ete posee 
+        self.__cases_vides=np.zeros((5,9),int)
+        #tableau compose des cartes present sur le plateau
+        self.__cartes_posees=[]
+
+    def add_carte(self,carte,pos):
+        #On verifie si la carte posée est bien une carte
+        if not isinstance ( carte , Carte ) :
+            print("Erreur: uniquement des cartes peuvent être posee sur le plateau")
+        
+        #Les cartes d'arrivee sont placee face cache
+        if carte.typ != 4 and carte.typ != 5:
+            carte.face=1
+
+        #On change l'état de la carte
+        carte.etat=1
+
+        #On défini la position de la carte
+        carte.pos=pos
+
+        #On ajoute la carte aux cartes du plateau
+        self.__cartes_posees.append(carte)
+
+        #On indique qu'une carte est posée à la position de la carte
+        self.__cases_vides[carte.pos[0]][carte.pos[1]]=1
+    
+    #Fonction qui réinitialise le plateau
+    def reset_plateau(self):
         self.__cases_vides=np.zeros((5,9),int)
         self.__cartes_posees=[]
 
-    def maj_cartes_posees(self,deck):
-        self.__cases_vides=np.zeros((5,9),int)
-        self.__cartes_posees=[]
-        for i in range(0,len(deck)):
-            if deck[i].etat==1:
-                self.__cartes_posees.append(deck[i])
-                self.__cases_vides[deck[i].pos[0]][deck[i].pos[1]]=1
-
+    #Fonction qui affiche le plateau
     def affiche(self):
-        #Fonction qui affiche le plateau de jeu   
-            #affiche de la premiere ligne
+        #Fonction qui affiche le plateau de jeu 
+        os.system("cls")  #efface le contenue de la console, valable que sur windows
+   
+            #affichage de la premiere ligne
         for i in range(0,10):
             if i==0 :
                 print(" |",end = "")
@@ -160,19 +207,13 @@ class Plateau(object):
             else:
                print("-----",end = "")
         print("")
-    
 
+    @property
+    def cartes_posees(self) : return self.__cartes_posees
 
-class Casevide(object):
-    """Case vide du plateau"""
-    def affiche(x):
-        if x==0:
-            print("     ",end = "")
-        if x==1:
-            print("     ",end = "")
-        if x==2:
-            print("     ",end = "")
+    @property
+    def cases_vides(self) : return self.__cases_vides
 
-    
-        
-        
+    @cartes_posees.setter
+    def cartes_posees(self,cartes):
+        self.__cartes_posees=cartes

@@ -1,10 +1,15 @@
+import numpy as np
 import random
+
+
+
+
 
 class Menu(object):
 
     def __init__(self):  # Property
         self.__number = 0
-        self.__noms = []
+        self.__players_name = []
         self.__bot = []
         self.__roles = []
     
@@ -39,8 +44,8 @@ class Menu(object):
             print('')
             joueur = 0
             joueur = input()
-            self.__noms.append(joueur)
-            print('The name of the player is:', self.__noms[k])
+            self.__players_name.append(joueur)
+            print('The name of the player is:', self.__players_name[k])
             print('Please press 0 if the player is an AI and press 1 if the player is an Human')
             etat = False
             bot = []
@@ -87,8 +92,8 @@ class Menu(object):
     def __affichage_debut_fin(self):
         total=[]
         for k in range (self.__number-1):
-            total.append(self.__noms[k] + '(' + self.__bot[k]+'),')
-        total.append(self.__noms[self.__number-1] + '(' + self.__bot[self.__number-1]+')')
+            total.append(self.__players_name[k] + '(' + self.__bot[k]+'),')
+        total.append(self.__players_name[self.__number-1] + '(' + self.__bot[self.__number-1]+')')
         total = ' '.join(total)
         print('---------------------')
         print('The', self.__number, 'players are:', total)
@@ -97,6 +102,7 @@ class Menu(object):
         self.__aff_wel() 
         self.__get_number() 
         self.__players() 
+        self.__cartes_roles()
         self.__affichage_debut_fin()
 
     @property
@@ -104,8 +110,8 @@ class Menu(object):
         return self.__number
 
     @property
-    def noms(self):
-        return self.__noms
+    def players_name(self):
+        return self.__players_name
 
     @property
     def bot(self):
