@@ -4,7 +4,7 @@ from menu import Menu
 from player import Player
 from hand import Hand
 from deck import Deck
-from map import Carte
+from mapp import Carte
 
 
 
