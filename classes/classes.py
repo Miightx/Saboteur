@@ -337,6 +337,49 @@ class Player(object):
         pioche[0].face=1
         self.__hand.cards.append(pioche[0])
         pioche.remove(pioche[0])
+
+    def choix_action(self,plateau):
+        #Le joueur choisi une action
+        print("What action do you want to take?")
+        print("1) Use a card")
+        print("2) Passing your turn and throw away a card")
+        choix_action=int(input())
+
+        #On s'assure que le joueur choisi une action parmis les actions possibles
+        while choix_action !=1 and choix_action !=2:
+            print("Please, don't do anything else and just play!")
+            print("1) Use a card")
+            print("2) Passing your turn and throw away a card")
+            choix_action=int(input())
+        return choix_action
+
+    def choix_carte_act(self,plateau):
+
+        #On demande au joueur quel carte il veut jouer
+        no_carte=int(input("What card would you like to play (1 to {0})?".format(self.__hand.hand_size)))-1
+
+        #On s'assure que le joueur choisisse une de ses cartes
+        while no_carte < 0 or no_carte > self.__hand.hand_size-1:
+            print("Please, do not steal a card from your neighbour!")
+            no_carte=int(input("What card would you like to play (1 to {0})?".format(self.__hand.hand_size)))-1
+
+        #On recupere la carte que le joueur a choisi
+        choix_carte=self.__hand.cards[no_carte]
+
+        return choix_carte
+
+    def choix_carte_rem(self,plateau):
+        #On demande au joueur quelle carte il veut se defausser
+        no_carte=int(input("Which card do you want to throw away (1 to {0})?".format(self.__hand.hand_size)))-1
+
+        #On s'assure que le joueur choisisse une de ses cartes
+        while no_carte < 0 or no_carte > self.__hand.hand_size-1:
+            print("Please, don't steal a card from your neighbour!")
+            no_carte=int(input("What card would you like to play (1 to {0})?".format(self.__hand.hand_size)))-1
+                
+        choix_carte=self.__hand.cards[no_carte]
+
+        return choix_carte
     
     def choix_pos(self,plateau):
         pos=[]
@@ -532,18 +575,9 @@ class SABOOTERS(object):
         print("It is{0} turn:".format(self.__joueurs[x].name))
         self.__joueurs[x].hand.affiche()
 
-        #Le joueur choisi une action
-        print("What action do you want to take?")
-        print("1) Use a card")
-        print("2) Passing your turn and throw away a card")
-        choix_action=int(input())
 
-        #On s'assure que le joueur choisi une action parmis les actions possibles
-        while choix_action !=1 and choix_action !=2:
-            print("Please, don't do anything else and just play!")
-            print("1) Use a card")
-            print("2) Passing your turn and throw away a card")
-            choix_action=int(input())
+        #Le joueur choisi une action
+        choix_action=self.__joueurs[x].choix_action(self.__plateau)
         
 
         #On rafraichi l'etat du jeu
@@ -552,16 +586,9 @@ class SABOOTERS(object):
         self.__joueurs[x].hand.affiche()
 
         if choix_action == 1:
+
             #On demande au joueur quel carte il veut jouer
-            no_carte=int(input("What card would you like to play (1 to {0})?".format(self.__joueurs[x].hand.hand_size)))-1
-
-            #On s'assure que le joueur choisisse une de ses cartes
-            while no_carte < 0 or no_carte > self.__joueurs[x].hand.hand_size-1:
-                print("Please, do not steal a card from your neighbour!")
-                no_carte=int(input("What card would you like to play (1 to {0})?".format(self.__joueurs[x].hand.hand_size)))-1
-
-            #On recupere la carte que le joueur a choisi
-            choix_carte=self.__joueurs[x].hand.cards[no_carte]
+            choix_carte=self.__joueurs[x].choix_carte_act(self.__plateau)
             
             #On demande au joueur ou il veut poser sa carte
             pos=self.__joueurs[x].choix_pos(self.__plateau)
@@ -572,14 +599,12 @@ class SABOOTERS(object):
             self.__joueurs[x].piocher_carte(self.__pioche)
 
         if choix_action == 2:
-            no_carte=int(input("Which card do you want to throw away (1 to {0})?".format(self.__joueurs[x].hand.hand_size)))-1
 
-            #On s'assure que le joueur choisisse une de ses cartes
-            while no_carte < 0 or no_carte > self.__joueurs[x].hand.hand_size-1:
-                print("Please, do not steal a card from your neighbour!")
-                no_carte=int(input("What card would you like to play (1 to {0})?".format(self.__joueurs[x].hand.hand_size)))-1
-                
-            choix_carte=self.__joueurs[x].hand.cards[no_carte]
+            #On demande au joueur quelle carte il veut se defausser
+            choix_carte=self.__joueurs[x].choix_carte_rem(self.__plateau)
+
+            #La carte est retire de la main du joueur et place dans la defausse et la joueur pioche une nouvelle carte
+            self.__defausse.append(choix_carte)
             self.__joueurs[x].hand.remove_card(choix_carte)
             self.__joueurs[x].piocher_carte(self.__pioche)
 
