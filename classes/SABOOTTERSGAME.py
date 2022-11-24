@@ -1,12 +1,10 @@
 import numpy as np
-import random
-import os
-
-from menu import *
-from player import *
-from hand import *
-from deck import *
-from map import *
+import random 
+from menu import Menu
+from player import Player
+from hand import Hand
+from deck import Deck
+from map import Carte
 
 
 
