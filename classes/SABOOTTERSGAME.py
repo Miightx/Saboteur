@@ -1,12 +1,12 @@
 import numpy as np
 import random 
+
 from deck import Deck
 from menu import Menu
 from player import Player
 from hand import Hand
-
-from mapp import Carte
-from mapp import Plateau
+from card import Carte
+from board import Plateau
 
 
 
@@ -102,8 +102,8 @@ class SABOOTERS(object):
         for i in range(3):
             self.tourjoueur(0)
         
-jeu=SABOOTERS()
-jeu.initpartie()
+# jeu=SABOOTERS()
+# jeu.initpartie()
 
-jeu.initmanche()
-jeu.tour_pour_rien()
+# jeu.initmanche()
+# jeu.tour_pour_rien()
