@@ -1,7 +1,11 @@
 import sys
 sys.path.insert(0,"../PROJETPYTHON")
-import classes.classes as sb
+from classes import *
 
-jeu=sb.SABOOTERS()
+
+
+jeu=SABOOTERS()
 jeu.initpartie()
+
 jeu.initmanche()
+jeu.tour_pour_rien()
