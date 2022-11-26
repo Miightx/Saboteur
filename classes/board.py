@@ -8,9 +8,10 @@ class Plateau(object):
     """Plateau du jeu SABOOTERS"""
     def __init__(self):
         #tableau binaire qui determine si une carte a ete posee 
-        self.__cases_vides=np.zeros((5,9),int)
+        self.__cases_vides=np.zeros((50,100),int)
         #tableau compose des cartes present sur le plateau
         self.__cartes_posees=[]
+        self.__dimensions=[[0,5],[0,9]]
 
     def add_carte(self,carte,pos):
         #On verifie si la carte posée est bien une carte
@@ -30,43 +31,59 @@ class Plateau(object):
         #On ajoute la carte aux cartes du plateau
         self.__cartes_posees.append(carte)
 
+        #On réajuste la dimention du plateau par rapport à la position de la nouvelle carte posée
+        if pos[0] < self.__dimensions[0][0]:
+            self.__dimensions[0][0]=pos[0]
+
+        if pos[0] > self.__dimensions[0][1]:
+            self.__dimensions[0][1]=pos[0]
+
+        if pos[1] < self.__dimensions[1][0]:
+            self.__dimensions[1][0]=pos[1]
+
+        if pos[1] < self.__dimensions[1][1]:
+            self.__dimensions[1][1]=pos[1]
+
         #On indique qu'une carte est posée à la position de la carte
-        self.__cases_vides[carte.pos[0]][carte.pos[1]]=1
+        self.__cases_vides[carte.pos[0]+25][carte.pos[1]+50]=1
     
     #Fonction qui réinitialise le plateau
     def reset_plateau(self):
-        self.__cases_vides=np.zeros((5,9),int)
+        self.__cases_vides=np.zeros((50,100),int)
         self.__cartes_posees=[]
+        self.__dimensions=[[0,5],[0,9]]
 
     #Fonction qui affiche le plateau
     def affiche(self):
         #Fonction qui affiche le plateau de jeu 
         os.system("cls")  #efface le contenue de la console, valable que sur windows
+
+
    
             #affichage de la premiere ligne
-        for i in range(0,10):
-            if i==0 :
+        for i in range(self.__dimensions[0][0],self.__dimensions[0][1]+1):
+            if i==self.__dimensions[0][0] :
                 print(" |",end = "")
             else:
                 print(" ",i-1," ",end = "")
         print("")
 
             #affichage de la deuxieme ligne
-        for i in range(0,10):
-            if i==0 :
+        for i in range(self.__dimensions[0][0],self.__dimensions[0][1]+1):
+            if i==self.__dimensions[0][0] :
                 print("-+",end = "")
             else:
                 print("-----",end = "")
         print("")
 
-        for i in range(0,5):
+        for i in range(self.__dimensions[1][0],self.__dimensions[1][1]):
             for x in range(0,3):
                 if x==1:
                     print(i,end = "")
                     print("|",end = "")
                 else:
                     print(" |",end = "")
-                for j in range(0,9):
+                for j in range(self.__dimensions[0][0],self.__dimensions[0][1]):
                     if self.__cases_vides[i][j]==0:
                         print("     ",end = "")
                     else:

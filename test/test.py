@@ -1,19 +1,3 @@
-class Test(object):
-    def __init__(self):
-        self.truc="truc"
+tab=[["i"]*18 for i in range (45)]
 
-    def TRUC(self):
-        print(self.truc)
-
-test=Test()
-test.TRUC()
-
-class Test:
-    def __init__(self):
-        self.truc="truc"
-
-    def TRUC(self):
-        print(self.truc)
-
-test=Test()
-test.TRUC()
+print(tab)
