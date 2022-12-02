@@ -41,7 +41,7 @@ class Plateau(object):
         if pos[1] < self.__dimensions[1][0]:
             self.__dimensions[1][0]=pos[1]
 
-        if pos[1] < self.__dimensions[1][1]:
+        if pos[1] > self.__dimensions[1][1]:
             self.__dimensions[1][1]=pos[1]
 
         #On indique qu'une carte est posée à la position de la carte
