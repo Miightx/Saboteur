@@ -8,7 +8,7 @@ class Plateau(object):
     """Plateau du jeu SABOOTERS"""
     def __init__(self):
         #tableau binaire qui determine si une carte a ete posee 
-        self.__cases_vides=np.zeros((50,100),int)
+        self.__cases_vides=np.zeros((20,20),int)
         #tableau compose des cartes present sur le plateau
         self.__cartes_posees=[]
         self.__dimensions=[[0,5],[0,9]]
@@ -45,7 +45,8 @@ class Plateau(object):
             self.__dimensions[1][1]=pos[1]
 
         #On indique qu'une carte est posée à la position de la carte
-        self.__cases_vides[carte.pos[0]+25][carte.pos[1]+50]=1
+        self.__cases_vides[carte.pos[0]+10][carte.pos[1]+10]=1
+        print(self.__cases_vides)
     
     #Fonction qui réinitialise le plateau
     def reset_plateau(self):
@@ -61,30 +62,30 @@ class Plateau(object):
 
    
             #affichage de la premiere ligne
-        for i in range(self.__dimensions[0][0],self.__dimensions[0][1]+1):
-            if i==self.__dimensions[0][0] :
+        for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
+            if j==self.__dimensions[1][0] :
                 print(" |",end = "")
             else:
-                print(" ",i-1," ",end = "")
+                print(" ",j-1," ",end = "")
         print("")
 
             #affichage de la deuxieme ligne
-        for i in range(self.__dimensions[0][0],self.__dimensions[0][1]+1):
-            if i==self.__dimensions[0][0] :
+        for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
+            if j==self.__dimensions[1][0] :
                 print("-+",end = "")
             else:
                 print("-----",end = "")
         print("")
 
-        for i in range(self.__dimensions[1][0],self.__dimensions[1][1]):
+        for i in range(self.__dimensions[0][0],self.__dimensions[0][1]+1):
             for x in range(0,3):
                 if x==1:
                     print(i,end = "")
                     print("|",end = "")
                 else:
                     print(" |",end = "")
-                for j in range(self.__dimensions[0][0],self.__dimensions[0][1]):
-                    if self.__cases_vides[i][j]==0:
+                for j in range(self.__dimensions[1][0],self.__dimensions[1][1]):
+                    if self.__cases_vides[i+10][j+10]==0:
                         print("     ",end = "")
                     else:
                         for k in range(len(self.__cartes_posees)):
@@ -93,8 +94,8 @@ class Plateau(object):
                 print("")
 
         #affichage de la derniere ligne
-        for i in range(0,10):
-            if i==0 :
+        for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
+            if j==0 :
                 print("-+",end = "")
             else:
                print("-----",end = "")
@@ -109,3 +110,5 @@ class Plateau(object):
     @cartes_posees.setter
     def cartes_posees(self,cartes):
         self.__cartes_posees=cartes
+
+

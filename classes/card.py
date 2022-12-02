@@ -111,7 +111,7 @@ class Carte(object):
     def pos(self, pos) : 
         self.__pos = [0,0]
         if self.etat==1:
-            if pos[0]>=0 and pos[0]<=4 and pos[1]>=0 and pos[1]<=8:
+            if pos[0]>=-25 and pos[0]<=25 and pos[1]>=-50 and pos[1]<=50:
                 self.__pos=pos
 
 
