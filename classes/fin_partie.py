@@ -2,15 +2,13 @@ import numpy as np
 
 class fin_manche(object):
 #count_winner et winner sont privés
-    def __init__(self,roles,players, s_count, c_count,sharing_gold,count):
+    def __init__(self,roles,players,sharing_gold,count):
         self.roles = roles    #Les roles ce sont de la classe menu.personnage[i]
         self.players = players    #Les roles ce sont de la classe menu.personnage[i]
         self.__score_manche = []
-        self.__s_count = s_count
-        self.__c_count= c_count
         self.spm = []   #score par manche
         self.__sharing_gold = sharing_gold #Distribution score dans le cas où les mineurs gagnent peut etre a enlever
-        self.__count= count
+        self.__count = count
 
 #Calcul du nombre de personnes qui ont gagné la manche
     def __count_winner(self):
@@ -20,9 +18,9 @@ class fin_manche(object):
             elif (self.roles[k]=='C'):
                 self.__c_count += 1
 
-    def roles_count(self):
-        count=[self.__s_count, self.__c_count]
-    def __winner(self):
+    def roles_count(self,s_count,c_count):
+        count = [self.__s_count, self.__c_count]
+    def __winner(self,count, s_state, c_state):
         etat = False
         score_manche = np.zeros(len(self.players))
         if (s_state == True): #Disons que c'est le cas où les saboteurs ont gagnés
@@ -62,7 +60,7 @@ class fin_manche(object):
                             indice += 1
 
             print("Voici la valeur des cartes or")
-            print(sharing_gold)
+            print(self.__sharing_gold)
 
     def finito(self):
         self.__count_winner()
