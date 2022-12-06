@@ -1,6 +1,6 @@
 import numpy as np
 import random
-from card import Carte
+from .card import Carte
 
 
 

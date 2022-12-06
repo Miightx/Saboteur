@@ -1,14 +1,14 @@
 import numpy as np
 import random
 import os
-from card import Carte
+from .card import Carte
 
 
 class Plateau(object):
     """Plateau du jeu SABOOTERS"""
     def __init__(self):
         #tableau binaire qui determine si une carte a ete posee 
-        self.__cases_vides=np.zeros((20,20),int)
+        self.__cases_vides=np.zeros((30,30),int)
         #tableau compose des cartes present sur le plateau
         self.__cartes_posees=[]
         self.__dimensions=[[0,5],[0,9]]
@@ -35,17 +35,17 @@ class Plateau(object):
         if pos[0] < self.__dimensions[0][0]:
             self.__dimensions[0][0]=pos[0]
 
-        if pos[0] > self.__dimensions[0][1]:
-            self.__dimensions[0][1]=pos[0]
+        if pos[0]+1 > self.__dimensions[0][1]:
+            self.__dimensions[0][1]=pos[0]+1
 
         if pos[1] < self.__dimensions[1][0]:
             self.__dimensions[1][0]=pos[1]
 
-        if pos[1] > self.__dimensions[1][1]:
-            self.__dimensions[1][1]=pos[1]
+        if pos[1]+1 > self.__dimensions[1][1]:
+            self.__dimensions[1][1]=pos[1]+1
 
         #On indique qu'une carte est posée à la position de la carte
-        self.__cases_vides[carte.pos[0]+10][carte.pos[1]+10]=1
+        self.__cases_vides[carte.pos[0]+15][carte.pos[1]+15]=1
         print(self.__cases_vides)
     
     #Fonction qui réinitialise le plateau
@@ -64,28 +64,35 @@ class Plateau(object):
             #affichage de la premiere ligne
         for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
             if j==self.__dimensions[1][0] :
-                print(" |",end = "")
+                print("  |",end = "")
             else:
-                print(" ",j-1," ",end = "")
+                if (j-1)<0 :
+                    print(f" {j-1}  ",end = "")
+                else:
+                    print(f"  {j-1}  ",end = "")
         print("")
 
             #affichage de la deuxieme ligne
         for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
             if j==self.__dimensions[1][0] :
-                print("-+",end = "")
+                print("--+",end = "")
             else:
                 print("-----",end = "")
         print("")
 
-        for i in range(self.__dimensions[0][0],self.__dimensions[0][1]+1):
+        for i in range(self.__dimensions[0][0],self.__dimensions[0][1]):
             for x in range(0,3):
                 if x==1:
-                    print(i,end = "")
-                    print("|",end = "")
+                    if i<0 :
+                        print(i,end = "|")
+                        #print("|",end = "")
+                    else:
+                        print(f" {i}",end = "|")
+                        #print("|",end = "")
                 else:
-                    print(" |",end = "")
+                    print("  |",end = "")
                 for j in range(self.__dimensions[1][0],self.__dimensions[1][1]):
-                    if self.__cases_vides[i+10][j+10]==0:
+                    if self.__cases_vides[i+15][j+15]==0:
                         print("     ",end = "")
                     else:
                         for k in range(len(self.__cartes_posees)):
@@ -95,8 +102,8 @@ class Plateau(object):
 
         #affichage de la derniere ligne
         for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
-            if j==0 :
-                print("-+",end = "")
+            if j==self.__dimensions[1][0] :
+                print("--+",end = "")
             else:
                print("-----",end = "")
         print("")

@@ -1,7 +1,7 @@
 import numpy as np
 import random
 import os
-from hand import Hand
+from .hand import Hand
 
 
 
@@ -65,8 +65,8 @@ class Player(object):
         pos.append(int(input("(y value)?")))
             
         #On s'assure que le joueur pose bien la carte sur le plateau
-        while pos[0] < 0 or pos[0] > 4 or pos[1] < 0 or pos[1] >8 :
-            print("Please place the card on the board (0<=x<=4) (0<=y<=8)")
+        while pos[0] < -10 or pos[0] > 10 or pos[1] < -10 or pos[1] >10 :
+            print("Please place the card on the board (-10<=x<=10) (-10<=y<=10)")
             pos=[]
             pos.append(int(input("Where do you want to place your card (x value)?")))
             pos.append(int(input("(y value)?")))
