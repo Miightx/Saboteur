@@ -2,6 +2,9 @@ import numpy as np
 import random
 import os
 from .hand import Hand
+from .card import Carte
+from .board import Plateau
+import sys
 
 
 
@@ -12,11 +15,19 @@ class Player(object):
         self.__hand = Hand(nb_players) #pour afficher la main: player.hand.display_hand()
 
     def piocher_carte(self,pioche):
-        pioche[0].face=1
-        self.__hand.cards.append(pioche[0])
+        if len(pioche)<=0:
+            print("Erreur: la pioche est vide")
+            sys.exit()
+        
+        self.__hand.add_card(pioche[0])
         pioche.remove(pioche[0])
 
     def choix_action(self,plateau):
+
+        if not isinstance ( plateau , Plateau ) :
+            print("Erreur: uniquement des cartes peuvent être ajouté à la main d'un joueur")
+            sys.exit()
+
         #Le joueur choisi une action
         print("What action do you want to take?")
         print("1) Use a card")
@@ -85,9 +96,9 @@ class Player(object):
     def hand(self):
         return self.__hand
 
-    @hand.setter
-    def hand(self,hand):
-        self.__hand=hand
+    # @hand.setter
+    # def hand(self,hand):
+    #     self.__hand=hand
 
 
 

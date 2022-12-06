@@ -23,21 +23,21 @@ class Deck(object):
     def random_cartes(self):
         self.__cartes=random.sample(self.__cartes, len(self.__cartes))
 
-    def affiche(self):
-        for i in range(0,len(self.__cartes)):
-            self.__cartes[i].face=1
+    # def affiche(self):
+    #     for i in range(0,len(self.__cartes)):
+    #         self.__cartes[i].face=1
 
-        for i in range(0,8):
-            for x in range(0,3):
-                for j in range(0,8):
-                    self.__cartes[j+(i-1)*8].affiche(x)
-                print("")
-        for i in range(0,len(self.__cartes)):
-            self.__cartes[i].face=0
+    #     for i in range(0,8):
+    #         for x in range(0,3):
+    #             for j in range(0,8):
+    #                 self.__cartes[j+(i-1)*8].affiche(x)
+    #             print("")
+    #     for i in range(0,len(self.__cartes)):
+    #         self.__cartes[i].face=0
 
     @property
     def cartes(self) : return self.__cartes
 
-    @cartes.setter
-    def cartes(self,cartes):
-        self.__cartes=cartes
+    # @cartes.setter
+    # def cartes(self,cartes):
+    #     self.__cartes=cartes

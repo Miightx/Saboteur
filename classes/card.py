@@ -17,12 +17,13 @@ class Carte(object):
     matrecto=[[1,2,1],[0,3,0]]
 
     def __init__(self,typ):
-        #On defini une position par default
-        self.__pos = [0,0] 
+        #On defini une position par default 
+        self.pos = [0,0] #La position de la carte n'est pas un attribut privé car une carte peut se trouvé à priori n'importe où
+
         #On defini le type de carte
         self.__typ=typ
         #On defini un etat par default de la carte, etat neutre dans la pile de carte "0"
-        self.__etat=0
+        # self.__etat=0
         #On defini par default que le carte est face cachee
         self.__face=0
         #On tire au hasard une apparence a la carte selon son type
@@ -84,8 +85,7 @@ class Carte(object):
         
             
 
-    @property
-    def pos(self) : return self.__pos
+
     @property
     def typ(self) : return self.__typ
     @property
@@ -99,20 +99,16 @@ class Carte(object):
 
     @face.setter
     def face(self,face):
+        self.__face=0
         if face>=0 and face<=1:
             self.__face=face
-    @etat.setter
-    #0:"Pile de carte" 1:"Posee sur le plateau" 2:"main de joueur" 3:"defausse" 
-    def etat(self,etat):
-        self.__etat=0
-        if etat>=0 and etat<=3 :
-            self.__etat=etat
-    @pos.setter
-    def pos(self, pos) : 
-        self.__pos = [0,0]
-        if self.etat==1:
-            if pos[0]>=-25 and pos[0]<=25 and pos[1]>=-50 and pos[1]<=50:
-                self.__pos=pos
+    # @etat.setter
+    # #0:"Pile de carte" 1:"Posee sur le plateau" 2:"main de joueur" 3:"defausse" 
+    # def etat(self,etat):
+    #     self.__etat=0
+    #     if etat>=0 and etat<=3 :
+    #         self.__etat=etat
+
 
 
 """

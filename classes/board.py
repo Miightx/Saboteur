@@ -1,6 +1,7 @@
 import numpy as np
 import random
 import os
+import sys
 from .card import Carte
 
 
@@ -17,13 +18,18 @@ class Plateau(object):
         #On verifie si la carte posée est bien une carte
         if not isinstance ( carte , Carte ) :
             print("Erreur: uniquement des cartes peuvent être posee sur le plateau")
-        
+            sys.exit()
+
+        if pos[0]<-10 or pos[0]>10 or pos[1]<-10 or pos[1]>10:
+            print("Erreur: La position de la carte va au dela de la taille maximale du plateau")
+            sys.exit()
+
         #Les cartes d'arrivee sont placee face cache
         if carte.typ != 4 and carte.typ != 5:
             carte.face=1
 
         #On change l'état de la carte
-        carte.etat=1
+        #carte.etat=1
 
         #On défini la position de la carte
         carte.pos=pos
@@ -46,7 +52,6 @@ class Plateau(object):
 
         #On indique qu'une carte est posée à la position de la carte
         self.__cases_vides[carte.pos[0]+15][carte.pos[1]+15]=1
-        print(self.__cases_vides)
     
     #Fonction qui réinitialise le plateau
     def reset_plateau(self):
@@ -111,11 +116,11 @@ class Plateau(object):
     @property
     def cartes_posees(self) : return self.__cartes_posees
 
-    @property
-    def cases_vides(self) : return self.__cases_vides
+    # @property
+    # def cases_vides(self) : return self.__cases_vides
 
-    @cartes_posees.setter
-    def cartes_posees(self,cartes):
-        self.__cartes_posees=cartes
+    # @cartes_posees.setter
+    # def cartes_posees(self,cartes):
+    #     self.__cartes_posees=cartes
 
 
