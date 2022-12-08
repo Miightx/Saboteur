@@ -25,7 +25,7 @@ class Player(object):
     def choix_action(self,plateau):
 
         if not isinstance ( plateau , Plateau ) :
-            print("Erreur: uniquement des cartes peuvent être ajouté à la main d'un joueur")
+            print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
             sys.exit()
 
         #Le joueur choisi une action
@@ -43,6 +43,9 @@ class Player(object):
         return choix_action
 
     def choix_carte_act(self,plateau):
+        if not isinstance ( plateau , Plateau ) :
+            print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
+            sys.exit()
 
         #On demande au joueur quel carte il veut jouer
         no_carte=int(input("What card would you like to play (1 to {0})?".format(self.__hand.hand_size)))-1
@@ -58,6 +61,10 @@ class Player(object):
         return choix_carte
 
     def choix_carte_rem(self,plateau):
+        if not isinstance ( plateau , Plateau ) :
+            print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
+            sys.exit()
+
         #On demande au joueur quelle carte il veut se defausser
         no_carte=int(input("Which card do you want to throw away (1 to {0})?".format(self.__hand.hand_size)))-1
 
@@ -71,6 +78,10 @@ class Player(object):
         return choix_carte
     
     def choix_pos(self,plateau):
+        if not isinstance ( plateau , Plateau ) :
+            print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
+            sys.exit()
+
         pos=[]
         pos.append(int(input("Where do you want to place your card (x value)?")))
         pos.append(int(input("(y value)?")))
@@ -82,6 +93,45 @@ class Player(object):
             pos.append(int(input("Where do you want to place your card (x value)?")))
             pos.append(int(input("(y value)?")))
         return pos
+
+    def tourjoueur(self,plateau):
+        #affichage du plateau et de la main du joueur dont c'est la tour
+        plateau.affiche()
+        print("It is{0} turn:".format(self.__name))
+        self.__hand.affiche()
+
+
+        #Le joueur choisi une action
+        choix_action=self.__joueurs[x].choix_action(self.__plateau)
+        
+
+        #On rafraichi l'etat du jeu
+        self.__plateau.affiche()
+        print("It is {0} turn:".format(self.__joueurs[x].name))
+        self.__joueurs[x].hand.affiche()
+
+        if choix_action == 1:
+
+            #On demande au joueur quel carte il veut jouer
+            choix_carte=self.__joueurs[x].choix_carte_act(self.__plateau)
+            
+            #On demande au joueur ou il veut poser sa carte
+            pos=self.__joueurs[x].choix_pos(self.__plateau)
+              
+            #La carte est placee sur le plateau et le joueur pioche une nouvelle carte
+            self.__plateau.add_carte(choix_carte,pos)
+            self.__joueurs[x].hand.remove_card(choix_carte)
+            self.__joueurs[x].piocher_carte(self.__pioche)
+
+        if choix_action == 2:
+
+            #On demande au joueur quelle carte il veut se defausser
+            choix_carte=self.__joueurs[x].choix_carte_rem(self.__plateau)
+
+            #La carte est retire de la main du joueur et place dans la defausse et la joueur pioche une nouvelle carte
+            self.__defausse.append(choix_carte)
+            self.__joueurs[x].hand.remove_card(choix_carte)
+            self.__joueurs[x].piocher_carte(self.__pioche)
 
 
     @property
