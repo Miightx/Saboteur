@@ -71,7 +71,7 @@ class Plateau(object):
             if j==self.__dimensions[1][0] :
                 print("  |",end = "")
             else:
-                if (j-1)<0 :
+                if (j-1)<0 or (j-1)>=10:
                     print(f" {j-1}  ",end = "")
                 else:
                     print(f"  {j-1}  ",end = "")
@@ -88,7 +88,7 @@ class Plateau(object):
         for i in range(self.__dimensions[0][0],self.__dimensions[0][1]):
             for x in range(0,3):
                 if x==1:
-                    if i<0 :
+                    if i<0 or i>=10:
                         print(i,end = "|")
                         #print("|",end = "")
                     else:
