@@ -189,7 +189,7 @@ class Human(Player):
 
             #La carte est retire de la main du joueur et place dans la defausse et la joueur pioche une nouvelle carte
             defausse.append(choix_carte)
-            self.hand.remove_card(choix_carte)
+            self.defausse_carte(choix_carte, defausse)
             self.piocher_carte(pioche)
 
 
