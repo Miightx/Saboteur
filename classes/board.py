@@ -24,6 +24,10 @@ class Plateau(object):
             print("Erreur: La position de la carte va au dela de la taille maximale du plateau")
             sys.exit()
 
+        if self.__cases_vides[pos[0]+15][pos[1]+15]==1 :
+            print("Erreur: une carte est déja positionnée à l'emplacement désiré")
+            sys.exit()
+
         #Les cartes d'arrivee sont placee face cache
         if carte.typ != 4 and carte.typ != 5:
             carte.face=1
@@ -52,10 +56,11 @@ class Plateau(object):
 
         #On indique qu'une carte est posée à la position de la carte
         self.__cases_vides[carte.pos[0]+15][carte.pos[1]+15]=1
+        
     
     #Fonction qui réinitialise le plateau
     def reset_plateau(self):
-        self.__cases_vides=np.zeros((50,100),int)
+        self.__cases_vides=np.zeros((30,30),int)
         self.__cartes_posees=[]
         self.__dimensions=[[0,5],[0,9]]
 
@@ -116,8 +121,8 @@ class Plateau(object):
     @property
     def cartes_posees(self) : return self.__cartes_posees
 
-    # @property
-    # def cases_vides(self) : return self.__cases_vides
+    @property
+    def cases_vides(self) : return self.__cases_vides
 
     # @cartes_posees.setter
     # def cartes_posees(self,cartes):

@@ -63,7 +63,7 @@ class SABOOTERS(object):
 
     def tour_pour_rien(self):
         for i in range(3):
-            self.tourjoueur(0)
+            self.__joueurs[0].tourjoueur(self.__plateau, self.__pioche, self.__defausse)
         
 # jeu=SABOOTERS()
 # jeu.initpartie()

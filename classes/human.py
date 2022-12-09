@@ -4,31 +4,22 @@ import os
 from .hand import Hand
 from .card import Carte
 from .board import Plateau
+from .player import Player
 import sys
 
 
 
-class Player(object):
+class Human(Player):
     def __init__(self,name,role,nb_players):
-        self.__name = name
-        self.__role = role    #le role c'est de la classe menu.personnage[i]
-        self.__hand = Hand(nb_players) #pour afficher la main: player.hand.display_hand()
+        super ( ) . __init__ (name,role,nb_players)
 
-    def piocher_carte(self,pioche):
-        if len(pioche)<=0:
-            print("Erreur: la pioche est vide")
-            sys.exit()
-        
-        self.__hand.add_card(pioche[0])
-        pioche.remove(pioche[0])
-
-    def print_game_state_player(self,plateau):
+    def __print_game_state_player(self,plateau):
         #affichage du plateau et de la main du joueur dont c'est la tour
         plateau.affiche()
         print("It is{0} turn:".format(self.__name))
         self.__hand.affiche()
 
-    def choix_action(self,plateau):
+    def __choix_action(self,plateau):
 
         if not isinstance ( plateau , Plateau ) :
             print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
@@ -36,7 +27,7 @@ class Player(object):
 
 
         #affichage du plateau et de la main du joueur dont c'est la tour
-        self.print_game_state_player(plateau)
+        self.__print_game_state_player(plateau)
 
 
         #Le joueur choisi une action
@@ -53,12 +44,12 @@ class Player(object):
                 if (choix_action == 1 or choix_action == 2):
                     etat = True
                 else:
-                    self.print_game_state_player(plateau)
+                    self.__print_game_state_player(plateau)
                     print("Please, don't do anything else and just play!")
                     print("1) Use a card")
                     print("2) Passing your turn and throw away a card")
             else:
-                self.print_game_state_player(plateau)
+                self.__print_game_state_player(plateau)
                 print("Please, don't do anything else and just play!")
                 print("1) Use a card")
                 print("2) Passing your turn and throw away a card")
@@ -66,13 +57,13 @@ class Player(object):
 
         return choix_action
 
-    def choix_carte_act(self,plateau):
+    def __choix_carte_act(self,plateau):
         if not isinstance ( plateau , Plateau ) :
             print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
             sys.exit()
 
         #On demande au joueur quel carte il veut jouer
-        self.print_game_state_player(plateau)
+        self.__print_game_state_player(plateau)
         print("What card would you like to play (1 to {0})?".format(self.__hand.hand_size))
 
         #On s'assure que le joueur choisisse une de ses cartes
@@ -85,11 +76,11 @@ class Player(object):
                     etat = True
                     no_carte=no_carte-1
                 else:
-                    self.print_game_state_player(plateau)
+                    self.__print_game_state_player(plateau)
                     print("Please, do not steal a card from your neighbour!")
                     print("What card would you like to play (1 to {0})?".format(self.__hand.hand_size))
             else:
-                self.print_game_state_player(plateau)
+                self.__print_game_state_player(plateau)
                 print("Please, do not steal a card from your neighbour!")
                 print("What card would you like to play (1 to {0})?".format(self.__hand.hand_size))
 
@@ -99,13 +90,13 @@ class Player(object):
 
         return choix_carte
 
-    def choix_carte_rem(self,plateau):
+    def __choix_carte_rem(self,plateau):
         if not isinstance ( plateau , Plateau ) :
             print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
             sys.exit()
 
         #On demande au joueur quelle carte il veut se defausser
-        self.print_game_state_player(plateau)
+        self.__print_game_state_player(plateau)
         print("Which card do you want to throw away (1 to {0})?".format(self.__hand.hand_size))
 
         #On s'assure que le joueur choisisse une de ses cartes
@@ -118,11 +109,11 @@ class Player(object):
                     etat = True
                     no_carte=no_carte-1
                 else:
-                    self.print_game_state_player(plateau)
+                    self.__print_game_state_player(plateau)
                     print("Please, do not steal a card from your neighbour!")
                     print("Which card do you want to throw away (1 to {0})?".format(self.__hand.hand_size))
             else:
-                self.print_game_state_player(plateau)
+                self.__print_game_state_player(plateau)
                 print("Please, do not steal a card from your neighbour!")
                 print("Which card do you want to throw away (1 to {0})?".format(self.__hand.hand_size))
                 
@@ -130,7 +121,7 @@ class Player(object):
 
         return choix_carte
     
-    def choix_pos(self,plateau):
+    def __choix_pos(self,plateau):
         if not isinstance ( plateau , Plateau ) :
             print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
             sys.exit()
@@ -140,7 +131,7 @@ class Player(object):
         y=0
 
 
-        self.print_game_state_player(plateau)
+        self.__print_game_state_player(plateau)
         print("Where do you want to place your card ?")
 
 
@@ -158,15 +149,15 @@ class Player(object):
                         etat = True
                         pos=[x,y]
                     else:
-                        self.print_game_state_player(plateau)
+                        self.__print_game_state_player(plateau)
                         print("A card is already positioned at the desired location, choose another position")
                         print("Where do you want to place your card ?")
                 else:
-                    self.print_game_state_player(plateau)
+                    self.__print_game_state_player(plateau)
                     print("Please place the card on the board (-10<=x<=10) (-10<=y<=10)")
                     print("Where do you want to place your card ?")
             else:
-                self.print_game_state_player(plateau)
+                self.__print_game_state_player(plateau)
                 print("Please place the card on the board (-10<=x<=10) (-10<=y<=10)")
                 print("Where do you want to place your card ?")
 
@@ -176,15 +167,15 @@ class Player(object):
     def tourjoueur(self,plateau,pioche,defausse):
 
         #Le joueur choisi une action
-        choix_action=self.choix_action(plateau)
+        choix_action=self.__choix_action(plateau)
         
         if choix_action == 1:
 
             #On demande au joueur quel carte il veut jouer
-            choix_carte=self.choix_carte_act(plateau)
+            choix_carte=self.__choix_carte_act(plateau)
             
             #On demande au joueur ou il veut poser sa carte
-            pos=self.choix_pos(plateau)
+            pos=self.__choix_pos(plateau)
               
             #La carte est placee sur le plateau et le joueur pioche une nouvelle carte
             plateau.add_carte(choix_carte,pos)
@@ -194,7 +185,7 @@ class Player(object):
         if choix_action == 2:
 
             #On demande au joueur quelle carte il veut se defausser
-            choix_carte=self.choix_carte_rem(plateau)
+            choix_carte=self.__choix_carte_rem(plateau)
 
             #La carte est retire de la main du joueur et place dans la defausse et la joueur pioche une nouvelle carte
             defausse.append(choix_carte)
