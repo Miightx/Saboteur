@@ -1,8 +1,9 @@
 from classes import Player
 from classes import Carte
 from classes import Plateau
+from classes import Human
 
-p=Player("Julien","S",3)
+p=Human("Julien","S",3)
 pioche=[]
 pioche.append(Carte(0))
 pioche.append(Carte(0))

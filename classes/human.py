@@ -16,8 +16,8 @@ class Human(Player):
     def __print_game_state_player(self,plateau):
         #affichage du plateau et de la main du joueur dont c'est la tour
         plateau.affiche()
-        print("It is{0} turn:".format(self.__name))
-        self.__hand.affiche()
+        print("It is{0} turn:".format(self.name))
+        self.hand.affiche()
 
     def __choix_action(self,plateau):
 
@@ -64,7 +64,7 @@ class Human(Player):
 
         #On demande au joueur quel carte il veut jouer
         self.__print_game_state_player(plateau)
-        print("What card would you like to play (1 to {0})?".format(self.__hand.hand_size))
+        print("What card would you like to play (1 to {0})?".format(self.hand.hand_size))
 
         #On s'assure que le joueur choisisse une de ses cartes
         etat = False
@@ -72,21 +72,21 @@ class Human(Player):
             no_carte=input()
             if (no_carte.isdecimal()==True):
                 no_carte=int(no_carte)
-                if (no_carte > 0 and no_carte <= self.__hand.hand_size):
+                if (no_carte > 0 and no_carte <= self.hand.hand_size):
                     etat = True
                     no_carte=no_carte-1
                 else:
                     self.__print_game_state_player(plateau)
                     print("Please, do not steal a card from your neighbour!")
-                    print("What card would you like to play (1 to {0})?".format(self.__hand.hand_size))
+                    print("What card would you like to play (1 to {0})?".format(self.hand.hand_size))
             else:
                 self.__print_game_state_player(plateau)
                 print("Please, do not steal a card from your neighbour!")
-                print("What card would you like to play (1 to {0})?".format(self.__hand.hand_size))
+                print("What card would you like to play (1 to {0})?".format(self.hand.hand_size))
 
 
         #On recupere la carte que le joueur a choisi
-        choix_carte=self.__hand.cards[no_carte]
+        choix_carte=self.hand.cards[no_carte]
 
         return choix_carte
 
@@ -97,7 +97,7 @@ class Human(Player):
 
         #On demande au joueur quelle carte il veut se defausser
         self.__print_game_state_player(plateau)
-        print("Which card do you want to throw away (1 to {0})?".format(self.__hand.hand_size))
+        print("Which card do you want to throw away (1 to {0})?".format(self.hand.hand_size))
 
         #On s'assure que le joueur choisisse une de ses cartes
         etat = False
@@ -105,19 +105,19 @@ class Human(Player):
             no_carte=input()
             if (no_carte.isdecimal()==True):
                 no_carte=int(no_carte)
-                if (no_carte > 0 and no_carte <= self.__hand.hand_size):
+                if (no_carte > 0 and no_carte <= self.hand.hand_size):
                     etat = True
                     no_carte=no_carte-1
                 else:
                     self.__print_game_state_player(plateau)
                     print("Please, do not steal a card from your neighbour!")
-                    print("Which card do you want to throw away (1 to {0})?".format(self.__hand.hand_size))
+                    print("Which card do you want to throw away (1 to {0})?".format(self.hand.hand_size))
             else:
                 self.__print_game_state_player(plateau)
                 print("Please, do not steal a card from your neighbour!")
-                print("Which card do you want to throw away (1 to {0})?".format(self.__hand.hand_size))
+                print("Which card do you want to throw away (1 to {0})?".format(self.hand.hand_size))
                 
-        choix_carte=self.__hand.cards[no_carte]
+        choix_carte=self.hand.cards[no_carte]
 
         return choix_carte
     
@@ -179,7 +179,7 @@ class Human(Player):
               
             #La carte est placee sur le plateau et le joueur pioche une nouvelle carte
             plateau.add_carte(choix_carte,pos)
-            self.__hand.remove_card(choix_carte)
+            self.hand.remove_card(choix_carte)
             self.piocher_carte(pioche)
 
         if choix_action == 2:
@@ -193,21 +193,21 @@ class Human(Player):
             self.piocher_carte(pioche)
 
 
-    @property
-    def name(self):
-        return self.__name
+    # @property
+    # def name(self):
+    #     return self.name
 
-    @property
-    def role(self):
-        return self.__role
+    # @property
+    # def role(self):
+    #     return self.role
 
-    @property
-    def hand(self):
-        return self.__hand
+    # @property
+    # def hand(self):
+    #     return self.hand
 
     # @hand.setter
     # def hand(self,hand):
-    #     self.__hand=hand
+    #     self.hand=hand
 
 
 

@@ -7,6 +7,7 @@ from .player import Player
 from .hand import Hand
 from .card import Carte
 from .board import Plateau
+from .human import Human
 
 
 
@@ -28,7 +29,7 @@ class SABOOTERS(object):
 
         #initialisation des joueurs
         for i in range(0,self.__menu.number):
-            self.__joueurs.append(Player(self.__menu.players_name[i], self.__menu.roles[i], self.__menu.number))
+            self.__joueurs.append(Human(self.__menu.players_name[i], self.__menu.roles[i], self.__menu.number))
 
 
     def initmanche(self):
