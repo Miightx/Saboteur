@@ -59,44 +59,7 @@ class SABOOTERS(object):
             for j in range(self.__joueurs[i].hand.hand_size):
                 self.__joueurs[i].piocher_carte(self.__pioche)
 
-    def tourjoueur(self,x):
-        #affichage du plateau et de la main du joueur dont c'est la tour
-        self.__plateau.affiche()
-        print("It is{0} turn:".format(self.__joueurs[x].name))
-        self.__joueurs[x].hand.affiche()
 
-
-        #Le joueur choisi une action
-        choix_action=self.__joueurs[x].choix_action(self.__plateau)
-        
-
-        #On rafraichi l'etat du jeu
-        self.__plateau.affiche()
-        print("It is {0} turn:".format(self.__joueurs[x].name))
-        self.__joueurs[x].hand.affiche()
-
-        if choix_action == 1:
-
-            #On demande au joueur quel carte il veut jouer
-            choix_carte=self.__joueurs[x].choix_carte_act(self.__plateau)
-            
-            #On demande au joueur ou il veut poser sa carte
-            pos=self.__joueurs[x].choix_pos(self.__plateau)
-              
-            #La carte est placee sur le plateau et le joueur pioche une nouvelle carte
-            self.__plateau.add_carte(choix_carte,pos)
-            self.__joueurs[x].hand.remove_card(choix_carte)
-            self.__joueurs[x].piocher_carte(self.__pioche)
-
-        if choix_action == 2:
-
-            #On demande au joueur quelle carte il veut se defausser
-            choix_carte=self.__joueurs[x].choix_carte_rem(self.__plateau)
-
-            #La carte est retire de la main du joueur et place dans la defausse et la joueur pioche une nouvelle carte
-            self.__defausse.append(choix_carte)
-            self.__joueurs[x].hand.remove_card(choix_carte)
-            self.__joueurs[x].piocher_carte(self.__pioche)
 
     def tour_pour_rien(self):
         for i in range(3):
