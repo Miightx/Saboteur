@@ -32,7 +32,7 @@ class SABOOTERS(object):
             self.__joueurs.append(Human(self.__menu.players_name[i], self.__menu.roles[i], self.__menu.number))
 
 
-    def initmanche(self):
+    def __initmanche(self):
         #initialisation de la manche
 
         #On melange les cartes
@@ -59,6 +59,21 @@ class SABOOTERS(object):
         for i in range(self.__menu.number):
             for j in range(self.__joueurs[i].hand.hand_size):
                 self.__joueurs[i].piocher_carte(self.__pioche)
+
+    def manche(self):
+        #On initialise la manche
+        self.__initmanche
+        #Variable permettant de déterminer si les joueurs ont encore des cartes en main
+        nb_card_player=0
+        #Variable permettant de déterminer si l'or a été trouvé
+        gold_found=0
+        while no_card==0 and gold_found==0 :
+            nb_card_player=0
+            for i in range(self.__menu.number-1):
+                self.__joueurs[i].tourjoueur(self.__plateau,self.__pioche,self.__defausse)
+                nb_card_player= nb_card_player + len(self.__joueurs[i].hand.cards)
+                gold_found=self.__plateau.gold_found
+            
 
 
 
