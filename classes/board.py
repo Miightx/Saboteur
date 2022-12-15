@@ -13,6 +13,7 @@ class Plateau(object):
         #tableau compose des cartes present sur le plateau
         self.__cartes_posees=[]
         self.__dimensions=[[0,5],[0,9]]
+        self.__pos_gold=[]
 
     def add_carte(self,carte,pos):
         #On verifie si la carte posée est bien une carte
@@ -31,6 +32,9 @@ class Plateau(object):
         #Les cartes d'arrivee sont placee face cache
         if carte.typ != 4 and carte.typ != 5:
             carte.face=1
+
+        #Le plateau garde en memoire la position de la carte gold
+        if
 
         #On change l'état de la carte
         #carte.etat=1
