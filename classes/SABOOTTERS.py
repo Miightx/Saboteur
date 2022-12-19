@@ -63,12 +63,7 @@ class SABOOTERS(object):
     def manche(self):
         #On initialise la manche
         self.__initmanche
-<<<<<<< Updated upstream
-        #Variable permettant de déterminer si les joueurs ont encore des cartes en main
-        nb_card_player=0
-        #Variable permettant de déterminer si l'or a été trouvé
-        gold_found=0
-=======
+
 
         #Variable permettant de déterminer si les joueurs ont encore des cartes en main
         nb_card_player=0
@@ -76,7 +71,6 @@ class SABOOTERS(object):
         #Variable permettant de déterminer si l'or a été trouvé
         gold_found=0
         
->>>>>>> Stashed changes
         while no_card==0 and gold_found==0 :
             nb_card_player=0
             for i in range(self.__menu.number-1):
