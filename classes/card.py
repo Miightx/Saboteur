@@ -6,8 +6,9 @@ import os
 class Carte(object):
     """Carte du jeu SABOOTERS"""
     #Tables contenant le contenu des cartes
+                #   0          1         2         3         4         5         6         7         8         9         10        11
     tablechemin=[('(   )'),('( | )'),('(---)'),('( x )'),('(-x )'),('( x-)'),('(-+ )'),('( +-)'),('(-+-)'),('(-S-)'),('($$$)'),('(-N-)')]
-    tableaction=[('(   )'),('(XXX)'),('(ATT)'),('(DEF)'),('( P )'),('( L )'),('( W )'),('( M )'),('(MAP)')]
+    tableaction=[('(   )'),('(XXX)'),('(REP)'),('(BRK)'),('( P )'),('( L )'),('( W )'),('( M )'),('(MAP)')]
     tablerecto=[('(   )'),('(+++)'),('(+S+)'),('(END)')]
     
     
@@ -33,7 +34,7 @@ class Carte(object):
             self.__vectrecto=Carte.matrecto[0]
         if typ == 1 :
             #Carte action
-            self.__vectapparence=Carte.mataction[np.random.choice(np.array([0,1,2,3,4,5,6,7,8,9,10,11,12]))]
+            self.__vectapparence=Carte.mataction[np.random.choice(np.array([1,2,3,4,5,6,7,8,9,10,11,12]))]
             self.__vectrecto=Carte.matrecto[0]
         if typ == 2:
             #Carte map
@@ -51,6 +52,11 @@ class Carte(object):
             #Carte pierre
             self.__vectapparence=Carte.matchemin[16]
             self.__vectrecto=Carte.matrecto[1]
+
+        if typ == 6:
+            #Carte éboulement
+            self.__vectapparence=Carte.mataction[0]
+            self.__vectrecto=Carte.matrecto[0]
 
 
 
@@ -118,6 +124,7 @@ class Carte(object):
 • Type 3 : Carte start
 • Type 4 : Carte gold
 • Type 5 : Carte pierre 
+• Type 6 : Carte éboulement 
 """
 
 

@@ -23,7 +23,7 @@ class SABOOTERS(object):
         self.__joueurs=[]
         self.__plateau=Plateau()
 
-    def initpartie(self):
+    def __initpartie(self):
         #initialisation du menu
         self.__menu.start_game()
 
@@ -60,9 +60,9 @@ class SABOOTERS(object):
             for j in range(self.__joueurs[i].hand.hand_size):
                 self.__joueurs[i].piocher_carte(self.__pioche)
 
-    def manche(self):
+    def __manche(self):
         #On initialise la manche
-        self.__initmanche
+        self.__initmanche()
 
 
         #Variable permettant de déterminer si les joueurs ont encore des cartes en main
@@ -70,23 +70,41 @@ class SABOOTERS(object):
 
         #Variable permettant de déterminer si l'or a été trouvé
         gold_found=0
+        nb_card_player=1
         
-        while no_card==0 and gold_found==0 :
+        while nb_card_player!=0 and gold_found==0 :
             nb_card_player=0
-            for i in range(self.__menu.number-1):
-                self.__joueurs[i].tourjoueur(self.__plateau,self.__pioche,self.__defausse)
+            for i in range(self.__menu.number):
+                self.__joueurs[i].tourjoueur(self.__plateau,self.__pioche,self.__defausse,self.__joueurs)
                 nb_card_player= nb_card_player + len(self.__joueurs[i].hand.cards)
                 gold_found=self.__plateau.gold_found
+
+        #On vide la pioche et la defausse
+        self.__pioche=[]
+        self.__defausse=[]
+
+        #On enlève les cartes du plateau
+        self.__plateau.reset_plateau()
+        
+
+
+    def start_game(self):
+        #On initialise la partie
+        self.__initpartie()
+
+        #La partie se déroule en trois manches
+        for i in range(3):
+            #On affiche sur le plateau à quelle manche on est
+            self.__plateau.no_manche=i+1
+            #Une manche se déroule
+            self.__manche()
+        
+            
             
 
 
 
-    def tour_pour_rien(self):
-        for i in range(3):
-            self.__joueurs[0].tourjoueur(self.__plateau, self.__pioche, self.__defausse)
+    # def tour_pour_rien(self):
+    #     for i in range(3):
+    #         self.__joueurs[0].tourjoueur(self.__plateau, self.__pioche, self.__defausse)
         
-# jeu=SABOOTERS()
-# jeu.initpartie()
-
-# jeu.initmanche()
-# jeu.tour_pour_rien()

@@ -13,7 +13,7 @@ class Player(ABC):
     def __init__(self,name,role,nb_players):
         self.__name = name
         self.__role = role    #le role c'est de la classe menu.personnage[i]
-        self.__hand = Hand(nb_players) #pour afficher la main: player.hand.display_hand()
+        self.__hand = Hand(nb_players)   #pour afficher la main: player.hand.display_hand()
 
     def piocher_carte(self,pioche):
         if len(pioche)<=0:

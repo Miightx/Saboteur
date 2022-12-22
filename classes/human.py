@@ -14,10 +14,18 @@ class Human(Player):
         super ( ) . __init__ (name,role,nb_players)
 
     def __print_game_state_player(self,plateau):
+        if not isinstance ( plateau , Plateau ) :
+            print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
+            sys.exit()
         #affichage du plateau et de la main du joueur dont c'est la tour
+        os.system("cls")  #efface le contenue de la console, valable que sur windows
+        print("+-----------+")
+        print("| ROUND : {0} |".format(plateau.no_manche))
+        print("+-----------+")
         plateau.affiche()
-        print("It is{0} turn:".format(self.name))
+        print("It is {0} turn:".format(self.name))
         self.hand.affiche()
+        self.hand.affiche_tools()
 
     def __choix_action(self,plateau):
 
@@ -57,14 +65,14 @@ class Human(Player):
 
         return choix_action
 
-    def __choix_carte_act(self,plateau):
+    def __choix_carte(self,plateau):
         if not isinstance ( plateau , Plateau ) :
             print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
             sys.exit()
 
         #On demande au joueur quel carte il veut jouer
         self.__print_game_state_player(plateau)
-        print("What card would you like to play (1 to {0})?".format(self.hand.hand_size))
+        print("What card would you like to chose (1 to {0})?".format(len(self.hand.cards)))
 
         #On s'assure que le joueur choisisse une de ses cartes
         etat = False
@@ -72,17 +80,17 @@ class Human(Player):
             no_carte=input()
             if (no_carte.isdecimal()==True):
                 no_carte=int(no_carte)
-                if (no_carte > 0 and no_carte <= self.hand.hand_size):
+                if (no_carte > 0 and no_carte <= len(self.hand.cards)):
                     etat = True
                     no_carte=no_carte-1
                 else:
                     self.__print_game_state_player(plateau)
                     print("Please, do not steal a card from your neighbour!")
-                    print("What card would you like to play (1 to {0})?".format(self.hand.hand_size))
+                    print("What card would you like to play (1 to {0})?".format(len(self.hand.cards)))
             else:
                 self.__print_game_state_player(plateau)
                 print("Please, do not steal a card from your neighbour!")
-                print("What card would you like to play (1 to {0})?".format(self.hand.hand_size))
+                print("What card would you like to play (1 to {0})?".format(len(self.hand.cards)))
 
 
         #On recupere la carte que le joueur a choisi
@@ -90,36 +98,6 @@ class Human(Player):
 
         return choix_carte
 
-    def __choix_carte_rem(self,plateau):
-        if not isinstance ( plateau , Plateau ) :
-            print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
-            sys.exit()
-
-        #On demande au joueur quelle carte il veut se defausser
-        self.__print_game_state_player(plateau)
-        print("Which card do you want to throw away (1 to {0})?".format(self.hand.hand_size))
-
-        #On s'assure que le joueur choisisse une de ses cartes
-        etat = False
-        while (etat == False):
-            no_carte=input()
-            if (no_carte.isdecimal()==True):
-                no_carte=int(no_carte)
-                if (no_carte > 0 and no_carte <= self.hand.hand_size):
-                    etat = True
-                    no_carte=no_carte-1
-                else:
-                    self.__print_game_state_player(plateau)
-                    print("Please, do not steal a card from your neighbour!")
-                    print("Which card do you want to throw away (1 to {0})?".format(self.hand.hand_size))
-            else:
-                self.__print_game_state_player(plateau)
-                print("Please, do not steal a card from your neighbour!")
-                print("Which card do you want to throw away (1 to {0})?".format(self.hand.hand_size))
-                
-        choix_carte=self.hand.cards[no_carte]
-
-        return choix_carte
     
     def __choix_pos(self,plateau):
         if not isinstance ( plateau , Plateau ) :
@@ -164,7 +142,34 @@ class Human(Player):
 
         return pos
 
-    def tourjoueur(self,plateau,pioche,defausse):
+    def __use_tools_card(self,players,choix_carte):
+        #Revoir cette fonction, augmenter solidité
+        #Fonction qui applique une carte d'action d'outils
+        os.system("cls")  #efface le contenue de la console, valable que sur windows
+
+        #On affiche les outils des joueurs
+        for i in range(len(players)):
+            print("{0}:{1}'s tools:".format(i,players[i].name))
+            players[i].hand.affiche_tools()
+
+        #On demande au joueur sur quel joueur il veut appliquer la carte
+        choix_player=int(input("On which player do you want to apply this card? (0 to {0})".format(len(players)-1)))
+        os.system("cls")  #efface le contenue de la console, valable que sur windows
+
+        #Les outils du joueur choisi sont réparé
+        if choix_carte.vectapparence[0]==2:
+            players[choix_player].hand.tools[choix_carte.vectapparence[1]-4]=1
+            if choix_carte.vectapparence[2] != 0 :
+                players[choix_player].hand.tools[choix_carte.vectapparence[2]-4]=1
+
+        #Les outils du joueur choisi sont détruit
+        if choix_carte.vectapparence[0]==3:
+            players[choix_player].hand.tools[choix_carte.vectapparence[1]-4]=0
+            if choix_carte.vectapparence[2] != 0 :
+                players[choix_player].hand.tools[choix_carte.vectapparence[2]-4]=0
+    
+
+    def tourjoueur(self,plateau,pioche,defausse,players):
 
         #Le joueur choisi une action
         choix_action=self.__choix_action(plateau)
@@ -172,24 +177,47 @@ class Human(Player):
         if choix_action == 1:
 
             #On demande au joueur quel carte il veut jouer
-            choix_carte=self.__choix_carte_act(plateau)
+            choix_carte=self.__choix_carte(plateau)
             
-            #On demande au joueur ou il veut poser sa carte
-            pos=self.__choix_pos(plateau)
+            #La carte est un chemin
+            if choix_carte.typ==0:
+                #On demande au joueur où il veut poser sa carte
+                pos=self.__choix_pos(plateau)
               
-            #La carte est placee sur le plateau et le joueur pioche une nouvelle carte
-            plateau.add_carte(choix_carte,pos)
-            self.hand.remove_card(choix_carte)
-            self.piocher_carte(pioche)
+                #La carte est placee sur le plateau 
+                plateau.add_carte(choix_carte,pos)
+
+
+            #La carte est une carte action d'outils
+            if choix_carte.typ==1:
+                self.__use_tools_card(players,choix_carte)
+                
+
+            #La carte est un plan secret 
+            if choix_carte.typ==2: 
+                print("Which end card do you want to see? (1 to 3)")
+
+
+            #La carte est un chemin
+            if choix_carte.typ==6: pass
+
+            
 
         if choix_action == 2:
 
             #On demande au joueur quelle carte il veut se defausser
-            choix_carte=self.__choix_carte_rem(plateau)
+            choix_carte=self.__choix_carte(plateau)
 
-            #La carte est retire de la main du joueur et place dans la defausse et la joueur pioche une nouvelle carte
+            #La carte est placé dans la defausse 
             defausse.append(choix_carte)
             self.defausse_carte(choix_carte, defausse)
+            if len(pioche)>0:
+                self.piocher_carte(pioche)
+
+        #La carte est retire de la main du joueur
+        self.hand.remove_card(choix_carte)
+        #Le joueur pioche une nouvelle carte si il reste des cartes
+        if len(pioche)>0:
             self.piocher_carte(pioche)
 
 

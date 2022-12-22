@@ -14,6 +14,9 @@ class Plateau(object):
         self.__cartes_posees=[]
         self.__dimensions=[[0,5],[0,9]]
         self.__pos_gold=[]
+        self.__gold_found=0
+        #Variable qui permet d'afficher à quelle manche le jeu est
+        self.no_manche=0
 
     def add_carte(self,carte,pos):
         #On verifie si la carte posée est bien une carte
@@ -34,7 +37,7 @@ class Plateau(object):
             carte.face=1
 
         #Le plateau garde en memoire la position de la carte gold
-        if
+        
 
         #On change l'état de la carte
         #carte.etat=1
@@ -60,6 +63,7 @@ class Plateau(object):
 
         #On indique qu'une carte est posée à la position de la carte
         self.__cases_vides[carte.pos[0]+15][carte.pos[1]+15]=1
+
         
     
     #Fonction qui réinitialise le plateau
@@ -71,7 +75,7 @@ class Plateau(object):
     #Fonction qui affiche le plateau
     def affiche(self):
         #Fonction qui affiche le plateau de jeu 
-        os.system("cls")  #efface le contenue de la console, valable que sur windows
+        #os.system("cls")  #efface le contenue de la console, valable que sur windows
 
 
    
@@ -127,6 +131,9 @@ class Plateau(object):
 
     @property
     def cases_vides(self) : return self.__cases_vides
+
+    @property
+    def gold_found(self) : return self.__gold_found
 
     # @cartes_posees.setter
     # def cartes_posees(self,cartes):

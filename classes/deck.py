@@ -13,9 +13,11 @@ class Deck(object):
         self.__cartes.append(Carte(4))
         for i in range(2):
             self.__cartes.append(Carte(5))
-        for i in range(40):
+        #for i in range(40):
+        for i in range(10):
             self.__cartes.append(Carte(0))
-        for i in range(26):
+        #for i in range(26):
+        for i in range(10):
             self.__cartes.append(Carte(1))
         self.__cartes.append(Carte(2))
 
