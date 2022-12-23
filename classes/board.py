@@ -3,13 +3,13 @@ import random
 import os
 import sys
 from .card import Carte
-
+from .path_card import Path_card
 
 class Plateau(object):
     """Plateau du jeu SABOOTERS"""
     def __init__(self):
         #tableau binaire qui determine si une carte a ete posee 
-        self.__cases_vides=np.zeros((30,30,5),int)
+        self.__pathmap=np.zeros((30,30,5),int)
         #tableau compose des cartes present sur le plateau
         self.__cartes_posees=[]
         self.__dimensions=[[0,5],[0,9]]
@@ -20,7 +20,7 @@ class Plateau(object):
 
     def add_carte(self,carte,pos):
         #On verifie si la carte posée est bien une carte
-        if not isinstance ( carte , Carte ) :
+        if not isinstance ( carte , Path_card ) :
             print("Erreur: uniquement des cartes peuvent être posee sur le plateau")
             sys.exit()
 
@@ -28,7 +28,7 @@ class Plateau(object):
             print("Erreur: La position de la carte va au dela de la taille maximale du plateau")
             sys.exit()
 
-        if self.__cases_vides[pos[0]+15][pos[1]+15][0]==1 :
+        if self.__pathmap[pos[0]+15][pos[1]+15][0]==1 :
             print("Erreur: une carte est déja positionnée à l'emplacement désiré")
             sys.exit()
 
@@ -64,13 +64,13 @@ class Plateau(object):
             self.__dimensions[1][1]=pos[1]+1
 
         #On indique qu'une carte est posée à la position de la carte
-        self.__cases_vides[carte.pos[0]+15][carte.pos[1]+15]=1
+        self.__pathmap[carte.pos[0]+15][carte.pos[1]+15]=carte.path
 
         
     
     #Fonction qui réinitialise le plateau
     def reset_plateau(self):
-        self.__cases_vides=np.zeros((30,30),int)
+        self.__pathmap=np.zeros((30,30),int)
         self.__cartes_posees=[]
         self.__dimensions=[[0,5],[0,9]]
 
@@ -112,7 +112,7 @@ class Plateau(object):
                 else:
                     print("  |",end = "")
                 for j in range(self.__dimensions[1][0],self.__dimensions[1][1]):
-                    if self.__cases_vides[i+15][j+15]==0:
+                    if self.__pathmap[i+15][j+15][0]==0:
                         print("     ",end = "")
                     else:
                         for k in range(len(self.__cartes_posees)):
@@ -132,7 +132,7 @@ class Plateau(object):
     def cartes_posees(self) : return self.__cartes_posees
 
     @property
-    def cases_vides(self) : return self.__cases_vides
+    def pathmap(self) : return self.__pathmap
 
     @property
     def gold_found(self) : return self.__gold_found

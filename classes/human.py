@@ -112,18 +112,16 @@ class Human(Player):
         self.__print_game_state_player(plateau)
         print("Where do you want to place your card ?")
 
-
-            
         #On s'assure que le joueur pose bien la carte sur le plateau
         etat = False
         while (etat == False):
             x=input("(x value)")
             y=input("(y value)")
-            if (x.isdecimal()==True and y.isdecimal()==True):
-                x=int(x)
-                y=int(y)
+            try:
+                x = int(x)
+                y = int(y)
                 if (x >= -10 and x <= 10 and y >= -10 and y <= 10):
-                    if plateau.cases_vides[x+15][y+15]==0 :
+                    if plateau.pathmap[x+15][y+15][0]==0 :
                         etat = True
                         pos=[x,y]
                     else:
@@ -134,7 +132,7 @@ class Human(Player):
                     self.__print_game_state_player(plateau)
                     print("Please place the card on the board (-10<=x<=10) (-10<=y<=10)")
                     print("Where do you want to place your card ?")
-            else:
+            except ValueError:
                 self.__print_game_state_player(plateau)
                 print("Please place the card on the board (-10<=x<=10) (-10<=y<=10)")
                 print("Where do you want to place your card ?")

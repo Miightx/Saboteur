@@ -1,9 +1,9 @@
 import numpy as np
 import random
 import os
+from abc import ABC , abstractmethod
 
-
-class Carte(object):
+class Carte(ABC):
     """Carte du jeu SABOOTERS"""
     #Tables contenant le contenu des cartes
                 #   0          1         2         3         4         5         6         7         8         9         10        11
@@ -18,7 +18,7 @@ class Carte(object):
     matrecto=[[1,2,1],[0,3,0]]
 
     #Matrices contenant les vecteurs de chemin attribué aux cartes chemin [valeur indiquant la présence d'une carte, haut, gauche, droite, bas]
-                # 0           1           2            3
+                # 0           1           2            3          4           5           6           7           8           9           10          11          12          13          14          15          16
     matpath=[[1,1,0,0,1],[1,0,1,1,0],[1,1,0,0,0],[1,0,0,0,1],[1,0,1,0,0],[1,0,0,1,0],[1,1,1,1,1],[1,1,1,0,1],[1,0,1,0,1],[1,1,1,0,0],[1,1,0,1,1],[1,0,0,1,1],[1,1,0,1,0],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1]]
 
     def __init__(self,typ):
@@ -27,81 +27,29 @@ class Carte(object):
 
         #On defini le type de carte
         self.__typ=typ
-        #On defini un etat par default de la carte, etat neutre dans la pile de carte "0"
-        # self.__etat=0
+
         #On defini par default que le carte est face cachee
         self.__face=0
-        #On tire au hasard une apparence a la carte selon son type
-        if typ == 0 :
-            #Carte chemin
-            self.__vectapparence=Carte.matchemin[np.random.choice(np.array([0,1,2,3,4,5,6,7,8,9,10,11,12,13]))]
-            self.__vectrecto=Carte.matrecto[0]
-        if typ == 1 :
-            #Carte action
-            self.__vectapparence=Carte.mataction[np.random.choice(np.array([1,2,3,4,5,6,7,8,9,10,11,12]))]
-            self.__vectrecto=Carte.matrecto[0]
-        if typ == 2:
-            #Carte map
-            self.__vectapparence=Carte.mataction[13]
-            self.__vectrecto=Carte.matrecto[0]
-        if typ == 3:
-            #Carte start
-            self.__vectapparence=Carte.matchemin[14]
-            self.__vectrecto=Carte.matrecto[0]
-        if typ == 4:
-            #Carte gold
-            self.__vectapparence=Carte.matchemin[15]
-            self.__vectrecto=Carte.matrecto[1]
-        if typ == 5:
-            #Carte pierre
-            self.__vectapparence=Carte.matchemin[16]
-            self.__vectrecto=Carte.matrecto[1]
 
-        if typ == 6:
-            #Carte éboulement
-            self.__vectapparence=Carte.mataction[0]
-            self.__vectrecto=Carte.matrecto[0]
+    @abstractmethod
+    def affiche(self,x): pass
 
 
 
-    def affiche(self,x):
-        #On affiche la partie de la carte que l'on souhaite afficher
-        if self.__face==1:
-            if self.__typ == 0 or self.__typ == 3 or self.__typ == 4 or self.__typ == 5:
-                if x==0:
-                    print(Carte.tablechemin[self.__vectapparence[0]],end = "")
-                if x==1:
-                    print(Carte.tablechemin[self.__vectapparence[1]],end = "")
-                if x==2:
-                    print(Carte.tablechemin[self.__vectapparence[2]],end = "")
-            if self.__typ == 1 or self.__typ == 2:
-                if x==0:
-                    print(Carte.tableaction[self.__vectapparence[0]],end = "")
-                if x==1:
-                    print(Carte.tableaction[self.__vectapparence[1]],end = "")
-                if x==2:
-                    print(Carte.tableaction[self.__vectapparence[2]],end = "")
-        if self.__face==0:
-            if x==0:
-                print(Carte.tablerecto[self.__vectrecto[0]],end = "")
-            if x==1:
-                print(Carte.tablerecto[self.__vectrecto[1]],end = "")
-            if x==2:
-                print(Carte.tablerecto[self.__vectrecto[2]],end = "")
 
-    def affiche_carte_entiere(self):
-        for x in range(0,3):
-            print(Carte.tablechemin[self.__vectapparence[x]])
+
+
+
+
+    # def affiche_carte_entiere(self):
+    #     for x in range(0,3):
+    #         print(Carte.tablechemin[self.__vectapparence[x]])
         
             
 
 
     @property
     def typ(self) : return self.__typ
-    @property
-    def vectapparence(self) : return self.__vectapparence
-    @property
-    def vectrecto(self) : return self.__vectrecto
     @property
     def etat(self) : return self.__etat
     @property
