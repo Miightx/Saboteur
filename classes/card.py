@@ -11,11 +11,15 @@ class Carte(object):
     tableaction=[('(   )'),('(XXX)'),('(REP)'),('(BRK)'),('( P )'),('( L )'),('( W )'),('( M )'),('(MAP)')]
     tablerecto=[('(   )'),('(+++)'),('(+S+)'),('(END)')]
     
-    
     #Matrices contenant contenant les vecteurs permettant d'atribuer une apparence a chaques types de cartes
+                #0        1       2       3       4       5       6       7       8       9       10      11      12      13      14       15        16         
     matchemin=[[1,1,1],[0,2,0],[1,3,0],[0,3,1],[0,4,0],[0,5,0],[1,8,1],[1,6,1],[0,6,1],[1,6,0],[1,7,1],[0,7,1],[1,7,0],[1,8,1],[1,9,1],[10,10,10],[1,11,1]]
     mataction=[[1,1,1],[2,4,0],[2,5,0],[2,6,0],[2,4,5],[2,4,6],[2,5,6],[3,4,0],[3,5,0],[3,6,0],[3,4,5],[3,4,6],[3,5,6],[7,8,4]]
     matrecto=[[1,2,1],[0,3,0]]
+
+    #Matrices contenant les vecteurs de chemin attribué aux cartes chemin [valeur indiquant la présence d'une carte, haut, gauche, droite, bas]
+                # 0           1           2            3
+    matpath=[[1,1,0,0,1],[1,0,1,1,0],[1,1,0,0,0],[1,0,0,0,1],[1,0,1,0,0],[1,0,0,1,0],[1,1,1,1,1],[1,1,1,0,1],[1,0,1,0,1],[1,1,1,0,0],[1,1,0,1,1],[1,0,0,1,1],[1,1,0,1,0],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1]]
 
     def __init__(self,typ):
         #On defini une position par default 

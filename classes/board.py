@@ -9,7 +9,7 @@ class Plateau(object):
     """Plateau du jeu SABOOTERS"""
     def __init__(self):
         #tableau binaire qui determine si une carte a ete posee 
-        self.__cases_vides=np.zeros((30,30),int)
+        self.__cases_vides=np.zeros((30,30,5),int)
         #tableau compose des cartes present sur le plateau
         self.__cartes_posees=[]
         self.__dimensions=[[0,5],[0,9]]
@@ -28,7 +28,7 @@ class Plateau(object):
             print("Erreur: La position de la carte va au dela de la taille maximale du plateau")
             sys.exit()
 
-        if self.__cases_vides[pos[0]+15][pos[1]+15]==1 :
+        if self.__cases_vides[pos[0]+15][pos[1]+15][0]==1 :
             print("Erreur: une carte est déja positionnée à l'emplacement désiré")
             sys.exit()
 
@@ -37,6 +37,8 @@ class Plateau(object):
             carte.face=1
 
         #Le plateau garde en memoire la position de la carte gold
+        if carte.typ == 4 :
+            self.__pos_gold=pos
         
 
         #On change l'état de la carte
