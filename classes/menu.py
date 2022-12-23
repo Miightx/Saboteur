@@ -1,17 +1,15 @@
 import random
-
-
-
-
-
+import numpy as np
 class Menu(object):
-
-    def __init__(self):  # Property
+    def __init__(self, state):  # Property
         self.__number = 0
         self.__players_name = []
         self.__bot = []
         self.__roles = []
-    
+        self.__count = []
+        self.__state = state
+        self.__sharing_gold = []
+        self.__spm = []
     #Methodes
     def __aff_wel(self):  # Affichage du début
         print("+--------------------------------------------------------------------+")
@@ -119,7 +117,82 @@ class Menu(object):
     @property
     def roles(self):
         return self.__roles
-
+    @property
+    def count(self):
+        return self.__count
+    @count.setter
+    def count(self,count):
+        self.__count = count
     @property
     def game_start(self):
-        return self.aff_wel(), self.get_number(), self.players(), self.affichage_debut_fin()
+        return self.__aff_wel(), self.__get_number(), self.__players(), self.__affichage_debut_fin()
+    def count_winner(self):
+        for k in range (len(self.roles)):   #Pour chaque roles je compte le nb de joueurs ayant ce role
+            if (self.roles[k]=='S'):
+                self.__count[0] += 1
+            elif (self.roles[k]=='C'):
+                self.__count[1] += 1
+
+    def winner(self,count, state):
+        etat = False
+        score_manche = np.zeros(self.__number)
+        if (self.__state == 1): #Disons que c'est le cas où les saboteurs ont gagnés == 1
+            print('Saboteurs won this game')
+            print('')
+            for k in range (self.__number):
+                if (self.__count[0] == 1):
+                    if (self.__roles[k] == 'S'):  #Un sabotteur, il obtient 4 pts
+                        score_manche[k]= 4
+                elif(self.__count[0] == 2 or self.__count[0] == 3): #2 ou 3 ils obtiennent 3 pts
+                    if (self.__roles[k] == 'S'):
+                        score_manche[k]= 3
+        elif (self.__state == 2):     #Cas ou Mineurs gagnent == 2
+            print('Diggers won this game')
+            for k in range(self.__number):
+                self.__sharing_gold[k] = np.randint(1,3)    #Cartes or valeur entre 1 et 3
+                if (self.__roles[k]=='C'):                    #Personnes étant Mineur
+                    while (len(self.__sharing_gold)!=0):    #Jusqu'a quand y'a plus de pts a distribuer
+                        indice = 0
+                        while (indice < count[1]):          #Addition des pts des mineurs quand il y a plus de cartes or que de mineurs
+                            print("It is the remain gold cards")
+                            print(self.__sharing_gold)
+                            print("To {0} to choose the card he/she wishes")
+                            while (etat == False):          #Choix de la carte d'or
+                                print(f"Please choose a value between 1 and {self.__number}")
+                                self.__choice = input()
+                                if (self.__choice.isdecimal() == True):
+                                    self.__choice = int(self.__choice)
+                                    if (self.__choice >0 or self.__choice < len(self.__sharing_gold)):
+                                        print("Please choose another value")
+                                        etat = True
+                                    else:
+                                        print("Please choose another value")
+                            self.__spm[indice] += self.__sharing_gold[self.__choice]      #Stockage des scores pour calcuer en fin de partie
+                            self.__sharing_gold.pop(self.__choice)                      #Enlever la carte d'or choisit
+                            print("{0} choose", self.__sharing_gold[self.__choice])
+                            indice += 1
+
+            print("Voici la valeur des cartes or")
+            print(self.__sharing_gold)
+
+    def __calcul_point(self):  # Comptage des pts de chaque manche
+        for i in range(self.__number):
+            self.__score = self.__spm[0] + self.__spm[1] + self.__spm[2]
+        print(f' Le score final est de {self.__score}')
+    def finito(self,count,state):
+        self.count_winner()
+        self.winner(self,count)
+
+
+
+
+    @property
+    def score(self):
+        return self.__score
+    @property
+    def state(self):
+        return self.__state
+
+    @property
+    def spm(self):
+        return self.__spm

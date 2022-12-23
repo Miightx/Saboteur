@@ -9,7 +9,8 @@ class fin_manche(object):
         self.spm = []   #score par manche
         self.__sharing_gold = sharing_gold #Distribution score dans le cas où les mineurs gagnent peut etre a enlever
         self.__count = count
-
+        self.__s_count = 0
+        self.__c_count = 0
 #Calcul du nombre de personnes qui ont gagné la manche
     def __count_winner(self):
         for k in range (len(self.roles)):   #Pour chaque roles je compte le nb de joueurs ayant ce role
@@ -62,9 +63,9 @@ class fin_manche(object):
             print("Voici la valeur des cartes or")
             print(self.__sharing_gold)
 
-    def finito(self):
+    def finito(self,count,s_state,c_state):
         self.__count_winner()
-        self.__winner()
+        self.__winner(self,count,s_state,c_state)
 
 
 @property
