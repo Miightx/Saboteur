@@ -16,7 +16,7 @@ class Deck(object):
         for i in range(2):
             self.__cartes.append(Path_card(5))
         #for i in range(40):
-        for i in range(10):
+        for i in range(40):
             self.__cartes.append(Path_card(0))
         #for i in range(26):
         for i in range(10):

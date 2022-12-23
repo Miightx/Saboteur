@@ -47,9 +47,9 @@ class SABOOTERS(object):
             #On place les cartes arrive/depart sur le plateau
             if self.__deck.cartes[i].typ == 3 or self.__deck.cartes[i].typ == 4 or self.__deck.cartes[i].typ == 5:
                 if self.__deck.cartes[i].typ==3:
-                    self.__plateau.add_carte(self.__deck.cartes[i],[2,0])
+                    self.__plateau.add_carte(self.__deck.cartes[i],[2,0],1)
                 else:
-                    self.__plateau.add_carte(self.__deck.cartes[i],set_pos_gold[k])
+                    self.__plateau.add_carte(self.__deck.cartes[i],set_pos_gold[k],1)
                     k=k+1
             #On cree la pioche avec les cartes action et chemin
             else :
@@ -78,6 +78,8 @@ class SABOOTERS(object):
                 self.__joueurs[i].tourjoueur(self.__plateau,self.__pioche,self.__defausse,self.__joueurs)
                 nb_card_player= nb_card_player + len(self.__joueurs[i].hand.cards)
                 gold_found=self.__plateau.gold_found
+                if gold_found==1:
+                    a=input(self.__pos_gold)
 
         #On vide la pioche et la defausse
         self.__pioche=[]

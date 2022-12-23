@@ -9,16 +9,20 @@ class Plateau(object):
     """Plateau du jeu SABOOTERS"""
     def __init__(self):
         #tableau binaire qui determine si une carte a ete posee 
-        self.__pathmap=np.zeros((30,30,5),int)
+        self.__pathmap=np.ones((30,30,5),int)
+        for i in range(len(self.__pathmap)):
+            for j in range(len(self.__pathmap[0])):
+                self.__pathmap[i][j][0]=0
         #tableau compose des cartes present sur le plateau
         self.__cartes_posees=[]
         self.__dimensions=[[0,5],[0,9]]
         self.__pos_gold=[]
+        self.__pos_stone=[]
         self.__gold_found=0
         #Variable qui permet d'afficher à quelle manche le jeu est
         self.no_manche=0
 
-    def add_carte(self,carte,pos):
+    def add_carte(self,carte,pos,init_game=0): #Le paramètre init_game permet de dire si on initialise la partie
         #On verifie si la carte posée est bien une carte
         if not isinstance ( carte , Path_card ) :
             print("Erreur: uniquement des cartes peuvent être posee sur le plateau")
@@ -39,6 +43,10 @@ class Plateau(object):
         #Le plateau garde en memoire la position de la carte gold
         if carte.typ == 4 :
             self.__pos_gold=pos
+
+        #Le plateau garde en memoire la position des cartes pierres
+        if carte.typ == 5 :
+            self.__pos_stone.append(pos)
         
 
         #On change l'état de la carte
@@ -66,13 +74,39 @@ class Plateau(object):
         #On indique qu'une carte est posée à la position de la carte
         self.__pathmap[carte.pos[0]+15][carte.pos[1]+15]=carte.path
 
+        if init_game==0:
+            #On verifie si la carte a été posé à coté d'une carte END
+            if ((pos[0]==self.__pos_gold[0]+1 or pos[0]==self.__pos_gold[0]-1) and pos[1]==self.__pos_gold[1]) or ((pos[1]==self.__pos_gold[1]+1 or pos[1]==self.__pos_gold[1]-1) and pos[0]==self.__pos_gold[0]):
+                for i in range(len(self.__cartes_posees)):
+                    if self.__cartes_posees[i].pos==self.__pos_gold:
+                        self.__cartes_posees[i].face==1
+                        self.__gold_found=1
+                        
+
+            for j in range(len(self.__pos_stone)):
+                if pos[0]==self.__pos_stone[j][0]+1 or pos[0]==self.__pos_stone[j][0]-1 or pos[1]==self.__pos_stone[j][1]+1 or pos[1]==self.__pos_stone[j][1]-1:
+                    for i in range(len(self.__cartes_posees)):
+                        if self.__cartes_posees[i].pos==self.__pos_stone[j]:
+                            self.__cartes_posees[i].face==1
+
+        
+
+        
+
+
+
         
     
     #Fonction qui réinitialise le plateau
     def reset_plateau(self):
-        self.__pathmap=np.zeros((30,30),int)
+        self.__pathmap=np.ones((30,30,5),int)
+        for i in range(len(self.__pathmap)):
+            for j in range(len(self.__pathmap[0])):
+                self.__pathmap[i][j][0]=0
         self.__cartes_posees=[]
         self.__dimensions=[[0,5],[0,9]]
+        self.__pos_gold=[]
+        self.__pos_stone=[]
 
     #Fonction qui affiche le plateau
     def affiche(self):
