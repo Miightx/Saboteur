@@ -70,6 +70,8 @@ class SABOOTERS(object):
 
         #Variable permettant de déterminer si l'or a été trouvé
         gold_found=0
+
+        #Compteur de carte
         nb_card_player=1
         
         while nb_card_player!=0 and gold_found==0 :
@@ -79,7 +81,10 @@ class SABOOTERS(object):
                 nb_card_player= nb_card_player + len(self.__joueurs[i].hand.cards)
                 gold_found=self.__plateau.gold_found
                 if gold_found==1:
-                    a=input(self.__pos_gold)
+                    self.__menu.fin_de_manche(self.__joueurs[i].name,self.joueurs)
+                    break
+        if gold_found==0:
+            self.__menu.fin_de_manche("SABOOTERS",self.joueurs)
 
         #On vide la pioche et la defausse
         self.__pioche=[]
