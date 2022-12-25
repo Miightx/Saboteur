@@ -133,7 +133,7 @@ class Menu(object):
             elif (self.roles[k]=='C'):
                 self.__count[1] += 1
 
-    def winner(self,count, state):
+    def winner(self, count):
         etat = False
         score_manche = np.zeros(self.__number)
         if (self.__state == 1): #Disons que c'est le cas où les saboteurs ont gagnés == 1
@@ -175,16 +175,15 @@ class Menu(object):
             print("Voici la valeur des cartes or")
             print(self.__sharing_gold)
 
-    def __calcul_point(self):  # Comptage des pts de chaque manche
+    def calcul_point(self):  # Comptage des pts de chaque manche
         for i in range(self.__number):
             self.__score = self.__spm[0] + self.__spm[1] + self.__spm[2]
         print(f' Le score final est de {self.__score}')
-    def finito(self,count,state):
+    def fin_manche(self,count,state):
         self.count_winner()
-        self.winner(self,count)
-
-
-
+        self.winner(count)
+    def fin_de_partie(self):
+        return self.calcul_point()
 
     @property
     def score(self):

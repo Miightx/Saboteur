@@ -12,7 +12,6 @@ from board import Plateau
 
 
 
-
 class SABOOTERS(object):
     def __init__(self):
         self.__menu=Menu()
@@ -101,6 +100,8 @@ class SABOOTERS(object):
     def tour_pour_rien(self):
         for i in range(3):
             self.tourjoueur(0)
+    def fin_de_manche(self):
+        state = 0
         
 # jeu=SABOOTERS()
 # jeu.initpartie()
