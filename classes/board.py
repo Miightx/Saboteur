@@ -17,7 +17,6 @@ class Plateau(object):
         self.__cartes_posees=[]
         self.__dimensions=[[0,5],[0,9]]
         self.__pos_gold=[]
-        self.__pos_stone=[]
         self.__gold_found=0
         #Variable qui permet d'afficher à quelle manche le jeu est
         self.no_manche=0
@@ -43,11 +42,6 @@ class Plateau(object):
         #Le plateau garde en memoire la position de la carte gold
         if carte.typ == 4 :
             self.__pos_gold=pos
-
-        #Le plateau garde en memoire la position des cartes pierres
-        if carte.typ == 5 :
-            self.__pos_stone.append(pos)
-        
 
         #On change l'état de la carte
         #carte.etat=1
@@ -89,7 +83,13 @@ class Plateau(object):
                         if self.__cartes_posees[i].pos==self.__pos_stone[j]:
                             self.__cartes_posees[i].face==1
 
+    def remove_card(self,carte):
+        if not isinstance ( carte , Path_card ) :
+            print("Erreur: uniquement des cartes peuvent être retiré du plateau")
+            sys.exit()
         
+        
+
 
         
 
@@ -170,6 +170,9 @@ class Plateau(object):
 
     @property
     def gold_found(self) : return self.__gold_found
+
+    @property
+    def pos_gold(self) : return self.__pos_gold
 
     # @cartes_posees.setter
     # def cartes_posees(self,cartes):

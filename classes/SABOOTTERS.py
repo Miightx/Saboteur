@@ -90,7 +90,7 @@ class SABOOTERS(object):
                     #self.__menu.fin_de_manche(self.__joueurs[i].name,self.joueurs)
                     break
         #Si l'or n'a pas été trouvé les sabooters gagne
-        if gold_found==0:
+        if gold_found==0: pass
             #self.__menu.fin_de_manche("SABOOTERS",self.joueurs)
 
         #On vide la pioche et la defausse

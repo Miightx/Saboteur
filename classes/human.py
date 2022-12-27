@@ -263,10 +263,30 @@ class Human(Player):
 
                     #La carte est un plan secret 
                     if choix_carte.typ==2: 
-                        print("Which end card do you want to see? (1 to 3)")
+                        print("Which card do you want to reveal? ")
+                        etat = False
+                        while (etat == False):
+                            i=input("(i value)")
+                            j=input("(j value)")
+                            try:
+                                i = int(i)
+                                j = int(j)
+                                etat = True
+                                pos=[i,j]
+                            except ValueError:
+                                self.__print_game_state_player(plateau)
+                                print("Please choose a position on the board")
+                                print("Which card do you want to reveal? ")
 
+                        if pos == plateau.pos_gold:
+                            print("The ancient scroll tells you that there is more gold here than you could spend on a night of drinking at the tavern.")
+                            a=input("Press any button to continue.")
 
-                    #La carte est un chemin
+                        else : 
+                            print("The old scroll tells you that there is absolutely nothing at this location and that it really sucks.")
+                            a=input("Press any button to continue.")
+
+                    #La carte est une carte éboulement
                     if choix_carte.typ==6: pass
 
             
