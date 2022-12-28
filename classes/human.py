@@ -66,14 +66,13 @@ class Human(Player):
 
         return choix_action
 
-    def __change_action(self):
+    def __change_action(self,plateau):
 
         etat1 = False
         while (etat1 == False):
             print("Do you want to take another action?")
             print("1: yes 0: no")
             change=input()
-            print(change)
             if (change.isdecimal()==True):
                 change=int(change)
                 if (change == 1 or change == 0):
@@ -99,10 +98,11 @@ class Human(Player):
         etat = False
         change = 0
 
-        self.__print_game_state_player(plateau)
-        print("What card would you like to chose (1 to {0})?".format(len(self.hand.cards)))
+
 
         while (etat == False and change == 0):
+            self.__print_game_state_player(plateau)
+            print("What card would you like to chose (1 to {0})?".format(len(self.hand.cards)))
 
             no_carte=input()
             if (no_carte.isdecimal()==True):
@@ -114,25 +114,21 @@ class Human(Player):
                     else:
                         self.__print_game_state_player(plateau)
                         print("One of the tools is broken, this card cannot be used.")
-                        change=self.__change_action()
-                        if change == 0:
-                            self.__print_game_state_player(plateau)
-                            print("What card would you like to chose (1 to {0})?".format(len(self.hand.cards)))
-
+                        change=self.__change_action(plateau)
                 else:
                     self.__print_game_state_player(plateau)
                     print("Please, do not steal a card from your neighbour!")
-                    print("What card would you like to play (1 to {0})?".format(len(self.hand.cards)))
+                    change=self.__change_action(plateau)
             else:
                 self.__print_game_state_player(plateau)
                 print("Please, do not steal a card from your neighbour!")
-                print("What card would you like to play (1 to {0})?".format(len(self.hand.cards)))
+                change=self.__change_action(plateau)
 
 
         #On recupere la carte que le joueur a choisi
         choix_carte=self.hand.cards[no_carte]
 
-        return choix_carte, change
+        return change,choix_carte
 
     
     def __choix_pos(self,plateau,card):
@@ -153,7 +149,8 @@ class Human(Player):
 
         #On s'assure que le joueur pose bien la carte sur le plateau, qu'il ne superpose pas les cartes et que la carte qu'il pose est compatible avec les autres cartes
         etat = False
-        while (etat == False):
+        change=0
+        while (etat == False and change==0):
             i=input("(i value)")
             j=input("(j value)")
             try:
@@ -167,7 +164,10 @@ class Human(Player):
                         else:
                             self.__print_game_state_player(plateau)
                             print("The card does not fit with the other cards")
-                            print("Where do you want to place your card ?")
+                            change=self.__change_action(plateau)
+                            if change == 0:
+                                self.__print_game_state_player(plateau)
+                                print("Where do you want to place your card ?")
                     else:
                         self.__print_game_state_player(plateau)
                         print("A card is already positioned at the desired location, choose another position")
@@ -182,7 +182,7 @@ class Human(Player):
                 print("Where do you want to place your card ?")
 
 
-        return pos
+        return change, pos
 
     def __use_tools_card(self,players,choix_carte):
         #Revoir cette fonction, augmenter solidité
@@ -195,20 +195,23 @@ class Human(Player):
             players[i].hand.affiche_tools()
 
         #On demande au joueur sur quel joueur il veut appliquer la carte
+        change=0
         etat=0
-        while etat == 0:
+        while etat == 0 and change == 0:
             choix_player=input("On which player do you want to apply this card? (0 to {0})".format(len(players)-1))
             try:
                 choix_player=int(choix_player)
                 if choix_player>=0 and choix_player<=len(players)-1:
                     etat = True
                 else:
-                    os.system('cls' if os.name == 'nt' else 'clear')  #efface le contenue de la console, on verifie si on est sur windows ou pas
-                    #On affiche les outils des joueurs
-                    for i in range(len(players)):
-                        print("{0}:{1}'s tools:".format(i,players[i].name))
-                        players[i].hand.affiche_tools()
-                        print("Please, don't do anything else and just play!")
+                    print("The value entered is not correct")
+                    change=self.__change_action(plateau)
+                    if change == 0:
+                        os.system('cls' if os.name == 'nt' else 'clear')  #efface le contenue de la console, on verifie si on est sur windows ou pas
+                        #On affiche les outils des joueurs
+                        for i in range(len(players)):
+                            print("{0}:{1}'s tools:".format(i,players[i].name))
+                            players[i].hand.affiche_tools()
                 
             except ValueError:
                 os.system('cls' if os.name == 'nt' else 'clear')  #efface le contenue de la console, on verifie si on est sur windows ou pas
@@ -220,17 +223,21 @@ class Human(Player):
 
         os.system('cls' if os.name == 'nt' else 'clear')  #efface le contenue de la console, on verifie si on est sur windows ou pas
 
-        #Les outils du joueur choisi sont réparé
-        if choix_carte.vectapparence[0]==2:
-            players[choix_player].hand.tools[choix_carte.vectapparence[1]-4]=1
-            if choix_carte.vectapparence[2] != 0 :
-                players[choix_player].hand.tools[choix_carte.vectapparence[2]-4]=1
+        if change==0:
+            #Les outils du joueur choisi sont réparé
+            if choix_carte.vectapparence[0]==2:
+                players[choix_player].hand.tools[choix_carte.vectapparence[1]-4]=1
+                if choix_carte.vectapparence[2] != 0 :
+                    players[choix_player].hand.tools[choix_carte.vectapparence[2]-4]=1
 
-        #Les outils du joueur choisi sont détruit
-        if choix_carte.vectapparence[0]==3:
-            players[choix_player].hand.tools[choix_carte.vectapparence[1]-4]=0
-            if choix_carte.vectapparence[2] != 0 :
-                players[choix_player].hand.tools[choix_carte.vectapparence[2]-4]=0
+            #Les outils du joueur choisi sont détruit
+            if choix_carte.vectapparence[0]==3:
+                players[choix_player].hand.tools[choix_carte.vectapparence[1]-4]=0
+                if choix_carte.vectapparence[2] != 0 :
+                    players[choix_player].hand.tools[choix_carte.vectapparence[2]-4]=0
+        return change
+        
+
     
 
     def tourjoueur(self,plateau,pioche,defausse,players):
@@ -242,7 +249,7 @@ class Human(Player):
 
             if choix_action == 1:
                 #On demande au joueur quel carte il veut jouer
-                choix_carte, change=self.__choix_carte(plateau,choix_action)
+                change, choix_carte=self.__choix_carte(plateau,choix_action)
             
                 if change==1 :pass
 
@@ -250,10 +257,11 @@ class Human(Player):
                     #La carte est un chemin
                     if choix_carte.typ==0:
                         #On demande au joueur où il veut poser sa carte
-                        pos=self.__choix_pos(plateau,choix_carte)
-              
-                        #La carte est placee sur le plateau 
-                        plateau.add_carte(choix_carte,pos)
+                        change, pos=self.__choix_pos(plateau,choix_carte)
+
+                        if change==0:
+                            #La carte est placee sur le plateau 
+                            plateau.add_carte(choix_carte,pos)
 
 
                     #La carte est une carte action d'outils
@@ -290,7 +298,8 @@ class Human(Player):
                     if choix_carte.typ==6: 
                         
                         etat = False
-                        while (etat == False):
+                        while (etat == False and change==0):
+                            self.__print_game_state_player(plateau)
                             print("Which path do you want to collapse?")
                             i=input("(i value)")
                             j=input("(j value)")
@@ -302,6 +311,7 @@ class Human(Player):
                                 if etat == False:
                                     self.__print_game_state_player(plateau)
                                     print("The position does not correspond to any card.")
+                                    change=self.__change_action(plateau)
                             except ValueError:
                                 self.__print_game_state_player(plateau)
                                 print("Please choose a position on the board")
@@ -310,10 +320,11 @@ class Human(Player):
             if choix_action == 2:
 
                 #On demande au joueur quelle carte il veut se defausser
-                choix_carte,change=self.__choix_carte(plateau,choix_action)
+                change, choix_carte=self.__choix_carte(plateau,choix_action)
 
-                #La carte est placé dans la defausse 
-                defausse.append(choix_carte)
+                if change ==0:
+                    #La carte est placé dans la defausse 
+                    defausse.append(choix_carte)
 
         #La carte est retire de la main du joueur
         self.hand.remove_card(choix_carte)

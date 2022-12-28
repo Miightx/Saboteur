@@ -15,7 +15,7 @@ class Plateau(object):
                 self.__pathmap[i][j][0]=0
         #tableau compose des cartes present sur le plateau
         self.__cartes_posees=[]
-        self.__dimensions=[[0,5],[0,9]]
+        self.__dimensions=[[0,0],[0,0]]
         self.__pos_gold=[]
         self.__pos_start=[]
         self.__pos_stone=[]
@@ -40,6 +40,8 @@ class Plateau(object):
         #Les cartes d'arrivee sont placee face cache
         if carte.typ != 4 and carte.typ != 5:
             carte.face=1
+        else:
+            carte.face=0
 
         #Le plateau garde en memoire la position de la carte gold
         if carte.typ == 4 :
@@ -83,15 +85,15 @@ class Plateau(object):
             if ((pos[0]==self.__pos_gold[0]+1 or pos[0]==self.__pos_gold[0]-1) and pos[1]==self.__pos_gold[1]) or ((pos[1]==self.__pos_gold[1]+1 or pos[1]==self.__pos_gold[1]-1) and pos[0]==self.__pos_gold[0]):
                 for i in range(len(self.__cartes_posees)):
                     if self.__cartes_posees[i].pos==self.__pos_gold:
-                        self.__cartes_posees[i].face==1
+                        self.__cartes_posees[i].face=1
                         self.__gold_found=1
                         
 
-            for j in range(len(self.__pos_stone)):
-                if pos[0]==self.__pos_stone[j][0]+1 or pos[0]==self.__pos_stone[j][0]-1 or pos[1]==self.__pos_stone[j][1]+1 or pos[1]==self.__pos_stone[j][1]-1:
-                    for i in range(len(self.__cartes_posees)):
-                        if self.__cartes_posees[i].pos==self.__pos_stone[j]:
-                            self.__cartes_posees[i].face==1
+            for pos_stone in self.__pos_stone:
+                if ((pos[0]==pos_stone[0]+1 or pos[0]==pos_stone[0]-1) and pos[1]==pos_stone[1]) or ((pos[1]==pos_stone[1]+1 or pos[1]==pos_stone[1]-1) and pos[0]==pos_stone[0]):
+                    for carte in self.__cartes_posees:
+                        if carte.pos==pos_stone:
+                            carte.face=1
 
     # def remove_card(self,carte):
     #     if not isinstance ( carte , Path_card ) :
@@ -101,7 +103,7 @@ class Plateau(object):
     def collapse(self,pos):
         etat=False
         for carte in self.__cartes_posees:
-            if carte.pos==pos:
+            if carte.pos==pos and carte.typ != 3 and carte.typ != 4 and carte.typ != 5:
                 etat=True
                 self.__cartes_posees.remove(carte)
                 break
@@ -122,7 +124,7 @@ class Plateau(object):
             for j in range(len(self.__pathmap[0])):
                 self.__pathmap[i][j][0]=0
         self.__cartes_posees=[]
-        self.__dimensions=[[0,5],[0,9]]
+        self.__dimensions=[[0,0],[0,0]]
         self.__pos_gold=[]
         self.__pos_stone=[]
 
@@ -142,7 +144,7 @@ class Plateau(object):
                     print(f" {j-1}  ",end = "")
                 else:
                     print(f"  {j-1}  ",end = "")
-        print("")
+        print("|")
 
             #affichage de la deuxieme ligne
         for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
@@ -150,7 +152,7 @@ class Plateau(object):
                 print("--+",end = "")
             else:
                 print("-----",end = "")
-        print("")
+        print("+--")
 
         for i in range(self.__dimensions[0][0],self.__dimensions[0][1]):
             for x in range(0,3):
@@ -170,7 +172,7 @@ class Plateau(object):
                         for k in range(len(self.__cartes_posees)):
                             if self.__cartes_posees[k].pos == [i,j]:
                                 self.__cartes_posees[k].affiche(x)
-                print("")
+                print("|")
 
         #affichage de la derniere ligne
         for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
@@ -178,7 +180,7 @@ class Plateau(object):
                 print("--+",end = "")
             else:
                print("-----",end = "")
-        print("")
+        print("+--")
 
     @property
     def cartes_posees(self) : return self.__cartes_posees

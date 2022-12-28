@@ -39,7 +39,7 @@ class SABOOTERS(object):
         self.__deck.random_cartes()
 
         #On defini les positions des cartes "END"
-        set_pos_gold=random.sample([[0,8],[2,8],[4,8]], 3)
+        set_pos_gold=random.sample([[-1,8],[2,8],[5,8]], 3)
 
         #repartition des cartes
         k=0
@@ -78,16 +78,16 @@ class SABOOTERS(object):
         while nb_card_player!=0 and gold_found==0 :
             nb_card_player=0
             #On parcour les joueurs
-            for i in range(self.__menu.number):
+            for joueur in self.__joueurs:
                 #Tour du joueur
-                self.__joueurs[i].tourjoueur(self.__plateau,self.__pioche,self.__defausse,self.__joueurs)
+                joueur.tourjoueur(self.__plateau,self.__pioche,self.__defausse,self.__joueurs)
                 #On compte les cartes
-                nb_card_player= nb_card_player + len(self.__joueurs[i].hand.cards)
+                nb_card_player= nb_card_player + len(joueur.hand.cards)
                 #On verifie si l'or a été trouvé
                 gold_found=self.__plateau.gold_found
                 #Si l'or a été trouvé c'est la fin de la manche, les mineurs gagne
                 if gold_found==1:
-                    #self.__menu.fin_de_manche(self.__joueurs[i].name,self.joueurs)
+                    #self.__menu.fin_de_manche(joueur.name,self.joueurs)
                     break
         #Si l'or n'a pas été trouvé les sabooters gagne
         if gold_found==0: pass
