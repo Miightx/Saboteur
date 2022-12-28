@@ -174,17 +174,13 @@ class Menu(object):
 
             print("Voici la valeur des cartes or")
             print(self.__sharing_gold)
-
-    def calcul_point(self):  # Comptage des pts de chaque manche
-        for i in range(self.__number):
-            self.__score = self.__spm[0] + self.__spm[1] + self.__spm[2]
-        print(f' Le score final est de {self.__score}')
-    def fin_manche(self,count,state):
+    def fin_manche(self,count):
         self.count_winner()
         self.winner(count)
     def fin_de_partie(self):
-        return self.calcul_point()
-
+        for i in range(self.__number):
+            self.__score = self.__spm[0] + self.__spm[1] + self.__spm[2]
+        print(f' Le score final est de {self.__score}')
     @property
     def score(self):
         return self.__score
