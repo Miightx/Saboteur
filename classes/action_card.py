@@ -25,13 +25,13 @@ class Action_card(Carte):
     def affiche(self,x):
         #On affiche la partie de la carte que l'on souhaite afficher
         if self.face==1:
-            if self.typ == 1 or self.typ == 2:
-                if x==0:
-                    print(Carte.tableaction[self.__vectapparence[0]],end = "")
-                if x==1:
-                    print(Carte.tableaction[self.__vectapparence[1]],end = "")
-                if x==2:
-                    print(Carte.tableaction[self.__vectapparence[2]],end = "")
+            #if self.typ == 1 or self.typ == 2:
+            if x==0:
+                print(Carte.tableaction[self.__vectapparence[0]],end = "")
+            if x==1:
+                print(Carte.tableaction[self.__vectapparence[1]],end = "")
+            if x==2:
+                print(Carte.tableaction[self.__vectapparence[2]],end = "")
         if self.face==0:
             if x==0:
                 print(Carte.tablerecto[self.__vectrecto[0]],end = "")

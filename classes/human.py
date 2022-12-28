@@ -19,7 +19,7 @@ class Human(Player):
             print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
             sys.exit()
         #affichage du plateau et de la main du joueur dont c'est la tour
-        os.system("cls")  #efface le contenue de la console, valable que sur windows
+        os.system('cls' if os.name == 'nt' else 'clear')  #efface le contenue de la console, on verifie si on est sur windows ou pas
         print("+-----------+")
         print("| ROUND : {0} |".format(plateau.no_manche))
         print("+-----------+")
@@ -187,7 +187,7 @@ class Human(Player):
     def __use_tools_card(self,players,choix_carte):
         #Revoir cette fonction, augmenter solidité
         #Fonction qui applique une carte d'action d'outils
-        os.system("cls")  #efface le contenue de la console, valable que sur windows
+        os.system('cls' if os.name == 'nt' else 'clear')  #efface le contenue de la console, on verifie si on est sur windows ou pas
 
         #On affiche les outils des joueurs
         for i in range(len(players)):
@@ -203,7 +203,7 @@ class Human(Player):
                 if choix_player>=0 and choix_player<=len(players)-1:
                     etat = True
                 else:
-                    os.system("cls")  #efface le contenue de la console, valable que sur windows
+                    os.system('cls' if os.name == 'nt' else 'clear')  #efface le contenue de la console, on verifie si on est sur windows ou pas
                     #On affiche les outils des joueurs
                     for i in range(len(players)):
                         print("{0}:{1}'s tools:".format(i,players[i].name))
@@ -211,14 +211,14 @@ class Human(Player):
                         print("Please, don't do anything else and just play!")
                 
             except ValueError:
-                os.system("cls")  #efface le contenue de la console, valable que sur windows
+                os.system('cls' if os.name == 'nt' else 'clear')  #efface le contenue de la console, on verifie si on est sur windows ou pas
                 #On affiche les outils des joueurs
                 for i in range(len(players)):
                     print("{0}:{1}'s tools:".format(i,players[i].name))
                     players[i].hand.affiche_tools()
                     print("Please, don't do anything else and just play!")
 
-        os.system("cls")  #efface le contenue de la console, valable que sur windows
+        os.system('cls' if os.name == 'nt' else 'clear')  #efface le contenue de la console, on verifie si on est sur windows ou pas
 
         #Les outils du joueur choisi sont réparé
         if choix_carte.vectapparence[0]==2:
@@ -287,9 +287,25 @@ class Human(Player):
                             a=input("Press any button to continue.")
 
                     #La carte est une carte éboulement
-                    if choix_carte.typ==6: pass
+                    if choix_carte.typ==6: 
+                        
+                        etat = False
+                        while (etat == False):
+                            print("Which path do you want to collapse?")
+                            i=input("(i value)")
+                            j=input("(j value)")
+                            try:
+                                i = int(i)
+                                j = int(j)
+                                pos=[i,j]
+                                etat = plateau.collapse(pos)
+                                if etat == False:
+                                    self.__print_game_state_player(plateau)
+                                    print("The position does not correspond to any card.")
+                            except ValueError:
+                                self.__print_game_state_player(plateau)
+                                print("Please choose a position on the board")
 
-            
 
             if choix_action == 2:
 

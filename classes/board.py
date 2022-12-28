@@ -17,6 +17,8 @@ class Plateau(object):
         self.__cartes_posees=[]
         self.__dimensions=[[0,5],[0,9]]
         self.__pos_gold=[]
+        self.__pos_start=[]
+        self.__pos_stone=[]
         self.__gold_found=0
         #Variable qui permet d'afficher à quelle manche le jeu est
         self.no_manche=0
@@ -42,6 +44,14 @@ class Plateau(object):
         #Le plateau garde en memoire la position de la carte gold
         if carte.typ == 4 :
             self.__pos_gold=pos
+        
+        #Le plateau garde en memoire la position des cartes stone
+        if carte.typ == 5 :
+            self.__pos_stone.append(pos)
+
+        #Le plateau garde en memoire la position de la carte start
+        if carte.typ == 3 :
+            self.__pos_start=pos
 
         #On change l'état de la carte
         #carte.etat=1
@@ -83,19 +93,27 @@ class Plateau(object):
                         if self.__cartes_posees[i].pos==self.__pos_stone[j]:
                             self.__cartes_posees[i].face==1
 
-    def remove_card(self,carte):
-        if not isinstance ( carte , Path_card ) :
-            print("Erreur: uniquement des cartes peuvent être retiré du plateau")
-            sys.exit()
-        
-        
+    # def remove_card(self,carte):
+    #     if not isinstance ( carte , Path_card ) :
+    #         print("Erreur: uniquement des cartes peuvent être retiré du plateau")
+    #         sys.exit()
+
+    def collapse(self,pos):
+        etat=False
+        for carte in self.__cartes_posees:
+            if carte.pos==pos:
+                etat=True
+                self.__cartes_posees.remove(carte)
+                break
+        if etat==True:
+            self.__pathmap[pos[0]][pos[1]]=[0,1,1,1]
+        return etat
 
 
-        
 
 
 
-        
+ 
     
     #Fonction qui réinitialise le plateau
     def reset_plateau(self):
@@ -177,5 +195,3 @@ class Plateau(object):
     # @cartes_posees.setter
     # def cartes_posees(self,cartes):
     #     self.__cartes_posees=cartes
-
-
