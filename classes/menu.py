@@ -1,5 +1,11 @@
 import random
 import numpy as np
+import os
+
+
+
+
+
 class Menu(object):
     def __init__(self, state):  # Property
         self.__number = 0
@@ -37,6 +43,8 @@ class Menu(object):
 
     def __players(self):  # Configuration des joueurs
         for k in range(self.__number):
+            os.system("cls")  #efface le contenue de la console, valable que sur windows
+            self.__aff_wel() 
             print('Please enter the name of player', k + 1 )
             print('')
             joueur = 0
@@ -96,6 +104,7 @@ class Menu(object):
         print('The', self.__number, 'players are:', total)
 
     def start_game(self):
+        os.system("cls")  #efface le contenue de la console, valable que sur windows
         self.__aff_wel() 
         self.__get_number() 
         self.__players() 
