@@ -34,7 +34,6 @@ class Action_card(Carte):
     def affiche(self,x): #Le parametre x détermine quel partie de la carte on affiche
         #On affiche la partie de la carte que l'on souhaite afficher
         if self.face==1:
-            #if self.typ == 1 or self.typ == 2:
             if x==0:
                 print(Carte.tableaction[self.__vectapparence[0]],end = "")
             elif x==1:
@@ -55,7 +54,7 @@ class Action_card(Carte):
                 print("Erreur: la valeur d'affichage de la carte est incorrecte, veuilliez choisir une valeur entre 0 et 2")
                 sys.exit()
 
-    #Fonction qui tostring
+    #Fonction tostring
     def __str__(self):
         st=Carte.tableaction[self.__vectapparence[0]]+"\n"+Carte.tableaction[self.__vectapparence[1]]+"\n"+Carte.tableaction[self.__vectapparence[2]]
         return st

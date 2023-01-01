@@ -39,7 +39,7 @@ class Path_card(Carte):
             print("Erreur: la valeur du type de carte est incorrecte")
             sys.exit()
 
-    def affiche(self,x):
+    def affiche(self,x):#Le parametre x détermine quel partie de la carte on affiche
         #On affiche la partie de la carte que l'on souhaite afficher
         if self.face==1:
             if x==0:
@@ -63,10 +63,12 @@ class Path_card(Carte):
                 print("Erreur: la valeur d'affichage de la carte est incorrecte, veuilliez choisir une valeur entre 0 et 2")
                 sys.exit()
 
+    #Fonction tostring
     def __str__(self):
         st=Carte.tablechemin[self.__vectapparence[0]]+"\n"+Carte.tablechemin[self.__vectapparence[1]]+"\n"+Carte.tablechemin[self.__vectapparence[2]]
         return st
 
+    #Fonction de comparaison
     def __eq__(self,other):
 
         if not isinstance ( other , Action_card ) :
