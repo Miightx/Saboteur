@@ -8,42 +8,55 @@ from .path_card import Path_card
 class Plateau(object):
     """Plateau du jeu SABOOTERS"""
     def __init__(self):
-        #tableau binaire qui determine si une carte a ete posee 
+        #tableau binaire qui determine si une carte a ete posee et contien le chemin de la mine
         self.__pathmap=np.ones((30,30,5),int)
         for i in range(len(self.__pathmap)):
             for j in range(len(self.__pathmap[0])):
                 self.__pathmap[i][j][0]=0
-        #tableau compose des cartes present sur le plateau
+        #liste composé des cartes présent sur le plateau
         self.__cartes_posees=[]
+        #Tableau des dimensions du plateau que l'on affiche, permet de rendre le plateau dynamique
         self.__dimensions=[[0,0],[0,0]]
+        #attribut qui permet de garder en memoire la position de la carte gold
         self.__pos_gold=[]
+        #attribut qui permet de garder en memoire la position de la carte start
         self.__pos_start=[]
+        #attribut qui permet de garder en memoire les positions des cartes pierres
         self.__pos_stone=[]
+        #attribut qui permet de determiner si la carte gold a été trouvé 
         self.__gold_found=0
         #Variable qui permet d'afficher à quelle manche le jeu est
-        self.no_manche=0
+        self.no_manche=0 #L'attribut est publique car il doit pouvoir être modifié depuis l'extérieur 
 
+#Méthode qui permet d'ajouter une carte sur le plateau, on met en parametre la carte et la position à laquelle on souhaite poser le carte
     def add_carte(self,carte,pos,init_game=0): #Le paramètre init_game permet de dire si on initialise la partie
         #On verifie si la carte posée est bien une carte
         if not isinstance ( carte , Path_card ) :
             print("Erreur: uniquement des cartes peuvent être posee sur le plateau")
             sys.exit()
 
+        #On limite la zone où la carte peut être posée
         if pos[0]<-10 or pos[0]>10 or pos[1]<-10 or pos[1]>10:
             print("Erreur: La position de la carte va au dela de la taille maximale du plateau")
             sys.exit()
 
+        #On verifie si il y a déja une carte positionné à l'endroit désiré
         if self.__pathmap[pos[0]+15][pos[1]+15][0]==1 :
             print("Erreur: une carte est déja positionnée à l'emplacement désiré")
             sys.exit()
 
-        #Les cartes d'arrivee sont placee face cache
+        #On verifie si la valeur entrée pour init_game est correct
+        if init_game!=0 and init_game!=1:
+            print("Erreur: valeur incorrecte entrée pour init_game")
+            sys.exit()
+
+        #Les cartes d'arrivée sont placée face cachée
         if carte.typ != 4 and carte.typ != 5:
             carte.face=1
         else:
             carte.face=0
 
-        #Le plateau garde en memoire la position de la carte gold
+        #Le plateau garde en mémoire la position de la carte gold
         if carte.typ == 4 :
             self.__pos_gold=pos
         
@@ -55,10 +68,7 @@ class Plateau(object):
         if carte.typ == 3 :
             self.__pos_start=pos
 
-        #On change l'état de la carte
-        #carte.etat=1
-
-        #On défini la position de la carte
+        #On modifie la position de la carte
         carte.pos=pos
 
         #On ajoute la carte aux cartes du plateau
@@ -95,20 +105,18 @@ class Plateau(object):
                         if carte.pos==pos_stone:
                             carte.face=1
 
-    # def remove_card(self,carte):
-    #     if not isinstance ( carte , Path_card ) :
-    #         print("Erreur: uniquement des cartes peuvent être retiré du plateau")
-    #         sys.exit()
-
+#Methode qui permet de créer un éboulement
     def collapse(self,pos):
         etat=False
         for carte in self.__cartes_posees:
+            #On cherche parmis les cartes posée si il y en a une qui correspond à la position de l'éboulemetn et si elle ne correspond pas à une carte départ ou arrivée
             if carte.pos==pos and carte.typ != 3 and carte.typ != 4 and carte.typ != 5:
                 etat=True
                 self.__cartes_posees.remove(carte)
                 break
         if etat==True:
             self.__pathmap[pos[0]][pos[1]]=[0,1,1,1]
+        #La methode retourne un booléen qui indique si lopération est  un succès
         return etat
 
 
@@ -131,11 +139,7 @@ class Plateau(object):
     #Fonction qui affiche le plateau
     def affiche(self):
         #Fonction qui affiche le plateau de jeu 
-        #os.system("cls")  #efface le contenue de la console, valable que sur windows
-
-
-   
-            #affichage de la premiere ligne
+        #affichage de la première ligne
         for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
             if j==self.__dimensions[1][0] :
                 print("  |",end = "")
@@ -146,7 +150,7 @@ class Plateau(object):
                     print(f"  {j-1}  ",end = "")
         print("|")
 
-            #affichage de la deuxieme ligne
+        #affichage de la deuxieme ligne
         for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
             if j==self.__dimensions[1][0] :
                 print("--+",end = "")
@@ -194,6 +198,3 @@ class Plateau(object):
     @property
     def pos_gold(self) : return self.__pos_gold
 
-    # @cartes_posees.setter
-    # def cartes_posees(self,cartes):
-    #     self.__cartes_posees=cartes

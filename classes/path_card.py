@@ -4,6 +4,12 @@ import os
 from .card import Carte
 
 class Path_card(Carte):
+    """Cartes chemin du jeu SABOOTERS
+    • Type 0 : Carte chemin
+    • Type 3 : Carte start
+    • Type 4 : Carte gold
+    • Type 5 : Carte pierre"""
+
     def __init__(self,typ):
         super().__init__(typ)
 
@@ -29,24 +35,50 @@ class Path_card(Carte):
             self.__vectapparence=Carte.matchemin[16]
             self.__vectrecto=Carte.matrecto[1]
             self.__path=Carte.matpath[16]
+        else:
+            print("Erreur: la valeur du type de carte est incorrecte")
+            sys.exit()
 
     def affiche(self,x):
         #On affiche la partie de la carte que l'on souhaite afficher
         if self.face==1:
             if x==0:
                 print(Carte.tablechemin[self.__vectapparence[0]],end = "")
-            if x==1:
+            elif x==1:
                 print(Carte.tablechemin[self.__vectapparence[1]],end = "")
-            if x==2:
+            elif x==2:
                 print(Carte.tablechemin[self.__vectapparence[2]],end = "")
+            else:
+                print("Erreur: la valeur d'affichage de la carte est incorrecte, veuilliez choisir une valeur entre 0 et 2")
+                sys.exit()
 
         if self.face==0:
             if x==0:
                 print(Carte.tablerecto[self.__vectrecto[0]],end = "")
-            if x==1:
+            elif x==1:
                 print(Carte.tablerecto[self.__vectrecto[1]],end = "")
-            if x==2:
+            elif x==2:
                 print(Carte.tablerecto[self.__vectrecto[2]],end = "")
+            else:
+                print("Erreur: la valeur d'affichage de la carte est incorrecte, veuilliez choisir une valeur entre 0 et 2")
+                sys.exit()
+
+    def __str__(self):
+        st=Carte.tablechemin[self.__vectapparence[0]]+"\n"+Carte.tablechemin[self.__vectapparence[1]]+"\n"+Carte.tablechemin[self.__vectapparence[2]]
+        return st
+
+    def __eq__(self,other):
+
+        if not isinstance ( other , Action_card ) :
+            return False
+
+        if ( self is other ) :
+            return True
+
+        if self.typ != other.typ or self.__vectapparence != other.vectapparence:
+            return False
+
+        return True
 
     @property
     def vectapparence(self) : return self.__vectapparence

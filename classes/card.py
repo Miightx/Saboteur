@@ -4,7 +4,14 @@ import os
 from abc import ABC , abstractmethod
 
 class Carte(ABC):
-    """Carte du jeu SABOOTERS"""
+    """Carte du jeu SABOOTERS
+    • Type 0 : Carte chemin
+    • Type 1 : Carte action
+    • Type 2 : Carte map
+    • Type 3 : Carte start
+    • Type 4 : Carte gold
+    • Type 5 : Carte pierre 
+    • Type 6 : Carte éboulement """
     #Tables contenant le contenu des cartes
                 #   0          1         2         3         4         5         6         7         8         9         10        11
     tablechemin=[('(   )'),('( | )'),('(---)'),('( x )'),('(-x )'),('( x-)'),('(-+ )'),('( +-)'),('(-+-)'),('(-S-)'),('($$$)'),('(-N-)')]
@@ -29,29 +36,13 @@ class Carte(ABC):
         self.__typ=typ
 
         #On defini par default que le carte est face cachee
-        self.__face=0
+        self.face=0 #La face détermine si la carte est posé coté recto ou verso, cet attribut est privé car on souhaite controler sa modification
 
     @abstractmethod
     def affiche(self,x): pass
 
-
-
-
-
-
-
-
-    # def affiche_carte_entiere(self):
-    #     for x in range(0,3):
-    #         print(Carte.tablechemin[self.__vectapparence[x]])
-        
-            
-
-
     @property
     def typ(self) : return self.__typ
-    @property
-    def etat(self) : return self.__etat
     @property
     def face(self) : return self.__face
 
@@ -60,23 +51,5 @@ class Carte(ABC):
         self.__face=0
         if face>=0 and face<=1:
             self.__face=face
-    # @etat.setter
-    # #0:"Pile de carte" 1:"Posee sur le plateau" 2:"main de joueur" 3:"defausse" 
-    # def etat(self,etat):
-    #     self.__etat=0
-    #     if etat>=0 and etat<=3 :
-    #         self.__etat=etat
-
-
-
-"""
-• Type 0 : Carte chemin
-• Type 1 : Carte action
-• Type 2 : Carte map
-• Type 3 : Carte start
-• Type 4 : Carte gold
-• Type 5 : Carte pierre 
-• Type 6 : Carte éboulement 
-"""
 
 
