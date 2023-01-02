@@ -2,6 +2,7 @@ import numpy as np
 import random
 import os
 from .card import Carte
+import sys
 
 class Path_card(Carte):
     """Cartes chemin du jeu SABOOTERS
@@ -20,23 +21,23 @@ class Path_card(Carte):
             self.__vectapparence=Carte.matchemin[chemin]
             self.__vectrecto=Carte.matrecto[0]
             self.__path=Carte.matpath[chemin]
-        if typ == 3:
+        elif typ == 3:
             #Carte start
             self.__vectapparence=Carte.matchemin[14]
             self.__vectrecto=Carte.matrecto[0]
             self.__path=Carte.matpath[14]
-        if typ == 4:
+        elif typ == 4:
             #Carte gold
             self.__vectapparence=Carte.matchemin[15]
             self.__vectrecto=Carte.matrecto[1]
             self.__path=Carte.matpath[15]
-        if typ == 5:
+        elif typ == 5:
             #Carte pierre
             self.__vectapparence=Carte.matchemin[16]
             self.__vectrecto=Carte.matrecto[1]
             self.__path=Carte.matpath[16]
         else:
-            print("Erreur: la valeur du type de carte est incorrecte")
+            print("Erreur: la valeur du type de carte est incorrecte, path_card.py")
             sys.exit()
 
     def affiche(self,x):#Le parametre x détermine quel partie de la carte on affiche
@@ -71,7 +72,7 @@ class Path_card(Carte):
     #Fonction de comparaison
     def __eq__(self,other):
 
-        if not isinstance ( other , Action_card ) :
+        if not isinstance ( other , Path_card ) :
             return False
 
         if ( self is other ) :

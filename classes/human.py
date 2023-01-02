@@ -24,7 +24,7 @@ class Human(Player):
         print("| ROUND : {0} |".format(plateau.no_manche))
         print("+-----------+")
         plateau.affiche()
-        print("It is {0} turn:".format(self.name))
+        print("It is {0} turn, your role is: {1}".format(self.name,self.role))
         self.hand.affiche()
         self.hand.affiche_tools()
 
@@ -190,9 +190,9 @@ class Human(Player):
         os.system('cls' if os.name == 'nt' else 'clear')  #efface le contenue de la console, on verifie si on est sur windows ou pas
 
         #On affiche les outils des joueurs
-        for i in range(len(players)):
-            print("{0}:{1}'s tools:".format(i,players[i].name))
-            players[i].hand.affiche_tools()
+        for player in players:
+            print("{1}'s tools:".format(player.name))
+            player.hand.affiche_tools()
 
         #On demande au joueur sur quel joueur il veut appliquer la carte
         change=0
@@ -209,16 +209,16 @@ class Human(Player):
                     if change == 0:
                         os.system('cls' if os.name == 'nt' else 'clear')  #efface le contenue de la console, on verifie si on est sur windows ou pas
                         #On affiche les outils des joueurs
-                        for i in range(len(players)):
-                            print("{0}:{1}'s tools:".format(i,players[i].name))
-                            players[i].hand.affiche_tools()
+                        for player in players:
+                            print("{1}'s tools:".format(player.name))
+                            player.hand.affiche_tools()
                 
             except ValueError:
                 os.system('cls' if os.name == 'nt' else 'clear')  #efface le contenue de la console, on verifie si on est sur windows ou pas
                 #On affiche les outils des joueurs
-                for i in range(len(players)):
-                    print("{0}:{1}'s tools:".format(i,players[i].name))
-                    players[i].hand.affiche_tools()
+                for player in players:
+                    print("{1}'s tools:".format(players.name))
+                    player.hand.affiche_tools()
                     print("Please, don't do anything else and just play!")
 
         os.system('cls' if os.name == 'nt' else 'clear')  #efface le contenue de la console, on verifie si on est sur windows ou pas

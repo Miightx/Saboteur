@@ -10,9 +10,9 @@ class Plateau(object):
     def __init__(self):
         #tableau binaire qui determine si une carte a ete posee et contien le chemin de la mine
         self.__pathmap=np.ones((30,30,5),int)
-        for i in range(len(self.__pathmap)):
-            for j in range(len(self.__pathmap[0])):
-                self.__pathmap[i][j][0]=0
+        for pathmap_i in self.__pathmap:
+            for pathmap_ij in pathmap_i:
+                pathmap_ij[0]=0
         #liste composé des cartes présent sur le plateau
         self.__cartes_posees=[]
         #Tableau des dimensions du plateau que l'on affiche, permet de rendre le plateau dynamique
@@ -128,9 +128,9 @@ class Plateau(object):
     #Fonction qui réinitialise le plateau
     def reset_plateau(self):
         self.__pathmap=np.ones((30,30,5),int)
-        for i in range(len(self.__pathmap)):
-            for j in range(len(self.__pathmap[0])):
-                self.__pathmap[i][j][0]=0
+        for pathmap_i in self.__pathmap:
+            for pathmap_ij in pathmap_i:
+                pathmap_ij[0]=0
         self.__cartes_posees=[]
         self.__dimensions=[[0,0],[0,0]]
         self.__pos_gold=[]

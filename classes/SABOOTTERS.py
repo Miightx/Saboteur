@@ -43,17 +43,17 @@ class SABOOTERS(object):
 
         #repartition des cartes
         k=0
-        for i in range(0,len(self.__deck.cartes)):
+        for carte in self.__deck.cartes:
             #On place les cartes arrive/depart sur le plateau
-            if self.__deck.cartes[i].typ == 3 or self.__deck.cartes[i].typ == 4 or self.__deck.cartes[i].typ == 5:
-                if self.__deck.cartes[i].typ==3:
-                    self.__plateau.add_carte(self.__deck.cartes[i],[2,0],1)
+            if carte.typ == 3 or carte.typ == 4 or carte.typ == 5:
+                if carte.typ==3:
+                    self.__plateau.add_carte(carte,[2,0],1)
                 else:
-                    self.__plateau.add_carte(self.__deck.cartes[i],set_pos_gold[k],1)
+                    self.__plateau.add_carte(carte,set_pos_gold[k],1)
                     k=k+1
             #On cree la pioche avec les cartes action et chemin
             else :
-                self.__pioche.append(self.__deck.cartes[i])
+                self.__pioche.append(carte)
         
         #Les joueurs piochent leurs cartes
         for i in range(self.__menu.number):

@@ -2,6 +2,7 @@ import numpy as np
 import random
 import os
 from .card import Carte
+import sys
 
 
 class Action_card(Carte):
@@ -27,7 +28,7 @@ class Action_card(Carte):
             self.__vectapparence=Carte.mataction[0]
             self.__vectrecto=Carte.matrecto[0]
         else:
-            print("Erreur: la valeur du type de carte est incorrecte")
+            print("Erreur: la valeur du type de carte est incorrecte, action_card.py")
             sys.exit()
         
 
