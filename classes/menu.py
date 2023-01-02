@@ -192,7 +192,7 @@ class Menu(object):
             print("Voici la valeur des cartes or")
             print(self.__sharing_gold)
         print(f"The score is {score_manche}")
-        self.__manche.append(score_manche)
+        self.__spm.append(score_manche)
     def fin_manche(self,count):
         self.count_winner()
         self.winner(count)
