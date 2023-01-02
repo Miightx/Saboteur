@@ -6,4 +6,3 @@ jeu=SABOOTERS()
 
 jeu.start_game()
 C=Action_card(p)
-# print(C)
