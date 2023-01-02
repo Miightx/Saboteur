@@ -15,6 +15,7 @@ class Menu(object):
         self.__count = []
         self.__sharing_gold = []
         self.__spm = []
+        self.__total_score = []
     #Methodes
     def __aff_wel(self):  # Affichage du début
         print("+--------------------------------------------------------------------+")
@@ -197,12 +198,14 @@ class Menu(object):
         self.count_winner()
         self.winner(state)
     def fin_de_partie(self):
+
         for i in range(self.__number):
-            self.__score = self.__manche[0][i] + self.__manche[1][i] + self.__manche[2][i]
-        print(f' Le score final est de {self.__score}')
+            score_for_one_player = self.__spm[0][i] + self.__spm[1][i] + self.__spm[2][i]
+            self.__total_score.append(score_for_one_player)
+        print(f' Le score final est de {self.__total_score}')
     @property
-    def score(self):
-        return self.__score
+    def total_score(self):
+        return self.__total_score
 
 
     @property
@@ -211,7 +214,3 @@ class Menu(object):
     @property
     def manche(self):
         return self.__manche
-    def start(self,state):
-        self.start_game()
-        self.count_winner()
-        self.winner(state)
