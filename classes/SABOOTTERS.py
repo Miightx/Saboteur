@@ -39,7 +39,7 @@ class SABOOTERS(object):
         self.__deck.random_cartes()
 
         #On defini les positions des cartes "END"
-        set_pos_gold=random.sample([[-1,8],[2,8],[5,8]], 3)
+        set_pos_gold=random.sample([[0,2],[2,2],[4,2]], 3)
 
         #repartition des cartes
         k=0
