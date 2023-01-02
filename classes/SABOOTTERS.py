@@ -69,14 +69,14 @@ class SABOOTERS(object):
         nb_card_player=0
 
         #Variable permettant de déterminer si l'or a été trouvé
-        gold_found=0
+        gold_found = 0
 
         #Compteur de carte
-        nb_card_player=1
+        nb_card_player = 1
         
         #Tant que l'or n'est pas trouvé et qu'il y a toujours des cartes en main
-        while nb_card_player!=0 and gold_found==0 :
-            nb_card_player=0
+        while nb_card_player != 0 and gold_found == 0:
+            nb_card_player = 0
             #On parcour les joueurs
             for joueur in self.__joueurs:
                 #Tour du joueur
@@ -84,14 +84,18 @@ class SABOOTERS(object):
                 #On compte les cartes
                 nb_card_player= nb_card_player + len(joueur.hand.cards)
                 #On verifie si l'or a été trouvé
-                gold_found=self.__plateau.gold_found
+                gold_found = self.__plateau.gold_found
                 #Si l'or a été trouvé c'est la fin de la manche, les mineurs gagne
                 if gold_found==1:
-                    #self.__menu.fin_de_manche(joueur.name,self.joueurs)
+                    state = 2
+                    self.__menu.fin_de_manche(state)
                     break
         #Si l'or n'a pas été trouvé les sabooters gagne
-        if gold_found==0: pass
-            #self.__menu.fin_de_manche("SABOOTERS",self.joueurs)
+        if gold_found==0:
+            state = 1
+            pass
+            self.__menu.fin_de_manche(state)
+
 
         #On vide la pioche et la defausse
         self.__pioche=[]
@@ -113,7 +117,8 @@ class SABOOTERS(object):
             #Une manche se déroule
             self.__manche()
         
-            
+    def end_game(self):
+        self.__menu.fin_de_partie()
             
 
 

@@ -193,9 +193,9 @@ class Menu(object):
             print(self.__sharing_gold)
         print(f"The score is {score_manche}")
         self.__spm.append(score_manche)
-    def fin_manche(self,count):
+    def fin_de_manche(self,state):
         self.count_winner()
-        self.winner(count)
+        self.winner(state)
     def fin_de_partie(self):
         for i in range(self.__number):
             self.__score = self.__manche[0][i] + self.__manche[1][i] + self.__manche[2][i]
