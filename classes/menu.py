@@ -95,7 +95,7 @@ class Menu(object):
 
     def __affichage_debut_fin(self):
         total=[]
-        for k in range (self.__number-1):
+        for k in range(self.__number-1):
             total.append(self.__players_name[k] + '(' + self.__bot[k]+'),')
         total.append(self.__players_name[self.__number-1] + '(' + self.__bot[self.__number-1]+')')
         total = ' '.join(total)
@@ -136,7 +136,7 @@ class Menu(object):
         return self.__aff_wel(), self.__get_number(), self.__players(), self.__affichage_debut_fin()
     def count_winner(self):
         self.__count = [0, 0]
-        for k in range (len(self.__roles)):   #Pour chaque roles je compte le nb de joueurs ayant ce role
+        for k in range(len(self.__roles)):   #Pour chaque roles je compte le nb de joueurs ayant ce role
             if (self.__roles[k]=='S'):
                 self.__count[0] += 1
             elif (self.__roles[k]=='C'):
@@ -144,9 +144,11 @@ class Menu(object):
         print(self.__count)
 
     def winner(self,state):
-        self.state= state
+        self.state = state
         etat = False
+        digger_win = []
         score_manche = np.zeros(self.__number)
+        card_pull = 0
         if (self.state == 1): #Disons que c'est le cas où les saboteurs ont gagnés == 1
             print('Saboteurs won this game!')
             print('')
@@ -156,41 +158,48 @@ class Menu(object):
                         score_manche[k]= 4
                 elif(self.__count[0] == 2 or self.__count[0] == 3): #2 ou 3 ils obtiennent 3 pts
                     if (self.__roles[k] == 'S'):
-                        score_manche[k]= 3
-        elif (self.__state == 2):     #Cas ou Mineurs gagnent == 2
+                        score_manche[k] = 3
+        elif (self.state == 2):     #Cas ou Mineurs gagnent == 2
             print('Diggers won this game!')
+            self.__sharing_gold = np.random.randint(1, 4, size=self.__number) #Carte d'or valant entre 1 et 3
+            self.__sharing_gold = self.__sharing_gold.tolist()
             for k in range(self.__number):
-                self.__sharing_gold[k] = np.randint(1,3)    #Cartes or valeur entre 1 et 3
                 if (self.__roles[k]=='C'):                    #Personnes étant Mineur
-                    while (len(self.__sharing_gold)!=0):    #Jusqu'a quand y'a plus de pts a distribuer
-                        indice = 0
-                        while (indice < self.count[1]):          #Addition des pts des mineurs quand il y a plus de cartes or que de mineurs
-                            print("It is the remain gold cards")
-                            print(self.__sharing_gold)
-                            print("To {0} to choose the card he/she wishes")
-                            while (etat == False):          #Choix de la carte d'or
-                                print(f"Please choose a value between 1 and {self.__number}")
-                                self.__choice = input()
-                                if (self.__choice.isdecimal() == True):
-                                    self.__choice = int(self.__choice)
-                                    if (self.__choice >0 or self.__choice < len(self.__sharing_gold)):
-                                        print("Please choose another value")
-                                        etat = True
-                                    else:
-                                        print("Please choose another value")
-                            self.__spm[indice] += self.__sharing_gold[self.__choice]      #Stockage des scores pour calcuer en fin de partie
-                            self.__sharing_gold.pop(self.__choice)                      #Enlever la carte d'or choisit
-                            print("{0} choose", self.__sharing_gold[self.__choice])
-                            indice += 1
-
+                    digger_win.append(self.__players_name[k])
+            self.__spm = np.zeros(len(digger_win))
+            while (len(self.__sharing_gold)!=0):    #Jusqu'a quand y'a plus de pts a distribuer
+                indice = 0
+                while (indice < self.count[1]):          #Addition des pts des mineurs quand il y a plus de cartes or que de mineurs
+                    print("It is the remaining gold cards")
+                    print(self.__sharing_gold)
+                    print(f"To {digger_win[indice]} to choose the card he/she wishes")
+                    while (etat == False):          #Choix de la carte d'or
+                        print(f"Please choose a value between 1 and {self.__number-card_pull}")
+                        self.__choice = input()
+                        if (self.__choice.isdecimal() == True):
+                            self.__choice = int(self.__choice)
+                            if (self.__choice >0 or self.__choice < len(self.__sharing_gold)-card_pull):
+                                etat = True
+                            else:
+                                print("Please choose another value")
+                    self.__spm[indice] += self.__sharing_gold[(self.__choice)-1]      #Stockage des scores pour calcuer en fin de partie
+                    print(f"{digger_win[indice]} choose {self.__sharing_gold[(self.__choice)-1]}")
+                    del self.__sharing_gold[self.__choice-1]                 #Enlever la carte d'or choisit
+                    indice += 1
+                    card_pull += 1
+                    etat = False
+                    if not(self.__sharing_gold):
+                        indice = 11
             print("Voici la valeur des cartes or")
             print(self.__sharing_gold)
+        print(f"The score is {score_manche}")
+
     def fin_manche(self,count):
         self.count_winner()
         self.winner(count)
     def fin_de_partie(self):
         for i in range(self.__number):
-            self.__score = self.__spm[0] + self.__spm[1] + self.__spm[2]
+            self.__score = self.__manche[0] + self.__manche[1] + self.__manche[2]
         print(f' Le score final est de {self.__score}')
     @property
     def score(self):

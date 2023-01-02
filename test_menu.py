@@ -1,5 +1,5 @@
 from classes import Menu
-state = 1
-
+state = 2
+import numpy as np
 menu = Menu()
 menu.start(state)
