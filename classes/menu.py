@@ -7,13 +7,12 @@ import os
 
 
 class Menu(object):
-    def __init__(self, state):  # Property
+    def __init__(self):  # Property
         self.__number = 0
         self.__players_name = []
         self.__bot = []
         self.__roles = []
         self.__count = []
-        self.__state = state
         self.__sharing_gold = []
         self.__spm = []
     #Methodes
@@ -136,17 +135,20 @@ class Menu(object):
     def game_start(self):
         return self.__aff_wel(), self.__get_number(), self.__players(), self.__affichage_debut_fin()
     def count_winner(self):
-        for k in range (len(self.roles)):   #Pour chaque roles je compte le nb de joueurs ayant ce role
-            if (self.roles[k]=='S'):
+        self.__count = [0, 0]
+        for k in range (len(self.__roles)):   #Pour chaque roles je compte le nb de joueurs ayant ce role
+            if (self.__roles[k]=='S'):
                 self.__count[0] += 1
-            elif (self.roles[k]=='C'):
+            elif (self.__roles[k]=='C'):
                 self.__count[1] += 1
+        print(self.__count)
 
-    def winner(self, count):
+    def winner(self,state):
+        self.state= state
         etat = False
         score_manche = np.zeros(self.__number)
-        if (self.__state == 1): #Disons que c'est le cas où les saboteurs ont gagnés == 1
-            print('Saboteurs won this game')
+        if (self.state == 1): #Disons que c'est le cas où les saboteurs ont gagnés == 1
+            print('Saboteurs won this game!')
             print('')
             for k in range (self.__number):
                 if (self.__count[0] == 1):
@@ -156,13 +158,13 @@ class Menu(object):
                     if (self.__roles[k] == 'S'):
                         score_manche[k]= 3
         elif (self.__state == 2):     #Cas ou Mineurs gagnent == 2
-            print('Diggers won this game')
+            print('Diggers won this game!')
             for k in range(self.__number):
                 self.__sharing_gold[k] = np.randint(1,3)    #Cartes or valeur entre 1 et 3
                 if (self.__roles[k]=='C'):                    #Personnes étant Mineur
                     while (len(self.__sharing_gold)!=0):    #Jusqu'a quand y'a plus de pts a distribuer
                         indice = 0
-                        while (indice < count[1]):          #Addition des pts des mineurs quand il y a plus de cartes or que de mineurs
+                        while (indice < self.count[1]):          #Addition des pts des mineurs quand il y a plus de cartes or que de mineurs
                             print("It is the remain gold cards")
                             print(self.__sharing_gold)
                             print("To {0} to choose the card he/she wishes")
@@ -193,10 +195,13 @@ class Menu(object):
     @property
     def score(self):
         return self.__score
-    @property
-    def state(self):
-        return self.__state
+
 
     @property
     def spm(self):
         return self.__spm
+
+    def start(self,state):
+        self.start_game()
+        self.count_winner()
+        self.winner(state)
