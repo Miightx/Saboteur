@@ -39,7 +39,7 @@ class SABOOTERS(object):
         self.__deck.random_cartes()
 
         #On defini les positions des cartes "END"
-        set_pos_gold=random.sample([[-1,8],[2,8],[5,8]], 3)
+        set_pos_gold=random.sample([[0,2],[2,2],[4,2]], 3)
 
         #repartition des cartes
         k=0
@@ -93,10 +93,7 @@ class SABOOTERS(object):
         #Si l'or n'a pas été trouvé les sabooters gagne
         if gold_found==0:
             state = 1
-            pass
             self.__menu.fin_de_manche(state)
-
-
         #On vide la pioche et la defausse
         self.__pioche=[]
         self.__defausse=[]
@@ -116,6 +113,8 @@ class SABOOTERS(object):
             self.__plateau.no_manche=i+1
             #Une manche se déroule
             self.__manche()
+
+        self.__menu.fin_de_partie()
         
     def end_game(self):
         self.__menu.fin_de_partie()
