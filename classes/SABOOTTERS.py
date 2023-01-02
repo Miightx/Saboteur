@@ -87,11 +87,11 @@ class SABOOTERS(object):
                 gold_found=self.__plateau.gold_found
                 #Si l'or a été trouvé c'est la fin de la manche, les mineurs gagne
                 if gold_found==1:
-                    #self.__menu.fin_de_manche(joueur.name,self.joueurs)
+                    self.__menu.fin_de_manche()
                     break
         #Si l'or n'a pas été trouvé les sabooters gagne
-        if gold_found==0: pass
-            #self.__menu.fin_de_manche("SABOOTERS",self.joueurs)
+        if gold_found==0: 
+            self.__menu.fin_de_manche()
 
         #On vide la pioche et la defausse
         self.__pioche=[]
@@ -112,6 +112,8 @@ class SABOOTERS(object):
             self.__plateau.no_manche=i+1
             #Une manche se déroule
             self.__manche()
+
+        self.__menu.fin_de_partie()
         
             
             
