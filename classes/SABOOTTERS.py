@@ -29,7 +29,10 @@ class SABOOTERS(object):
 
     def __initmanche(self):
         # initialisation de la manche
-
+        self.__menu.change_role()   # changement de rôles pour chaque manche
+        for i in range(0, self.__menu.number):
+            self.__joueurs.append(Human(self.__menu.players_name[i], self.__menu.roles[i], self.__menu.number))
+        # initialisation des joueurs
         # On melange les cartes
         self.__deck.random_cartes()
 
@@ -68,10 +71,13 @@ class SABOOTERS(object):
         # Compteur de carte
         nb_card_player = 1
 
+        state = 0
         # Tant que l'or n'est pas trouvé et qu'il y a toujours des cartes en main
         while nb_card_player != 0 and gold_found == 0:
             nb_card_player = 0
-            # On parcour les joueurs
+            # Variable pour savoir à qui de jouer
+            current_indice = 0
+            # On parcourt les joueurs
             for joueur in self.__joueurs:
                 # Tour du joueur
                 joueur.tourjoueur(self.__plateau, self.__pioche, self.__defausse, self.__joueurs)
@@ -79,12 +85,13 @@ class SABOOTERS(object):
                 nb_card_player = nb_card_player + len(joueur.hand.cards)
                 # On verifie si l'or a été trouvé
                 gold_found = self.__plateau.gold_found
-                # Si l'or a été trouvé c'est la fin de la manche, les mineurs gagne
+                # Si l'or a été trouvé c'est la fin de la manche, les mineurs gagnent
                 if gold_found == 1:
                     state = 2
-                    self.__menu.fin_de_manche(state)
+                    self.__menu.fin_de_manche(state,current_indice)
                     break
-        # Si l'or n'a pas été trouvé les sabooters gagne
+                current_indice += 1
+        # Si l'or n'a pas été trouvé les sabooters gagnent
         if gold_found == 0:
             self.__menu.fin_de_manche(state)
             pass
@@ -92,9 +99,9 @@ class SABOOTERS(object):
         # On vide la pioche et la defausse
         self.__pioche = []
         self.__defausse = []
-
         # On enlève les cartes du plateau
         self.__plateau.reset_plateau()
+
 
     def start_game(self):
         # On initialise la partie
