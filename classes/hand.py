@@ -20,8 +20,8 @@ class Hand(object):#0       1       2       3       4       5       6       7   
         else:
             self.__hand_size = 4
 
+    #Fonction qui affiche les outils du joueur
     def affiche_tools(self):
-        #Fonction qui affiche les outils du joueur
         print("")
         for x in range(0,3):
             for i in range(6):
@@ -44,9 +44,9 @@ class Hand(object):#0       1       2       3       4       5       6       7   
             print("")
         print("")
 
+    #Fonction qui affiche la main du joueur 
     def affiche(self):
-        #Fonction qui affiche la main du joueur   
-
+        
         for x in range(0,3):
             for i in range(2*len(self.__cards)):
                 if x==1 and i%2==0:
@@ -88,7 +88,4 @@ class Hand(object):#0       1       2       3       4       5       6       7   
     def cards(self):
         return self.__cards
 
-
-    # @cards.setter
-    # def cards(self,cards):
-    #     self.__cards=cards   
+ 

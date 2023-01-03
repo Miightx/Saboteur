@@ -15,6 +15,7 @@ class Player(ABC):
         self.__role = role    #le role c'est de la classe menu.personnage[i]
         self.__hand = Hand(nb_players)   #pour afficher la main: player.hand.display_hand()
 
+    #Methode qui permet de faire piocher une carte au joueur
     def piocher_carte(self,pioche):
         if len(pioche)<=0:
             print("Erreur: la pioche est vide")
@@ -23,10 +24,12 @@ class Player(ABC):
         self.__hand.add_card(pioche[0])
         pioche.remove(pioche[0])
 
+    #Methode qui permet d'enlever une carte au joueur
     def defausse_carte(self,card,defausse):
         defausse.append(card)
         self.__hand.remove_card(card)
 
+    #Methode abstraite qui permet à un humain ou à une IA de jouer pendant un tour 
     @abstractmethod
     def tourjoueur(self,plateau,pioche,defausse): pass
 

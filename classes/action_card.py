@@ -28,10 +28,13 @@ class Action_card(Carte):
             self.__vectapparence=Carte.mataction[0]
             self.__vectrecto=Carte.matrecto[0]
         else:
-            print("Erreur: la valeur du type de carte est incorrecte, action_card.py")
-            sys.exit()
+            print("Erreur: la valeur du type de carte est incorrecte, initialisation par default d'une carte action_tools")
+            a=input("press any bouton to continue")
+            #Carte action_tools
+            self.__vectapparence=Carte.mataction[np.random.choice(np.array([1,2,3,4,5,6,7,8,9,10,11,12]))]
+            self.__vectrecto=Carte.matrecto[0]
         
-
+    #Methode qui permet d'afficher une partie de la carte
     def affiche(self,x): #Le parametre x détermine quel partie de la carte on affiche
         #On affiche la partie de la carte que l'on souhaite afficher
         if self.face==1:
@@ -69,7 +72,7 @@ class Action_card(Carte):
         if ( self is other ) :
             return True
 
-        if self.typ != other.typ or self.__vectapparence != other.vectapparence:
+        if self.typ != other.typ or self.__vectapparence != other.vectapparence: #Les autres attributs ne sont pas testé car non déterminant sur la nature de la carte
             return False
 
         return True

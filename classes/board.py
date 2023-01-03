@@ -13,18 +13,25 @@ class Plateau(object):
         for pathmap_i in self.__pathmap:
             for pathmap_ij in pathmap_i:
                 pathmap_ij[0]=0
+
         #liste composé des cartes présent sur le plateau
         self.__cartes_posees=[]
+
         #Tableau des dimensions du plateau que l'on affiche, permet de rendre le plateau dynamique
         self.__dimensions=[[0,0],[0,0]]
+
         #attribut qui permet de garder en memoire la position de la carte gold
         self.__pos_gold=[]
+
         #attribut qui permet de garder en memoire la position de la carte start
         self.__pos_start=[]
+
         #attribut qui permet de garder en memoire les positions des cartes pierres
         self.__pos_stone=[]
+
         #attribut qui permet de determiner si la carte gold a été trouvé 
         self.__gold_found=0
+
         #Variable qui permet d'afficher à quelle manche le jeu est
         self.no_manche=0 #L'attribut est publique car il doit pouvoir être modifié depuis l'extérieur 
 
@@ -98,7 +105,7 @@ class Plateau(object):
                         self.__cartes_posees[i].face=1
                         self.__gold_found=1
                         
-
+            #On verifie si la carte a été posé à coté d'une carte pierre
             for pos_stone in self.__pos_stone:
                 if ((pos[0]==pos_stone[0]+1 or pos[0]==pos_stone[0]-1) and pos[1]==pos_stone[1]) or ((pos[1]==pos_stone[1]+1 or pos[1]==pos_stone[1]-1) and pos[0]==pos_stone[0]):
                     for carte in self.__cartes_posees:
@@ -116,15 +123,9 @@ class Plateau(object):
                 break
         if etat==True:
             self.__pathmap[pos[0]][pos[1]]=[0,1,1,1]
-        #La methode retourne un booléen qui indique si lopération est  un succès
+        #La methode retourne un booléen qui indique si l'opération est un succès
         return etat
 
-
-
-
-
- 
-    
     #Fonction qui réinitialise le plateau
     def reset_plateau(self):
         self.__pathmap=np.ones((30,30,5),int)
@@ -144,13 +145,14 @@ class Plateau(object):
             if j==self.__dimensions[1][0] :
                 print("  |",end = "")
             else:
+                #On gére le cas où le numéro de colonne comporte 2 caractères
                 if (j-1)<0 or (j-1)>=10:
                     print(f" {j-1}  ",end = "")
                 else:
                     print(f"  {j-1}  ",end = "")
         print("|")
 
-        #affichage de la deuxieme ligne
+        #affichage de la deuxieme ligne, partie supérieur du cadre
         for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
             if j==self.__dimensions[1][0] :
                 print("--+",end = "")
@@ -161,12 +163,11 @@ class Plateau(object):
         for i in range(self.__dimensions[0][0],self.__dimensions[0][1]):
             for x in range(0,3):
                 if x==1:
+                    #On gére le cas où le numéro de ligne comporte 2 caractères
                     if i<0 or i>=10:
                         print(i,end = "|")
-                        #print("|",end = "")
                     else:
                         print(f" {i}",end = "|")
-                        #print("|",end = "")
                 else:
                     print("  |",end = "")
                 for j in range(self.__dimensions[1][0],self.__dimensions[1][1]):
@@ -178,7 +179,7 @@ class Plateau(object):
                                 self.__cartes_posees[k].affiche(x)
                 print("|")
 
-        #affichage de la derniere ligne
+        #affichage de la derniere ligne, partie inférieur du cadre
         for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
             if j==self.__dimensions[1][0] :
                 print("--+",end = "")

@@ -14,20 +14,30 @@ class Human(Player):
     def __init__(self,name,role,nb_players):
         super ( ) . __init__ (name,role,nb_players)
 
+#Fonction qui affiche l'état du jeu pour le joueur humain
     def __print_game_state_player(self,plateau):
         if not isinstance ( plateau , Plateau ) :
             print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
             sys.exit()
         #affichage du plateau et de la main du joueur dont c'est la tour
         os.system('cls' if os.name == 'nt' else 'clear')  #efface le contenue de la console, on verifie si on est sur windows ou pas
+
+        #Affiche à quelle manche on est
         print("+-----------+")
         print("| ROUND : {0} |".format(plateau.no_manche))
         print("+-----------+")
+
+        #Affiche le plateau
         plateau.affiche()
         print("It is {0} turn, your role is: {1}".format(self.name,self.role))
+
+        #Affiche la main du joueur
         self.hand.affiche()
+
+        #Affiche l'état de ses outils
         self.hand.affiche_tools()
 
+    #Methode qui permet de demander au joueur quelle action il veut prendre
     def __choix_action(self,plateau):
 
         if not isinstance ( plateau , Plateau ) :
@@ -66,8 +76,8 @@ class Human(Player):
 
         return choix_action
 
+    #Methode qui permet de changer d'action si une action n'a pas pu être effectué
     def __change_action(self,plateau):
-
         etat1 = False
         while (etat1 == False):
             print("Do you want to take another action?")
@@ -85,21 +95,24 @@ class Human(Player):
                 self.__print_game_state_player(plateau)
                 print("Please, don't do anything else and just play!")
 
-
         return change
 
+    #Methode qui permet de demander au joueur quelle carte il veut jouer
     def __choix_carte(self,plateau,choix_action):
-    #On demande au joueur quel carte il veut jouer
+        #On s'assure qu'un plateau a bien été mis en parametre
         if not isinstance ( plateau , Plateau ) :
             print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
             sys.exit()
 
+        #On s'assure que la valeur de choix donné en entrée est correct
+        if choix_action !=0 and choix_action !=1:
+            print("Erreur: le choix d'action entrée en paramètre ne correspond à aucune action possible")
+            sys.exit()
+
+
         #On s'assure que le joueur choisisse une de ses cartes
         etat = False
         change = 0
-
-
-
         while (etat == False and change == 0):
             self.__print_game_state_player(plateau)
             print("What card would you like to chose (1 to {0})?".format(len(self.hand.cards)))
@@ -128,10 +141,12 @@ class Human(Player):
         #On recupere la carte que le joueur a choisi
         choix_carte=self.hand.cards[no_carte]
 
+        #La valeur change permet au joueur de changer d'action
         return change,choix_carte
 
-    
+    #Methode qui permet de choisir une position où placer la carte
     def __choix_pos(self,plateau,card):
+        #On verifie les parametres d'entrée
         if not isinstance ( plateau , Plateau ) :
             print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
             sys.exit()
@@ -142,7 +157,6 @@ class Human(Player):
         pos=[]
         x=0
         y=0
-
 
         self.__print_game_state_player(plateau)
         print("Where do you want to place your card ?")
@@ -181,9 +195,10 @@ class Human(Player):
                 print("Please place the card on the board (-10<=i<=10) (-10<=j<=10)")
                 print("Where do you want to place your card ?")
 
-
+        #La valeur change permet au joueur de changer d'action
         return change, pos
 
+    #Methode qui permet d'utiliser une carte action_tools
     def __use_tools_card(self,players,choix_carte):
         #Revoir cette fonction, augmenter solidité
         #Fonction qui applique une carte d'action d'outils
@@ -235,11 +250,13 @@ class Human(Player):
                 players[choix_player].hand.tools[choix_carte.vectapparence[1]-4]=0
                 if choix_carte.vectapparence[2] != 0 :
                     players[choix_player].hand.tools[choix_carte.vectapparence[2]-4]=0
+
+        #La valeur change permet au joueur de changer d'action
         return change
         
 
     
-
+    #Methode qui fait jouer le joueur pendant un tour
     def tourjoueur(self,plateau,pioche,defausse,players):
 
         change = 1

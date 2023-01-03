@@ -43,7 +43,3 @@ class Deck(object):
 
     @property
     def cartes(self) : return self.__cartes
-
-    # @cartes.setter
-    # def cartes(self,cartes):
-    #     self.__cartes=cartes

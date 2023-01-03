@@ -23,6 +23,7 @@ class SABOOTERS(object):
         self.__joueurs=[]
         self.__plateau=Plateau()
 
+    #Methode qui permet d'initialiser une partie
     def __initpartie(self):
         #initialisation du menu
         self.__menu.start_game()
@@ -31,7 +32,7 @@ class SABOOTERS(object):
         for i in range(0,self.__menu.number):
             self.__joueurs.append(Human(self.__menu.players_name[i], self.__menu.roles[i], self.__menu.number))
 
-
+    #Methode qui permet d'initialiser une manche
     def __initmanche(self):
         #initialisation de la manche
 
@@ -60,6 +61,7 @@ class SABOOTERS(object):
             for j in range(self.__joueurs[i].hand.hand_size):
                 self.__joueurs[i].piocher_carte(self.__pioche)
 
+    #Déroulement d'une manche
     def __manche(self):
         #On initialise la manche
         self.__initmanche()
@@ -101,7 +103,7 @@ class SABOOTERS(object):
         self.__plateau.reset_plateau()
         
 
-
+    #Déroulement d'une partie
     def start_game(self):
         #On initialise la partie
         self.__initpartie()
