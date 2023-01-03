@@ -95,7 +95,8 @@ class SABOOTERS(object):
 
         # Si l'or n'a pas été trouvé les sabooters gagnent
         if gold_found == 0:
-            self.__menu.fin_de_manche(state)
+            state = 1
+            self.__menu.fin_de_manche(state,current_indice)
             pass
 
         # On vide la pioche et la defausse
