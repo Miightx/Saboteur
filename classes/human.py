@@ -24,7 +24,7 @@ class Human(Player):
         print("| ROUND : {0} |".format(plateau.no_manche))
         print("+-----------+")
         plateau.affiche()
-        print("It is {0} turn:".format(self.name))
+        print("It is {0} turn, your role is: {1}".format(self.name,self.role))
         self.hand.affiche()
         self.hand.affiche_tools()
 
