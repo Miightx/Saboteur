@@ -27,7 +27,7 @@ class SABOOTERS(object):
         #initialisation des joueurs
         for i in range(0,self.__menu.number):
             self.__joueurs.append(Human(self.__menu.players_name[i], self.__menu.roles[i], self.__menu.number))
-
+    
     #Methode qui permet d'initialiser une manche
     def __initmanche(self):
         # initialisation de la manche
