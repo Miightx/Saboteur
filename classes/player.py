@@ -46,8 +46,12 @@ class Player(ABC):
 
     @role.setter
     def role(self,role):
-        if role == S:
+        if role == "S":
             self.__role=role
+        #On defini par default "C" comme role
+        else:
+            self.__role="C"
+
 
     @property
     def hand(self):

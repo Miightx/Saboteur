@@ -32,6 +32,10 @@ class SABOOTERS(object):
     def __initmanche(self):
         # initialisation de la manche
         self.__menu.change_role()   # changement de rôles pour chaque manche
+        i=0
+        for joueur in self.__joueurs:
+            joueur.role=self.__menu.roles[i]
+            i+=1
 
         # On melange les cartes
         self.__deck.random_cartes()
