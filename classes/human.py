@@ -28,7 +28,8 @@ class Human(Player):
         print("+-----------+")
 
         #Affiche le plateau
-        plateau.affiche()
+        #plateau.affiche()
+        print(plateau)
         print("It is {0} turn, your role is: {1}".format(self.name,self.role))
 
         #Affiche la main du joueur
