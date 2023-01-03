@@ -24,44 +24,21 @@ class SABOOTERS(object):
         # initialisation du menu
         self.__menu.start_game()
 
-<<<<<<< HEAD
         #initialisation des joueurs
         for i in range(0,self.__menu.number):
             self.__joueurs.append(Human(self.__menu.players_name[i], self.__menu.roles[i], self.__menu.number))
 
     #Methode qui permet d'initialiser une manche
-=======
-
->>>>>>> BrancheLaurent2
     def __initmanche(self):
         # initialisation de la manche
         self.__menu.change_role()   # changement de rôles pour chaque manche
-        for i in range(0, self.__menu.number):
-            self.__joueurs.append(Human(self.__menu.players_name[i], self.__menu.roles[i], self.__menu.number))
-        # initialisation des joueurs
+
         # On melange les cartes
         self.__deck.random_cartes()
 
         # On defini les positions des cartes "END"
         set_pos_gold=random.sample([[0,2],[2,2],[4,2]], 3)
 
-<<<<<<< HEAD
-        #repartition des cartes
-        k=0
-        for carte in self.__deck.cartes:
-            #On place les cartes arrive/depart sur le plateau
-            if carte.typ == 3 or carte.typ == 4 or carte.typ == 5:
-                if carte.typ==3:
-                    self.__plateau.add_carte(carte,[2,0],1)
-                else:
-                    self.__plateau.add_carte(carte,set_pos_gold[k],1)
-                    k=k+1
-            #On cree la pioche avec les cartes action et chemin
-            else :
-                self.__pioche.append(carte)
-        
-        #Les joueurs piochent leurs cartes
-=======
         # repartition des cartes
         k = 0
         for carte in self.__deck.cartes:
@@ -77,7 +54,6 @@ class SABOOTERS(object):
                 self.__pioche.append(carte)
 
         # Les joueurs piochent leurs cartes
->>>>>>> BrancheLaurent2
         for i in range(self.__menu.number):
             for j in range(self.__joueurs[i].hand.hand_size):
                 self.__joueurs[i].piocher_carte(self.__pioche)
@@ -116,6 +92,7 @@ class SABOOTERS(object):
                     self.__menu.fin_de_manche(state,current_indice)
                     break
                 current_indice += 1
+
         # Si l'or n'a pas été trouvé les sabooters gagnent
         if gold_found == 0:
             self.__menu.fin_de_manche(state)

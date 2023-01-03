@@ -30,11 +30,8 @@ class Human(Player):
         #Affiche le plateau
         plateau.affiche()
         print("It is {0} turn, your role is: {1}".format(self.name,self.role))
-<<<<<<< HEAD
 
         #Affiche la main du joueur
-=======
->>>>>>> BrancheLaurent2
         self.hand.affiche()
 
         #Affiche l'état de ses outils
@@ -108,7 +105,7 @@ class Human(Player):
             sys.exit()
 
         #On s'assure que la valeur de choix donné en entrée est correct
-        if choix_action !=0 and choix_action !=1:
+        if choix_action !=1 and choix_action !=2:
             print("Erreur: le choix d'action entrée en paramètre ne correspond à aucune action possible")
             sys.exit()
 
@@ -140,9 +137,12 @@ class Human(Player):
                 print("Please, do not steal a card from your neighbour!")
                 change=self.__change_action(plateau)
 
-
-        #On recupere la carte que le joueur a choisi
-        choix_carte=self.hand.cards[no_carte]
+        if change==0:
+            #On recupere la carte que le joueur a choisi
+            choix_carte=self.hand.cards[no_carte]
+        else:
+            #On crée une carte qui ne sera pas utilisé
+            choix_carte=Action_card(1)
 
         #La valeur change permet au joueur de changer d'action
         return change,choix_carte
