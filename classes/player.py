@@ -44,6 +44,11 @@ class Player(ABC):
     def role(self):
         return self.__role
 
+    @role.setter
+    def role(self,role):
+        if role == S:
+            self.__role=role
+
     @property
     def hand(self):
         return self.__hand
