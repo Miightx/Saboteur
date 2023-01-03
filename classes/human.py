@@ -30,8 +30,11 @@ class Human(Player):
         #Affiche le plateau
         plateau.affiche()
         print("It is {0} turn, your role is: {1}".format(self.name,self.role))
+<<<<<<< HEAD
 
         #Affiche la main du joueur
+=======
+>>>>>>> BrancheLaurent2
         self.hand.affiche()
 
         #Affiche l'état de ses outils

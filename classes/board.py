@@ -136,7 +136,7 @@ class Plateau(object):
         self.__dimensions=[[0,0],[0,0]]
         self.__pos_gold=[]
         self.__pos_stone=[]
-
+        self.__gold_found = 0
     #Fonction qui affiche le plateau
     def affiche(self):
         #Fonction qui affiche le plateau de jeu 
