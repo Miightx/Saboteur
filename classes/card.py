@@ -41,6 +41,9 @@ class Carte(ABC):
     @abstractmethod
     def affiche(self,x): pass
 
+    @abstractmethod
+    def part_st(self,x): pass
+
     @property
     def typ(self) : return self.__typ
     @property

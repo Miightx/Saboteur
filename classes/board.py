@@ -137,6 +137,59 @@ class Plateau(object):
         self.__pos_gold=[]
         self.__pos_stone=[]
         self.__gold_found = 0
+
+    #Fonction ToString
+    def __str__(self):
+        st=""
+        #Fonction qui affiche le plateau de jeu 
+        #affichage de la première ligne
+        for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
+            if j==self.__dimensions[1][0] :
+                st+="  |"
+            else:
+                #On gére le cas où le numéro de colonne comporte 2 caractères
+                if (j-1)<0 or (j-1)>=10:
+                    st+=f" {j-1}  "
+                else:
+                    st+=f"  {j-1}  "
+        st+="|"+"\n"
+
+        #affichage de la deuxieme ligne, partie supérieur du cadre
+        for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
+            if j==self.__dimensions[1][0] :
+                st+="--+"
+            else:
+                st+="-----"
+        st+="+--"+"\n"
+
+        for i in range(self.__dimensions[0][0],self.__dimensions[0][1]):
+            for x in range(0,3):
+                if x==1:
+                    #On gére le cas où le numéro de ligne comporte 2 caractères
+                    if i<0 or i>=10:
+                        st+=f"{i}|"
+                    else:
+                        st+=f" {i}|"
+                else:
+                    st+="  |"
+                for j in range(self.__dimensions[1][0],self.__dimensions[1][1]):
+                    if self.__pathmap[i+15][j+15][0]==0:
+                        st+="     "
+                    else:
+                        for k in range(len(self.__cartes_posees)):
+                            if self.__cartes_posees[k].pos == [i,j]:
+                                st+=self.__cartes_posees[k].part_st(x)
+                st+="|"+"\n"
+
+        #affichage de la derniere ligne, partie inférieur du cadre
+        for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
+            if j==self.__dimensions[1][0] :
+                st+="--+"
+            else:
+               st+="-----"
+        st+="+--"+"\n"
+        return st
+
     #Fonction qui affiche le plateau
     def affiche(self):
         #Fonction qui affiche le plateau de jeu 
