@@ -15,11 +15,11 @@ class Deck(object):
         self.__cartes.append(Path_card(4))
         for i in range(2):
             self.__cartes.append(Path_card(5))
-        #for i in range(40):
-        for i in range(10):
+        for i in range(40):
+        #for i in range(10):
             self.__cartes.append(Path_card(0))
-        #for i in range(26):
-        for i in range(10):
+        for i in range(26):
+        #for i in range(10):
             actiontyp=np.random.choice(np.array([0,1,2,3,4]))
             if actiontyp==0:
                 self.__cartes.append(Action_card(6))
