@@ -166,7 +166,7 @@ class Human(Player):
             self.__print_game_state_player(plateau)
             print("Which way do you want to orient the card (0 or 1)?")
             choix_carte.sens=0
-            print(choix_carte)
+            print(choix_carte,end="\n\n")
             choix_carte.sens=1
             print(choix_carte)
             sens=input()
