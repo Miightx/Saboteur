@@ -117,7 +117,3 @@ class SABOOTERS(object):
             self.__manche()
         self.__menu.fin_de_partie()
 
-
-    # def tour_pour_rien(self):
-    #     for i in range(3):
-    #         self.__joueurs[0].tourjoueur(self.__plateau, self.__pioche, self.__defausse)

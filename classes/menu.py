@@ -230,69 +230,6 @@ class Menu(object):
     def game_start(self):
         return self.__aff_wel(), self.__get_number(), self.__players(), self.__affichage_debut_fin()
 
-<<<<<<< HEAD
-=======
-    def winner(self,state,current_indice):
-        self.state = state
-        etat = False
-        score_manche = np.zeros(self.__number)
-        card_pull = 0
-        self.__current_indice = current_indice
-        if (self.state == 1): #Disons que c'est le cas où les saboteurs ont gagnés == 1
-            print('Saboteurs won this game!')
-            print('')
-            for k in range (self.__number):
-                if (self.__count[0] == 1):
-                    if (self.__roles[k] == 'S'):  #Un sabotteur, il obtient 4 pts
-                        score_manche[k]= 4
-                elif(self.__count[0] == 2 or self.__count[0] == 3): #2 ou 3 ils obtiennent 3 pts
-                    if (self.__roles[k] == 'S'):
-                        score_manche[k] = 3
-        elif (self.state == 2):     #Cas ou Mineurs gagnent == 2
-            print('Diggers won this game!')
-            self.__sharing_gold = np.random.randint(1, 4, size=self.__number)  # Carte d'or valant entre 1 et 3
-            self.__sharing_gold = self.__sharing_gold.tolist()
-            while (len(self.__sharing_gold) != 0):  # Jusqu'a quand y'a plus de pts a distribuer
-                if self.__current_indice == self.__number:
-                    self.__current_indice = 0
-                if (self.__roles[self.__current_indice] == 'C'):  # Personnes étant Mineur                while (current_indice < self.count[1]):  # Addition des pts des mineurs quand il y a plus de cartes or que de mineurs
-                    print("It is the remaining gold cards")
-                    print(self.__sharing_gold)
-                    print(f"To {self.__players_name[self.__current_indice]} to choose the card he/she wishes")
-                    while (etat == False):  # Choix de la carte d'or
-                        print(f"Please choose a value between 1 and {self.__number - card_pull}")
-                        self.__choice = input()
-                        if (self.__choice.isdecimal() == True):
-                            self.__choice = int(self.__choice)
-                            if (self.__choice > 0 or self.__choice < len(self.__sharing_gold) - card_pull):
-                                etat = True
-                            else:
-                                print("Please choose another value")
-                    score_manche[self.__current_indice] += self.__sharing_gold[self.__choice - 1]  # Stockage des scores pour calcuer en fin de partie
-                    print(f"{self.__players_name[self.__current_indice]} choose {self.__sharing_gold[(self.__choice) - 1]}")
-                    del self.__sharing_gold[self.__choice - 1]  # Enlever la carte d'or choisit
-                    self.__current_indice += 1
-                    card_pull += 1
-                    etat = False
-                    if not (self.__sharing_gold):
-                        self.__current_indice = 11
-                elif self.__roles[self.__current_indice] == 'S':
-                    self.__current_indice += 1
-            print("Voici la valeur des cartes or")
-            print(self.__sharing_gold)
-        print(f"The score is {score_manche}")
-        self.__spm.append(score_manche)
-    def fin_de_manche(self,state,current_indice):
-        self.count_winner()
-        self.winner(state,current_indice)
-    def fin_de_partie(self):
-
-        for i in range(self.__number):
-            score_for_one_player = self.__spm[0][i] + self.__spm[1][i] + self.__spm[2][i]
-            self.__total_score.append(score_for_one_player)
-        print(f' Le score final est de {self.__total_score}')
-        
->>>>>>> BrancheJulienLaurent3
     @property
     def total_score(self):
         return self.__total_score
