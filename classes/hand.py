@@ -20,6 +20,23 @@ class Hand(object):#0       1       2       3       4       5       6       7   
         else:
             self.__hand_size = 4
 
+    #Methode ToString pour afficher la main du joueur
+    def __str__(self):
+        st=""
+        for x in range(0,3):
+            for i in range(2*len(self.__cards)):
+                if x==1 and i%2==0:
+                    st+=f"{(i//2)+1}: "
+                elif i%2==0:
+                    st+="   "
+                elif i%2 != 0 and x==1:
+                    st+=self.__cards[(i-1)//2].part_st(x)+", "
+                elif i%2 != 0:
+                    st+=self.__cards[(i-1)//2].part_st(x)+"  "
+            st+="\n"
+        return st
+
+
     #Fonction qui affiche les outils du joueur
     def affiche_tools(self):
         print("")

@@ -33,7 +33,7 @@ class Human(Player):
         print("It is {0} turn, your role is: {1}".format(self.name,self.role))
 
         #Affiche la main du joueur
-        self.hand.affiche()
+        print(self.hand)
 
         #Affiche l'état de ses outils
         self.hand.affiche_tools()
