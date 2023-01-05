@@ -206,6 +206,7 @@ class Menu(object):
             score_for_one_player = self.__spm[0][i] + self.__spm[1][i] + self.__spm[2][i]
             self.__total_score.append(score_for_one_player)
         print(f' Le score final est de {self.__total_score}')
+        
     @property
     def total_score(self):
         return self.__total_score

@@ -6,6 +6,7 @@ from .card import Carte
 from .board import Plateau
 from .player import Player
 from .action_card import Action_card
+from .path_card import Path_card
 import sys
 
 
@@ -148,9 +149,50 @@ class Human(Player):
         #La valeur change permet au joueur de changer d'action
         return change,choix_carte
 
+    #Methode qui permet au joueur de choisir le sens de la carte
+    def choix_sens_carte(self,plateau,choix_carte):
+        #On verifie la nature des paramètres
+
+        if not isinstance ( plateau , Plateau ) :
+            print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
+            sys.exit()
+
+        if not isinstance (choix_carte , Path_card ) :
+            print("Erreur: Le joueur a besoin d'une carte pour prendre une decision")
+            sys.exit()
+
+
+        #On s'assure que le joueur choisisse sens=0 ou sens=1
+        etat = False
+        change = 0
+        while (etat == False and change == 0):
+            self.__print_game_state_player(plateau)
+            print("Which way do you want to orient the card (0 or 1)?")
+            choix_carte.sens=0
+            print(choix_carte)
+            choix_carte.sens=1
+            print(choix_carte)
+            sens=input()
+            if (sens.isdecimal()==True):
+                sens=int(sens)
+                if sens == 0 or sens ==1:
+                        etat = True
+                else:
+                    self.__print_game_state_player(plateau)
+                    print("It's a card, there are only two possibilities...")
+                    change=self.__change_action(plateau)
+            else:
+                self.__print_game_state_player(plateau)
+                print("It's a card, there are only two possibilities...")
+                change=self.__change_action(plateau)
+        choix_carte.sens=sens
+        return change
+        
+
+
     #Methode qui permet de choisir une position où placer la carte
     def __choix_pos(self,plateau,card):
-        #On verifie les parametres d'entrée
+        #On verifie les paramètres d'entrée
         if not isinstance ( plateau , Plateau ) :
             print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
             sys.exit()
@@ -163,6 +205,7 @@ class Human(Player):
         y=0
 
         self.__print_game_state_player(plateau)
+        print(card)
         print("Where do you want to place your card ?")
 
         #On s'assure que le joueur pose bien la carte sur le plateau, qu'il ne superpose pas les cartes et que la carte qu'il pose est compatible avec les autres cartes
@@ -176,26 +219,31 @@ class Human(Player):
                 j = int(j)
                 if (i >= -10 and j <= 10 and i >= -10 and j <= 10):
                     if plateau.pathmap[i+15][j+15][0]==0  :
-                        if ((card.path[1]==plateau.pathmap[i+14][j+15][4] or plateau.pathmap[i+14][j+15][0]==0)  and (card.path[2]==plateau.pathmap[i+15][j+14][3] or plateau.pathmap[i+15][j+14][0]==0) and (card.path[3]==plateau.pathmap[i+15][j+16][2] or plateau.pathmap[i+15][j+16][0]==0) and (card.path[4]==plateau.pathmap[i+16][j+15][1] or plateau.pathmap[i+16][j+15][0]==0)) and (plateau.pathmap[i+14][j+15][0]==1 or plateau.pathmap[i+16][j+15][0]==1 or plateau.pathmap[i+15][j+14][0]==1 or plateau.pathmap[i+15][j+16][0]==1):
+                        if ((card.path[card.sens][1]==plateau.pathmap[i+14][j+15][4] or plateau.pathmap[i+14][j+15][0]==0)  and (card.path[card.sens][2]==plateau.pathmap[i+15][j+14][3] or plateau.pathmap[i+15][j+14][0]==0) and (card.path[card.sens][3]==plateau.pathmap[i+15][j+16][2] or plateau.pathmap[i+15][j+16][0]==0) and (card.path[card.sens][4]==plateau.pathmap[i+16][j+15][1] or plateau.pathmap[i+16][j+15][0]==0)) and (plateau.pathmap[i+14][j+15][0]==1 or plateau.pathmap[i+16][j+15][0]==1 or plateau.pathmap[i+15][j+14][0]==1 or plateau.pathmap[i+15][j+16][0]==1):
                             etat = True
                             pos=[i,j]
                         else:
                             self.__print_game_state_player(plateau)
+                            print(card)
                             print("The card does not fit with the other cards")
                             change=self.__change_action(plateau)
                             if change == 0:
                                 self.__print_game_state_player(plateau)
+                                print(card)
                                 print("Where do you want to place your card ?")
                     else:
                         self.__print_game_state_player(plateau)
+                        print(card)
                         print("A card is already positioned at the desired location, choose another position")
                         print("Where do you want to place your card ?")
                 else:
                     self.__print_game_state_player(plateau)
+                    print(card)
                     print("Please place the card on the board (-10<=i<=10) (-10<=j<=10)")
                     print("Where do you want to place your card ?")
             except ValueError:
                 self.__print_game_state_player(plateau)
+                print(card)
                 print("Please place the card on the board (-10<=i<=10) (-10<=j<=10)")
                 print("Where do you want to place your card ?")
 
@@ -277,12 +325,16 @@ class Human(Player):
                 else:
                     #La carte est un chemin
                     if choix_carte.typ==0:
-                        #On demande au joueur où il veut poser sa carte
-                        change, pos=self.__choix_pos(plateau,choix_carte)
+                        #On demande au joueur dans quelle sens il veux poser sa carte
+                        change=self.choix_sens_carte(plateau, choix_carte)
 
                         if change==0:
-                            #La carte est placee sur le plateau 
-                            plateau.add_carte(choix_carte,pos)
+                            #On demande au joueur où il veut poser sa carte
+                            change, pos=self.__choix_pos(plateau,choix_carte)
+
+                            if change==0:
+                                #La carte est placee sur le plateau 
+                                plateau.add_carte(choix_carte,pos)
 
 
                     #La carte est une carte action d'outils

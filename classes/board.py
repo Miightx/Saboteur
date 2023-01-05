@@ -95,7 +95,7 @@ class Plateau(object):
             self.__dimensions[1][1]=pos[1]+1
 
         #On indique qu'une carte est posée à la position de la carte
-        self.__pathmap[carte.pos[0]+15][carte.pos[1]+15]=carte.path
+        self.__pathmap[carte.pos[0]+15][carte.pos[1]+15]=carte.path[carte.sens]
 
         if init_game==0:
             #On verifie si la carte a été posé à coté d'une carte END
@@ -190,55 +190,55 @@ class Plateau(object):
         st+="+--"+"\n"
         return st
 
-    #Fonction qui affiche le plateau
-    def affiche(self):
-        #Fonction qui affiche le plateau de jeu 
-        #affichage de la première ligne
-        for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
-            if j==self.__dimensions[1][0] :
-                print("  |",end = "")
-            else:
-                #On gére le cas où le numéro de colonne comporte 2 caractères
-                if (j-1)<0 or (j-1)>=10:
-                    print(f" {j-1}  ",end = "")
-                else:
-                    print(f"  {j-1}  ",end = "")
-        print("|")
+    # #Fonction qui affiche le plateau
+    # def affiche(self):
+    #     #Fonction qui affiche le plateau de jeu 
+    #     #affichage de la première ligne
+    #     for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
+    #         if j==self.__dimensions[1][0] :
+    #             print("  |",end = "")
+    #         else:
+    #             #On gére le cas où le numéro de colonne comporte 2 caractères
+    #             if (j-1)<0 or (j-1)>=10:
+    #                 print(f" {j-1}  ",end = "")
+    #             else:
+    #                 print(f"  {j-1}  ",end = "")
+    #     print("|")
 
-        #affichage de la deuxieme ligne, partie supérieur du cadre
-        for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
-            if j==self.__dimensions[1][0] :
-                print("--+",end = "")
-            else:
-                print("-----",end = "")
-        print("+--")
+    #     #affichage de la deuxieme ligne, partie supérieur du cadre
+    #     for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
+    #         if j==self.__dimensions[1][0] :
+    #             print("--+",end = "")
+    #         else:
+    #             print("-----",end = "")
+    #     print("+--")
 
-        for i in range(self.__dimensions[0][0],self.__dimensions[0][1]):
-            for x in range(0,3):
-                if x==1:
-                    #On gére le cas où le numéro de ligne comporte 2 caractères
-                    if i<0 or i>=10:
-                        print(i,end = "|")
-                    else:
-                        print(f" {i}",end = "|")
-                else:
-                    print("  |",end = "")
-                for j in range(self.__dimensions[1][0],self.__dimensions[1][1]):
-                    if self.__pathmap[i+15][j+15][0]==0:
-                        print("     ",end = "")
-                    else:
-                        for k in range(len(self.__cartes_posees)):
-                            if self.__cartes_posees[k].pos == [i,j]:
-                                self.__cartes_posees[k].affiche(x)
-                print("|")
+    #     for i in range(self.__dimensions[0][0],self.__dimensions[0][1]):
+    #         for x in range(0,3):
+    #             if x==1:
+    #                 #On gére le cas où le numéro de ligne comporte 2 caractères
+    #                 if i<0 or i>=10:
+    #                     print(i,end = "|")
+    #                 else:
+    #                     print(f" {i}",end = "|")
+    #             else:
+    #                 print("  |",end = "")
+    #             for j in range(self.__dimensions[1][0],self.__dimensions[1][1]):
+    #                 if self.__pathmap[i+15][j+15][0]==0:
+    #                     print("     ",end = "")
+    #                 else:
+    #                     for k in range(len(self.__cartes_posees)):
+    #                         if self.__cartes_posees[k].pos == [i,j]:
+    #                             self.__cartes_posees[k].affiche(x)
+    #             print("|")
 
-        #affichage de la derniere ligne, partie inférieur du cadre
-        for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
-            if j==self.__dimensions[1][0] :
-                print("--+",end = "")
-            else:
-               print("-----",end = "")
-        print("+--")
+    #     #affichage de la derniere ligne, partie inférieur du cadre
+    #     for j in range(self.__dimensions[1][0],self.__dimensions[1][1]+1):
+    #         if j==self.__dimensions[1][0] :
+    #             print("--+",end = "")
+    #         else:
+    #            print("-----",end = "")
+    #     print("+--")
 
     @property
     def cartes_posees(self) : return self.__cartes_posees

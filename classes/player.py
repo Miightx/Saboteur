@@ -34,8 +34,6 @@ class Player(ABC):
     def tourjoueur(self,plateau,pioche,defausse): pass
 
 
-
-
     @property
     def name(self):
         return self.__name

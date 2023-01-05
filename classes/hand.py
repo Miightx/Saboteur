@@ -61,23 +61,23 @@ class Hand(object):#0       1       2       3       4       5       6       7   
             print("")
         print("")
 
-    #Fonction qui affiche la main du joueur 
-    def affiche(self):
+    # #Fonction qui affiche la main du joueur 
+    # def affiche(self):
         
-        for x in range(0,3):
-            for i in range(2*len(self.__cards)):
-                if x==1 and i%2==0:
-                    print((i//2)+1,end = "")
-                    print(": ",end = "")
-                elif i%2==0:
-                    print("   ",end = "")
-                elif i%2 != 0 and x==1:
-                    self.__cards[(i-1)//2].affiche(x)
-                    print(", ",end = "")
-                elif i%2 != 0:
-                    self.__cards[(i-1)//2].affiche(x)
-                    print("  ",end = "")
-            print("")
+    #     for x in range(0,3):
+    #         for i in range(2*len(self.__cards)):
+    #             if x==1 and i%2==0:
+    #                 print((i//2)+1,end = "")
+    #                 print(": ",end = "")
+    #             elif i%2==0:
+    #                 print("   ",end = "")
+    #             elif i%2 != 0 and x==1:
+    #                 self.__cards[(i-1)//2].affiche(x)
+    #                 print(", ",end = "")
+    #             elif i%2 != 0:
+    #                 self.__cards[(i-1)//2].affiche(x)
+    #                 print("  ",end = "")
+    #         print("")
 
 
     
