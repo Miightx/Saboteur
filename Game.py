@@ -1,4 +1,4 @@
 from classes import SABOOTERS, Deck, Menu, Player, Hand, Path_card, Action_card, Plateau, Human
 
-jeu = SABOOTERS()
-jeu.start_game()
+play = SABOOTERS()
+play.start_game()

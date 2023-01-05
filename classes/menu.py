@@ -27,15 +27,15 @@ class Menu(object):
     def __get_number(self):
         """Put the number of players"""
         print("How many players?")
-        etat = False
-        while etat == False:
+        state = False
+        while state == False:
             self.__number = input()
             if (len(self.__number) == 1 or len(self.__number) == 2):
                 if self.__number.isdecimal() == True:
                     self.__number = int(self.__number)
                     if (self.__number > 2 and self.__number < 11):
                         print("There is", self.__number, "players")
-                        etat = True
+                        state = True
                     else:
                         print("Please choose a number between 3 and 10")
                 else:
@@ -55,19 +55,19 @@ class Menu(object):
             self.__players_name.append(joueur)
             print('The name of the player is:', self.__players_name[k])
             print('Please press 0 if the player is an AI and press 1 if the player is an Human')
-            etat = False
-            while etat == False:
+            state = False
+            while state == False:
                 bot = input()
                 if bot == '1':
                     self.__bot.append("Human")
-                    etat = True
+                    state = True
 
                 elif bot == '0':
                     self.__bot.append("AI")
-                    etat = True
+                    state = True
                 else:
                     print("Please select 0 (AI) or 1 (Human):")
-                    etat = False
+                    state = False
 
     def __cartes_roles(self):  # Saboteur or Digger
         """Role of each player"""
@@ -123,7 +123,7 @@ class Menu(object):
             state = 2: Digger won the set
         Calculate golds (points) for each digger """
         self.__state = state
-        etat = False
+        state = False
         score_manche = np.zeros(self.__number)
         card_pull = 0
         self.__current_indice = current_indice
@@ -148,13 +148,13 @@ class Menu(object):
                     print("It is the remaining gold cards")
                     print(self.__sharing_gold)
                     print(f"To {self.__players_name[self.__current_indice]} to choose the card he/she wishes")
-                    while etat == False:  # Choice of gold card
+                    while state == False:  # Choice of gold card
                         print(f"Please choose a value between 1 and {self.__number - card_pull}")
                         self.__choice = input()
-                        if (self.__choice.isdecimal() == True):
-                            self.__choice = int(self.__choice)
-                            if (self.__choice > 0 or self.__choice < len(self.__sharing_gold) - card_pull):
-                                etat = True
+                        if self.__choice.isdecimal() == True:
+                            self.__choice = np.abs(int(self.__choice))
+                            if self.__choice < self.__number - card_pull:
+                                state = True
                             else:
                                 print("Please choose another value")
                     score_manche[self.__current_indice] += self.__sharing_gold[
@@ -164,7 +164,7 @@ class Menu(object):
                     del self.__sharing_gold[self.__choice - 1]  # Remove the gold card chooses
                     self.__current_indice += 1
                     card_pull += 1
-                    etat = False
+                    state = False
                     if not self.__sharing_gold:
                         self.__current_indice = 11
                 elif self.__roles[self.__current_indice] == 'S':
