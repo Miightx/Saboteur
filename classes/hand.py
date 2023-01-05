@@ -20,62 +20,63 @@ class Hand(object):#0       1       2       3       4       5       6       7   
         else:
             self.__hand_size = 4
 
-    #Fonction qui affiche les outils du joueur
     def affiche_tools(self):
+        """Function that displays the player's tools"""
         print("")
-        for x in range(0,3):
+        for x in range(0, 3):
             for i in range(6):
-                if x==1 and i%2==0:
+                if x == 1 and i % 2 == 0:
                     if i == 0:
-                        print("P:  ",end = "")
+                        print("P:  ", end="")
                     if i == 2:
-                        print("L:  ",end = "")
+                        print("L:  ", end="")
                     if i == 4:
-                        print("W:  ",end = "")
-                elif i%2==0:
-                    print("    ",end = "")
-                elif i%2 != 0:
+                        print("W:  ", end="")
+                elif i % 2 == 0:
+                    print("    ", end="")
+                elif i % 2 != 0:
                     if self.tools[(i-1)//2] == 0:
-                        print(Hand.table_tools[Hand.mat_tools[(i-1)//2][0][x]],end = "")
-                        print("   ",end = "")
+                        print(Hand.table_tools[Hand.mat_tools[(i-1)//2][0][x]], end="")
+                        print("   ", end="")
                     if self.tools[(i-1)//2] == 1:
-                        print(Hand.table_tools[Hand.mat_tools[(i-1)//2][1][x]],end = "")
-                        print("   ",end = "")
+                        print(Hand.table_tools[Hand.mat_tools[(i-1)//2][1][x]], end="")
+                        print("   ", end="")
             print("")
         print("")
 
-    #Fonction qui affiche la main du joueur 
     def affiche(self):
-        
+        """ Function that displays the player's hand """
         for x in range(0,3):
             for i in range(2*len(self.__cards)):
-                if x==1 and i%2==0:
-                    print((i//2)+1,end = "")
-                    print(": ",end = "")
-                elif i%2==0:
-                    print("   ",end = "")
-                elif i%2 != 0 and x==1:
+                if x == 1 and i % 2 == 0:
+                    print((i//2)+1, end="")
+                    print(": ", end="")
+                elif i % 2 == 0:
+                    print("   ",end="")
+                elif i % 2 != 0 and x == 1:
                     self.__cards[(i-1)//2].affiche(x)
-                    print(", ",end = "")
-                elif i%2 != 0:
+                    print(", ", end="")
+                elif i % 2 != 0:
                     self.__cards[(i-1)//2].affiche(x)
-                    print("  ",end = "")
+                    print("  ", end="")
             print("")
 
 
     
-    def add_card(self, card): #ajouter une carte
-        if not isinstance ( card , Carte ) :
-            print("Erreur: uniquement des cartes peuvent être ajouté à la main d'un joueur")
+    def add_card(self, card):
+        """Method for adding a map"""
+        if not isinstance(card, Carte):
+            print("Error: only cards can be added to a player's hand")
             sys.exit()
         if len(self.__cards)==self.__hand_size:
             return
         card.face=1
         self.__cards.append(card)
 
-    def remove_card(self, card): #enlever une carte
-        if not isinstance ( card , Carte ) :
-            print("Erreur: uniquement des cartes peuvent être retiré de la main d'un joueur")
+    def remove_card(self, card):
+        """Method to remove a card"""
+        if not isinstance(card, Carte):
+            print("Error: only cards can be removed from a player's hand")
             sys.exit()
         self.__cards.remove(card)
     

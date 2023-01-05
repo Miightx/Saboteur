@@ -8,9 +8,9 @@ from .path_card import Path_card
 
 
 class Deck(object):
-    #On cree les cartes du deck
+    """Create the cards of the deck"""
     def __init__(self):
-        self.__cartes=[]
+        self.__cartes = []
         self.__cartes.append(Path_card(3))
         self.__cartes.append(Path_card(4))
         for i in range(2):
@@ -20,16 +20,16 @@ class Deck(object):
             self.__cartes.append(Path_card(0))
         #for i in range(26):
         for i in range(10):
-            actiontyp=np.random.choice(np.array([0,1,2,3,4]))
-            if actiontyp==0:
+            actiontyp = np.random.choice(np.array([0,1,2,3,4]))
+            if actiontyp == 0:
                 self.__cartes.append(Action_card(6))
-            else :
+            else:
                 self.__cartes.append(Action_card(1))
         self.__cartes.append(Action_card(2))
 
-    #fonction qui permet de melanger les cartes
     def random_cartes(self):
-        self.__cartes=random.sample(self.__cartes, len(self.__cartes))
+        """Method that allows you to mix cards"""
+        self.__cartes = random.sample(self.__cartes, len(self.__cartes))
 
 
 

@@ -13,97 +13,99 @@ class Action_card(Carte):
 
     def __init__(self,typ):
         super().__init__(typ)
+        # Appearance is drawn at random from the card according to its type
 
-        #On tire au hasard une apparence a la carte selon son type
-        if typ == 1 :
-            #Carte action_tools
-            self.__vectapparence=Carte.mataction[np.random.choice(np.array([1,2,3,4,5,6,7,8,9,10,11,12]))]
-            self.__vectrecto=Carte.matrecto[0]
+        if typ == 1:
+            # Action_tools card
+            self.__vectapparence = Carte.mataction[np.random.choice(np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]))]
+            self.__vectrecto = Carte.matrecto[0]
         elif typ == 2:
-            #Carte map
-            self.__vectapparence=Carte.mataction[13]
-            self.__vectrecto=Carte.matrecto[0]
+            # Map Card
+            self.__vectapparence = Carte.mataction[13]
+            self.__vectrecto = Carte.matrecto[0]
         elif typ == 6:
-            #Carte éboulement
-            self.__vectapparence=Carte.mataction[0]
-            self.__vectrecto=Carte.matrecto[0]
+            # Crumbling card
+            self.__vectapparence = Carte.mataction[0]
+            self.__vectrecto = Carte.matrecto[0]
         else:
-            print("Erreur: la valeur du type de carte est incorrecte, initialisation par default d'une carte action_tools")
+            print("Error: the value of the card type is incorrect, initialization by default of an action_tools card")
             a=input("press any bouton to continue")
-            #Carte action_tools
-            self.__vectapparence=Carte.mataction[np.random.choice(np.array([1,2,3,4,5,6,7,8,9,10,11,12]))]
-            self.__vectrecto=Carte.matrecto[0]
+            # Action_tools card
+            self.__vectapparence = Carte.mataction[np.random.choice(np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]))]
+            self.__vectrecto = Carte.matrecto[0]
         
-    #Methode qui permet d'afficher une partie de la carte
-    def part_st(self,x): #Le parametre x détermine quel partie de la carte on affiche
-        #On affiche la partie de la carte que l'on souhaite afficher
-        if self.face==1:
-            if x==0:
+    def part_st(self,x):    # The x parameter determines which part of the card is displayed
+        """ Method to display a part of the card"""
+        # Display the part of the card you want to see
+        if self.face == 1:
+            if x == 0:
                 return Carte.tableaction[self.__vectapparence[0]]
-            elif x==1:
+            elif x == 1:
                 return Carte.tableaction[self.__vectapparence[1]]
-            elif x==2:
+            elif x == 2:
                 return Carte.tableaction[self.__vectapparence[2]]
             else:
-                print("Erreur: la valeur d'affichage de la carte est incorrecte, veuilliez choisir une valeur entre 0 et 2")
+                print("Error: the display value of the card is incorrect, please choose a value between 0 and 2")
                 sys.exit()
-        if self.face==0:
-            if x==0:
+        if self.face == 0:
+            if x == 0:
                 return Carte.tablerecto[self.__vectrecto[0]]
-            elif x==1:
+            elif x == 1:
                 return Carte.tablerecto[self.__vectrecto[1]]
-            elif x==2:
+            elif x == 2:
                 return Carte.tablerecto[self.__vectrecto[2]]
             else:
-                print("Erreur: la valeur d'affichage de la carte est incorrecte, veuilliez choisir une valeur entre 0 et 2")
+                print("Error: the display value of the card is incorrect, please choose a value between 0 and 2")
                 sys.exit()
 
-    #Methode qui permet d'afficher une partie de la carte
-    def affiche(self,x): #Le parametre x détermine quel partie de la carte on affiche
-        #On affiche la partie de la carte que l'on souhaite afficher
-        if self.face==1:
-            if x==0:
-                print(Carte.tableaction[self.__vectapparence[0]],end = "")
-            elif x==1:
-                print(Carte.tableaction[self.__vectapparence[1]],end = "")
-            elif x==2:
-                print(Carte.tableaction[self.__vectapparence[2]],end = "")
+    def affiche(self,x):    # The x parameter determines which part of the card is displayed
+        """Method to display a part of the card"""
+
+        # Display the part of the card you want to see
+        if self.face == 1:
+            if x == 0:
+                print(Carte.tableaction[self.__vectapparence[0]], end="")
+            elif x == 1:
+                print(Carte.tableaction[self.__vectapparence[1]], end="")
+            elif x == 2:
+                print(Carte.tableaction[self.__vectapparence[2]], end="")
             else:
-                print("Erreur: la valeur d'affichage de la carte est incorrecte, veuilliez choisir une valeur entre 0 et 2")
+                print("Error: the display value of the card is incorrect, please choose a value between 0 and 2")
                 sys.exit()
-        if self.face==0:
-            if x==0:
-                print(Carte.tablerecto[self.__vectrecto[0]],end = "")
-            elif x==1:
-                print(Carte.tablerecto[self.__vectrecto[1]],end = "")
-            elif x==2:
-                print(Carte.tablerecto[self.__vectrecto[2]],end = "")
+        if self.face == 0:
+            if x == 0:
+                print(Carte.tablerecto[self.__vectrecto[0]], end="")
+            elif x == 1:
+                print(Carte.tablerecto[self.__vectrecto[1]], end="")
+            elif x == 2:
+                print(Carte.tablerecto[self.__vectrecto[2]], end="")
             else:
-                print("Erreur: la valeur d'affichage de la carte est incorrecte, veuilliez choisir une valeur entre 0 et 2")
+                print("Error: the display value of the card is incorrect, please choose a value between 0 and 2")
                 sys.exit()
 
-    #Fonction tostring
     def __str__(self):
-        st=Carte.tableaction[self.__vectapparence[0]]+"\n"+Carte.tableaction[self.__vectapparence[1]]+"\n"+Carte.tableaction[self.__vectapparence[2]]
+        """toString function"""
+
+        st = Carte.tableaction[self.__vectapparence[0]]+"\n"+Carte.tableaction[self.__vectapparence[1]]+"\n"+Carte.tableaction[self.__vectapparence[2]]
         return st
 
-    #Fonction de comparaison
     def __eq__(self,other):
 
-        if not isinstance ( other , Action_card ) :
+        if not isinstance(other, Action_card):
             return False
 
-        if ( self is other ) :
+        if self is other:
             return True
 
-        if self.typ != other.typ or self.__vectapparence != other.vectapparence: #Les autres attributs ne sont pas testé car non déterminant sur la nature de la carte
+        # The other attributes are not tested because they do not determine the nature of the card
+        if self.typ != other.typ or self.__vectapparence != other.vectapparence:
             return False
 
         return True
 
 
     @property
-    def vectapparence(self) : return self.__vectapparence
+    def vectapparence(self): return self.__vectapparence
     @property
-    def vectrecto(self) : return self.__vectrecto
+    def vectrecto(self): return self.__vectrecto
         

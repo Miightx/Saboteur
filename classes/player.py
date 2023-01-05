@@ -10,28 +10,27 @@ import sys
 
 
 class Player(ABC):
-    def __init__(self,name,role,nb_players):
+    def __init__(self,name, role, nb_players):
         self.__name = name
-        self.__role = role    #le role c'est de la classe menu.personnage[i]
-        self.__hand = Hand(nb_players)   #pour afficher la main: player.hand.display_hand()
-
-    #Methode qui permet de faire piocher une carte au joueur
-    def piocher_carte(self,pioche):
-        if len(pioche)<=0:
-            print("Erreur: la pioche est vide")
+        self.__role = role    # the role is of the class menu.character[i]
+        self.__hand = Hand(nb_players)   # to display the hand: player.hand.display_hand()
+    def piocher_carte(self, pioche):
+        """Method that allows the player to draw a card"""
+        if len(pioche) <= 0:
+            print("Error: the deck is empty")
             sys.exit()
         
         self.__hand.add_card(pioche[0])
         pioche.remove(pioche[0])
 
-    #Methode qui permet d'enlever une carte au joueur
-    def defausse_carte(self,card,defausse):
+    def defausse_carte(self, card, defausse):
+        """Method to remove a card from the player"""
         defausse.append(card)
         self.__hand.remove_card(card)
 
-    #Methode abstraite qui permet à un humain ou à une IA de jouer pendant un tour 
+    # Abstract method that allows a human or an AI to play during a round
     @abstractmethod
-    def tourjoueur(self,plateau,pioche,defausse): pass
+    def tourjoueur(self, plateau, pioche, defausse): pass
 
 
 
@@ -47,10 +46,10 @@ class Player(ABC):
     @role.setter
     def role(self,role):
         if role == "S":
-            self.__role=role
-        #On defini par default "C" comme role
+            self.__role = role
+        # Define by default "C" as a role
         else:
-            self.__role="C"
+            self.__role = "C"
 
 
     @property
