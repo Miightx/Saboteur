@@ -6,6 +6,7 @@ from .card import Carte
 from .board import Plateau
 from .player import Player
 from .action_card import Action_card
+from .path_card import Path_card
 import sys
 
 
@@ -32,8 +33,13 @@ class Human(Player):
         print(plateau)
         print("It is {0} turn, your role is: {1}".format(self.name, self.role))
 
+<<<<<<< HEAD
         # Displays the player's hand
         self.hand.affiche()
+=======
+        #Affiche la main du joueur
+        print(self.hand)
+>>>>>>> BrancheJulienLaurent3
 
         # Displays the status of its tools
         self.hand.affiche_tools()
@@ -146,12 +152,61 @@ class Human(Player):
         # The value change allows the player to change the action
         return change, choix_carte
 
+<<<<<<< HEAD
     # Method to choose a position where to place the map
     def __choix_pos(self, plateau, card):
         """Check  if the placed path cards meet the conditions"""
         # We check the input parameters
         if not isinstance(plateau, Plateau):
             print("Error: The player needs the board to make a decision")
+=======
+    #Methode qui permet au joueur de choisir le sens de la carte
+    def choix_sens_carte(self,plateau,choix_carte):
+        #On verifie la nature des paramètres
+
+        if not isinstance ( plateau , Plateau ) :
+            print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
+            sys.exit()
+
+        if not isinstance (choix_carte , Path_card ) :
+            print("Erreur: Le joueur a besoin d'une carte pour prendre une decision")
+            sys.exit()
+
+
+        #On s'assure que le joueur choisisse sens=0 ou sens=1
+        etat = False
+        change = 0
+        while (etat == False and change == 0):
+            self.__print_game_state_player(plateau)
+            print("Which way do you want to orient the card (0 or 1)?")
+            choix_carte.sens=0
+            print(choix_carte)
+            choix_carte.sens=1
+            print(choix_carte)
+            sens=input()
+            if (sens.isdecimal()==True):
+                sens=int(sens)
+                if sens == 0 or sens ==1:
+                        etat = True
+                else:
+                    self.__print_game_state_player(plateau)
+                    print("It's a card, there are only two possibilities...")
+                    change=self.__change_action(plateau)
+            else:
+                self.__print_game_state_player(plateau)
+                print("It's a card, there are only two possibilities...")
+                change=self.__change_action(plateau)
+        choix_carte.sens=sens
+        return change
+        
+
+
+    #Methode qui permet de choisir une position où placer la carte
+    def __choix_pos(self,plateau,card):
+        #On verifie les paramètres d'entrée
+        if not isinstance ( plateau , Plateau ) :
+            print("Erreur: Le joueur a besoin du plateau pour prendre une decision")
+>>>>>>> BrancheJulienLaurent3
             sys.exit()
         if not isinstance(card, Carte):
             print("Error: The player needs the board to make a decision")
@@ -161,6 +216,7 @@ class Human(Player):
         x = 0
         y = 0
         self.__print_game_state_player(plateau)
+        print(card)
         print("Where do you want to place your card ?")
 
         # We make sure that the player places the card on the board, that he does not overlap the cards and
@@ -174,6 +230,7 @@ class Human(Player):
                 i = int(i)
                 j = int(j)
                 if (i >= -10 and j <= 10 and i >= -10 and j <= 10):
+<<<<<<< HEAD
                     if plateau.pathmap[i + 15][j + 15][0] == 0:
                         if ((card.path[1] == plateau.pathmap[i + 14][j + 15][4] or plateau.pathmap[i + 14][j + 15][
                             0] == 0) and (card.path[2] == plateau.pathmap[i + 15][j + 14][3] or
@@ -184,25 +241,34 @@ class Human(Player):
                                     plateau.pathmap[i + 16][j + 15][0] == 0)) and (
                                 plateau.pathmap[i + 14][j + 15][0] == 1 or plateau.pathmap[i + 16][j + 15][0] == 1 or
                                 plateau.pathmap[i + 15][j + 14][0] == 1 or plateau.pathmap[i + 15][j + 16][0] == 1):
+=======
+                    if plateau.pathmap[i+15][j+15][0]==0  :
+                        if ((card.path[card.sens][1]==plateau.pathmap[i+14][j+15][4] or plateau.pathmap[i+14][j+15][0]==0)  and (card.path[card.sens][2]==plateau.pathmap[i+15][j+14][3] or plateau.pathmap[i+15][j+14][0]==0) and (card.path[card.sens][3]==plateau.pathmap[i+15][j+16][2] or plateau.pathmap[i+15][j+16][0]==0) and (card.path[card.sens][4]==plateau.pathmap[i+16][j+15][1] or plateau.pathmap[i+16][j+15][0]==0)) and (plateau.pathmap[i+14][j+15][0]==1 or plateau.pathmap[i+16][j+15][0]==1 or plateau.pathmap[i+15][j+14][0]==1 or plateau.pathmap[i+15][j+16][0]==1):
+>>>>>>> BrancheJulienLaurent3
                             etat = True
                             pos = [i, j]
                         else:
                             self.__print_game_state_player(plateau)
+                            print(card)
                             print("The card does not fit with the other cards")
                             change = self.__change_action(plateau)
                             if change == 0:
                                 self.__print_game_state_player(plateau)
+                                print(card)
                                 print("Where do you want to place your card ?")
                     else:
                         self.__print_game_state_player(plateau)
+                        print(card)
                         print("A card is already positioned at the desired location, choose another position")
                         print("Where do you want to place your card ?")
                 else:
                     self.__print_game_state_player(plateau)
+                    print(card)
                     print("Please place the card on the board (-10<=i<=10) (-10<=j<=10)")
                     print("Where do you want to place your card ?")
             except ValueError:
                 self.__print_game_state_player(plateau)
+                print(card)
                 print("Please place the card on the board (-10<=i<=10) (-10<=j<=10)")
                 print("Where do you want to place your card ?")
 
@@ -269,6 +335,7 @@ class Human(Player):
     def tourjoueur(self, plateau, pioche, defausse, players):
         """Allow a player to play for one turn"""
         change = 1
+<<<<<<< HEAD
         while change == 1:  # The player chooses an action
             choix_action = self.__choix_action(plateau)
             if choix_action == 1:   # The player is asked which card he wants to play
@@ -284,6 +351,40 @@ class Human(Player):
                     if choix_carte.typ == 1:                        # The card is a tool action card
                         self.__use_tools_card(players, choix_carte)
                     if choix_carte.typ == 2:                        # The card is face down
+=======
+        while change==1:
+            #Le joueur choisi une action
+            choix_action=self.__choix_action(plateau)
+
+            if choix_action == 1:
+                #On demande au joueur quel carte il veut jouer
+                change, choix_carte=self.__choix_carte(plateau,choix_action)
+            
+                if change==1 :pass
+
+                else:
+                    #La carte est un chemin
+                    if choix_carte.typ==0:
+                        #On demande au joueur dans quelle sens il veux poser sa carte
+                        change=self.choix_sens_carte(plateau, choix_carte)
+
+                        if change==0:
+                            #On demande au joueur où il veut poser sa carte
+                            change, pos=self.__choix_pos(plateau,choix_carte)
+
+                            if change==0:
+                                #La carte est placee sur le plateau 
+                                plateau.add_carte(choix_carte,pos)
+
+
+                    #La carte est une carte action d'outils
+                    if choix_carte.typ==1:
+                        self.__use_tools_card(players,choix_carte)
+                
+
+                    #La carte est un plan secret 
+                    if choix_carte.typ==2: 
+>>>>>>> BrancheJulienLaurent3
                         print("Which card do you want to reveal? ")
                         etat = False
                         while etat == False:

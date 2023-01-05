@@ -58,6 +58,7 @@ class Action_card(Carte):
                 print("Error: the display value of the card is incorrect, please choose a value between 0 and 2")
                 sys.exit()
 
+<<<<<<< HEAD
     def affiche(self,x):    # The x parameter determines which part of the card is displayed
         """Method to display a part of the card"""
 
@@ -82,6 +83,31 @@ class Action_card(Carte):
             else:
                 print("Error: the display value of the card is incorrect, please choose a value between 0 and 2")
                 sys.exit()
+=======
+    # #Methode qui permet d'afficher une partie de la carte
+    # def affiche(self,x): #Le parametre x détermine quel partie de la carte on affiche
+    #     #On affiche la partie de la carte que l'on souhaite afficher
+    #     if self.face==1:
+    #         if x==0:
+    #             print(Carte.tableaction[self.__vectapparence[0]],end = "")
+    #         elif x==1:
+    #             print(Carte.tableaction[self.__vectapparence[1]],end = "")
+    #         elif x==2:
+    #             print(Carte.tableaction[self.__vectapparence[2]],end = "")
+    #         else:
+    #             print("Erreur: la valeur d'affichage de la carte est incorrecte, veuilliez choisir une valeur entre 0 et 2")
+    #             sys.exit()
+    #     if self.face==0:
+    #         if x==0:
+    #             print(Carte.tablerecto[self.__vectrecto[0]],end = "")
+    #         elif x==1:
+    #             print(Carte.tablerecto[self.__vectrecto[1]],end = "")
+    #         elif x==2:
+    #             print(Carte.tablerecto[self.__vectrecto[2]],end = "")
+    #         else:
+    #             print("Erreur: la valeur d'affichage de la carte est incorrecte, veuilliez choisir une valeur entre 0 et 2")
+    #             sys.exit()
+>>>>>>> BrancheJulienLaurent3
 
     def __str__(self):
         """toString function"""
