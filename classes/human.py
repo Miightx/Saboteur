@@ -251,7 +251,8 @@ class Human(Player):
         """Allow a player to use a tool card"""
         # Erase the content of the console, we check if we are on Windows
         os.system('cls' if os.name == 'nt' else 'clear')
-        # On affiche les outils des joueurs
+
+        # Players' tools are displayed
         for player in players:
             print(f"{player.name}'s tools:")
             player.hand.affiche_tools()
@@ -295,8 +296,8 @@ class Human(Player):
                     players[choix_player].hand.tools[choix_carte.vectapparence[2] - 4] = 1
 
             # The tools of the chosen player are destroyed
-                if choix_carte.vectapparence[0] == 3:
-                    players[choix_player].hand.tools[choix_carte.vectapparence[1] - 4] = 0
+            if choix_carte.vectapparence[0] == 3:
+                players[choix_player].hand.tools[choix_carte.vectapparence[1] - 4] = 0
                 if choix_carte.vectapparence[2] != 0:
                     players[choix_player].hand.tools[choix_carte.vectapparence[2] - 4] = 0
 
