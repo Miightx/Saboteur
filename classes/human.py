@@ -217,7 +217,16 @@ class Human(Player):
                 j = int(j)
                 if (i >= -10 and j <= 10 and i >= -10 and j <= 10):
                     if board.pathmap[i+15][j+15][0]==0  :
-                        if ((card.path[card.direction][1]==board.pathmap[i+14][j+15][4] or board.pathmap[i+14][j+15][0]==0)  and (card.path[card.direction][2]==board.pathmap[i+15][j+14][3] or board.pathmap[i+15][j+14][0]==0) and (card.path[card.direction][3]==board.pathmap[i+15][j+16][2] or board.pathmap[i+15][j+16][0]==0) and (card.path[card.direction][4]==board.pathmap[i+16][j+15][1] or board.pathmap[i+16][j+15][0]==0)) and (board.pathmap[i+14][j+15][0]==1 or board.pathmap[i+16][j+15][0]==1 or board.pathmap[i+15][j+14][0]==1 or board.pathmap[i+15][j+16][0]==1):
+                        if ((card.path[card.direction][1] == board.pathmap[i + 14][j + 15][4] or
+                             board.pathmap[i + 14][j + 15][0] == 0) and (
+                                    card.path[card.direction][2] == board.pathmap[i + 15][j + 14][3] or
+                                    board.pathmap[i + 15][j + 14][0] == 0) and (
+                                    card.path[card.direction][3] == board.pathmap[i + 15][j + 16][2] or
+                                    board.pathmap[i + 15][j + 16][0] == 0) and (
+                                    card.path[card.direction][4] == board.pathmap[i + 16][j + 15][1] or
+                                    board.pathmap[i + 16][j + 15][0] == 0)) and (
+                                board.pathmap[i + 14][j + 15][0] == 1 or board.pathmap[i + 16][j + 15][0] == 1 or
+                                board.pathmap[i + 15][j + 14][0] == 1 or board.pathmap[i + 15][j + 16][0] == 1):
                             etat = True
                             pos = [i, j]
                         else:
