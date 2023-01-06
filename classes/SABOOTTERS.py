@@ -58,12 +58,12 @@ class SABOOTERS(object):
             for j in range(self.__players[i].hand.hand_size):
                 self.__players[i].pick_card(self.__unplayed_deck)
 
-    def __round(self):
+    def __round(self, nb_player_turn):
         """How a round unfolds"""
 
         # Initialization of a game
         self.__initround()
-
+        self.nb_player_turn = nb_player_turn
         # Variable to determine if players have any cards left in their hand
         nb_card_player = 0
 
@@ -79,10 +79,14 @@ class SABOOTERS(object):
             nb_card_player = 0
             # Variable to know who to play
             current_indice = 0
-            for player in self.__players:
-                player.player_turn(self.__board, self.__unplayed_deck, self.__played_deck, self.__players)
-                nb_card_player = nb_card_player + len(player.hand.cards)
-                gold_found = self.__board.gold_found
+            for k in range(len(self.__players)):
+                self.__players[self.nb_player_turn].player_turn(self.__board, self.__unplayed_deck, self.__played_deck, self.__players)
+                nb_card_player = nb_card_player + len(self.__players[self.nb_player_turn].hand.cards)
+                gold_found = self.__plateau.gold_found
+                self.nb_player_turn += 1
+                # Re-loop to allow every player to play
+                if self.nb_player_turn > len(self.__players) - 1:
+                    self.nb_player_turn = 0
                 # If gold has been found it is the end of the round, the diggers win
                 if gold_found == 1:
                     state = 2
@@ -103,17 +107,29 @@ class SABOOTERS(object):
         # Remove the cards from the board
         self.__board.reset_board()
 
-    # How a game is played
     def start_game(self):
         """How a game is played"""
         # Initialization of the game
         self.__initgame()
-
         # The game is played in three rounds
-        for i in range(3):
+        print("Write the name of the youngest person")
+        state = False
+        k = 0
+        while state == False:
+            name = input()
+            if name == str(self.__menu.players_name[k]):
+                nb_player_turn = k
+                state = True
+            else:
+                print('Please write a correct name')
+        self.__board.nb_round = 1
+        # A round is going on
+        self.__round(nb_player_turn)
+        for i in range(2):
             # We display on the board which round we are at
             self.__board.nb_round = i + 1
             # A round is going on
-            self.__round()
+            self.__round(nb_player_turn)
+            nb_player_turn += 1
         self.__menu.end_game()
 
