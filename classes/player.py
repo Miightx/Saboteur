@@ -3,7 +3,7 @@ import random
 from abc import ABC, abstractmethod
 import os
 from .hand import Hand
-from .card import Carte
+from .card import Card
 from .board import Board
 import sys
 

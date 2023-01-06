@@ -1,16 +1,16 @@
 import numpy as np
 import random
 import os
-from .card import Carte
+from .card import Card
 import sys
 
 
-class Path_card(Carte):
-    """Cartes chemin du jeu SABOOTERS
-    • Type 0 : Carte chemin
-    • Type 3 : Carte start
-    • Type 4 : Carte gold
-    • Type 5 : Carte pierre"""
+class Path_card(Card):
+    """Cards chemin du jeu SABOOTERS
+    • Type 0 : Card chemin
+    • Type 3 : Card start
+    • Type 4 : Card gold
+    • Type 5 : Card pierre"""
 
     def __init__(self, typ):
         super().__init__(typ)
@@ -21,62 +21,62 @@ class Path_card(Carte):
         # Appearance is randomly drawn on the card according to its type
         if typ == 0:  # Path Map
             chemin = np.random.choice(np.array([0, 1, 2, 3, 4, 5, 6, 7]))
-            self.__vectapparence = Carte.matchemin[chemin]
-            self.__vectrecto = Carte.matrecto[0]
-            self.__path = Carte.matpath[chemin]
+            self.__vectapparence = Card.matchemin[chemin]
+            self.__vectrecto = Card.matrecto[0]
+            self.__path = Card.matpath[chemin]
         elif typ == 3:
             # Map start
-            self.__vectapparence = Carte.matchemin[8]
-            self.__vectrecto = Carte.matrecto[0]
-            self.__path = Carte.matpath[8]
+            self.__vectapparence = Card.matchemin[8]
+            self.__vectrecto = Card.matrecto[0]
+            self.__path = Card.matpath[8]
         elif typ == 4:
             # Gold card
-            self.__vectapparence = Carte.matchemin[9]
-            self.__vectrecto = Carte.matrecto[1]
-            self.__path = Carte.matpath[9]
+            self.__vectapparence = Card.matchemin[9]
+            self.__vectrecto = Card.matrecto[1]
+            self.__path = Card.matpath[9]
         elif typ == 5:
             # Stone card
-            self.__vectapparence = Carte.matchemin[10]
-            self.__vectrecto = Carte.matrecto[1]
-            self.__path = Carte.matpath[10]
+            self.__vectapparence = Card.matchemin[10]
+            self.__vectrecto = Card.matrecto[1]
+            self.__path = Card.matpath[10]
         else:
             print("Error: the value of the card type is incorrect, initialization by default of a path card")
             a = input("press any bouton to continue")
             # Path Map
             chemin = np.random.choice(np.array([0, 1, 2, 3, 4, 5, 6, 7]))
-            self.__vectapparence = Carte.matchemin[chemin]
-            self.__vectrecto = Carte.matrecto[0]
-            self.__path = Carte.matpath[chemin]
+            self.__vectapparence = Card.matchemin[chemin]
+            self.__vectrecto = Card.matrecto[0]
+            self.__path = Card.matpath[chemin]
 
     def part_st(self, x):
         """Method to display a part of the map"""
         # Display the part of the map you want to see
         if self.face == 1:
             if x == 0:
-                return Carte.tablechemin[self.__vectapparence[self.__sens][0]]
+                return Card.tablechemin[self.__vectapparence[self.__sens][0]]
             elif x == 1:
-                return Carte.tablechemin[self.__vectapparence[self.__sens][1]]
+                return Card.tablechemin[self.__vectapparence[self.__sens][1]]
             elif x == 2:
-                return Carte.tablechemin[self.__vectapparence[self.__sens][2]]
+                return Card.tablechemin[self.__vectapparence[self.__sens][2]]
             else:
                 print("Error: the display value of the card is incorrect, please choose a value between 0 and 2")
                 sys.exit()
 
         if self.face == 0:
             if x == 0:
-                return Carte.tablerecto[self.__vectrecto[0]]
+                return Card.tablerecto[self.__vectrecto[0]]
             elif x == 1:
-                return Carte.tablerecto[self.__vectrecto[1]]
+                return Card.tablerecto[self.__vectrecto[1]]
             elif x == 2:
-                return Carte.tablerecto[self.__vectrecto[2]]
+                return Card.tablerecto[self.__vectrecto[2]]
             else:
                 print("Error: the display value of the card is incorrect, please choose a value between 0 and 2")
                 sys.exit()
 
     def __str__(self):
         """Function toString"""
-        st = Carte.tablechemin[self.__vectapparence[self.__sens][0]] + "\n" + Carte.tablechemin[self.__vectapparence[self.__sens][1]] + "\n" + \
-             Carte.tablechemin[self.__vectapparence[self.__sens][2]]
+        st = Card.tablechemin[self.__vectapparence[self.__sens][0]] + "\n" + Card.tablechemin[self.__vectapparence[self.__sens][1]] + "\n" + \
+             Card.tablechemin[self.__vectapparence[self.__sens][2]]
         return st
 
     # Fonction de comparaison

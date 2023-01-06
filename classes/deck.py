@@ -1,6 +1,6 @@
 import numpy as np
 import random
-from .card import Carte
+from .card import Card
 from .action_card import Action_card
 from .path_card import Path_card
 

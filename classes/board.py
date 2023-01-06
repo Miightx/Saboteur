@@ -2,7 +2,7 @@ import numpy as np
 import random
 import os
 import sys
-from .card import Carte
+from .card import Card
 from .path_card import Path_card
 
 

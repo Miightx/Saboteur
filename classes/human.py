@@ -2,7 +2,7 @@ import numpy as np
 import random
 import os
 from .hand import Hand
-from .card import Carte
+from .card import Card
 from .board import Board
 from .player import Player
 from .action_card import Action_card
@@ -192,7 +192,7 @@ class Human(Player):
         if not isinstance(board, Board):
             print("Error: The player needs the board to make a decision")
             sys.exit()
-        if not isinstance(card, Carte):
+        if not isinstance(card, Card):
             print("Error: The player needs the board to make a decision")
             sys.exit()
 
