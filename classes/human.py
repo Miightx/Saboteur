@@ -227,7 +227,7 @@ class Human(Player):
                                     board.pathmap[i + 16][j + 15][0] == 0)) and (
                                 board.pathmap[i + 14][j + 15][0] == 1 or board.pathmap[i + 16][j + 15][0] == 1 or
                                 board.pathmap[i + 15][j + 14][0] == 1 or board.pathmap[i + 15][j + 16][0] == 1):
-
+                            #These conditions make it impossible to place a card next to the stone and gold cards from the beginning.
                             if board.pathmap[i + 14][j + 15][0] == 2 or board.pathmap[i + 16][j + 15][0] == 2 or board.pathmap[i + 15][j + 14][0] == 2 or board.pathmap[i + 15][j + 16][0] == 2:
                                 if board.pathmap[i + 14][j + 15][0] == 1 or board.pathmap[i + 16][j + 15][0] == 1 or board.pathmap[i + 15][j + 14][0] == 1 or board.pathmap[i + 15][j + 16][0] == 1:
                                     etat = True
