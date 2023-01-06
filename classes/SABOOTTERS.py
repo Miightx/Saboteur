@@ -6,7 +6,7 @@ from .menu import Menu
 from .player import Player
 from .hand import Hand
 from .card import Carte
-from .board import Plateau
+from .board import Board
 from .human import Human
 
 
@@ -18,7 +18,7 @@ class SABOOTERS(object):
         self.__pioche = []
         self.__defausse = []
         self.__joueurs = []
-        self.__plateau = Plateau()
+        self.__board = Board()
 
     def __initpartie(self):
         """ Initialization of a game"""
@@ -27,7 +27,7 @@ class SABOOTERS(object):
         for i in range(0, self.__menu.number):
             self.__joueurs.append(Human(self.__menu.players_name[i], self.__menu.roles[i], self.__menu.number))
 
-    def __initmanche(self):
+    def __initround(self):
         """Initialization of a round"""
         self.__menu.change_role()
         i = 0
@@ -45,9 +45,9 @@ class SABOOTERS(object):
             # Place the arrival/departure cards on the board
             if carte.typ == 3 or carte.typ == 4 or carte.typ == 5:
                 if carte.typ == 3:
-                    self.__plateau.add_carte(carte, [2, 0], 1)
+                    self.__board.add_carte(carte, [2, 0], 1)
                 else:
-                    self.__plateau.add_carte(carte, set_pos_gold[k], 1)
+                    self.__board.add_carte(carte, set_pos_gold[k], 1)
                     k = k + 1
             # Create the deck with the action and path cards
             else:
@@ -58,11 +58,11 @@ class SABOOTERS(object):
             for j in range(self.__joueurs[i].hand.hand_size):
                 self.__joueurs[i].piocher_carte(self.__pioche)
 
-    def __manche(self):
+    def __round(self):
         """How a round unfolds"""
 
         # Initialization of a game
-        self.__initmanche()
+        self.__initround()
 
         # Variable to determine if players have any cards left in their hand
         nb_card_player = 0
@@ -80,20 +80,20 @@ class SABOOTERS(object):
             # Variable to know who to play
             current_indice = 0
             for joueur in self.__joueurs:
-                joueur.tourjoueur(self.__plateau, self.__pioche, self.__defausse, self.__joueurs)
+                joueur.tourjoueur(self.__board, self.__pioche, self.__defausse, self.__joueurs)
                 nb_card_player = nb_card_player + len(joueur.hand.cards)
-                gold_found = self.__plateau.gold_found
+                gold_found = self.__board.gold_found
                 # If gold has been found it is the end of the round, the diggers win
                 if gold_found == 1:
                     state = 2
-                    self.__menu.fin_de_manche(state, current_indice)
+                    self.__menu.fin_de_round(state, current_indice)
                     break
                 current_indice += 1
 
         # If the gold has not been found the saboteurs win
         if gold_found == 0:
             state = 1
-            self.__menu.fin_de_manche(state, current_indice)
+            self.__menu.fin_de_round(state, current_indice)
             pass
 
         # Empty the pick and drop
@@ -101,7 +101,7 @@ class SABOOTERS(object):
         self.__defausse = []
 
         # Remove the cards from the board
-        self.__plateau.reset_plateau()
+        self.__board.reset_board()
 
     # How a game is played
     def start_game(self):
@@ -112,8 +112,8 @@ class SABOOTERS(object):
         # The game is played in three rounds
         for i in range(3):
             # We display on the board which round we are at
-            self.__plateau.no_manche = i + 1
+            self.__board.no_round = i + 1
             # A round is going on
-            self.__manche()
+            self.__round()
         self.__menu.fin_de_partie()
 

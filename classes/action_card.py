@@ -6,10 +6,10 @@ import sys
 
 
 class Action_card(Carte):
-    """Cartes action du jeu SABOOTERS
-    • Type 1 : Carte action
-    • Type 2 : Carte map
-    • Type 6 : Carte éboulement """
+    """SABOOTERS action cards
+    • Type 1 : action_tools card
+    • Type 2 : map card
+    • Type 6 : collapse card """
 
     def __init__(self,typ):
         super().__init__(typ)

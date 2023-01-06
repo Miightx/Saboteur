@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 import os
 from .hand import Hand
 from .card import Carte
-from .board import Plateau
+from .board import Board
 import sys
 
 
@@ -30,7 +30,7 @@ class Player(ABC):
 
     # Abstract method that allows a human or an AI to play during a round
     @abstractmethod
-    def tourjoueur(self, plateau, pioche, defausse): pass
+    def tourjoueur(self, Board, pioche, defausse): pass
 
 
     @property

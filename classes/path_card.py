@@ -100,6 +100,7 @@ class Path_card(Carte):
 
     @property
     def sens(self) : return self.__sens
+    
     @sens.setter
     def sens(self,sens):
         if sens == 1:

@@ -6,8 +6,8 @@ from .card import Carte
 from .path_card import Path_card
 
 
-class Plateau(object):
-    """Plateau du jeu SABOOTERS"""
+class Board(object):
+    """SABOOTERS game board"""
 
     def __init__(self):
         # Binary array that determines if a map has been placed and contains the path to the mine
@@ -35,7 +35,7 @@ class Plateau(object):
         self.__gold_found = 0
 
         # Variable that displays which round the game is in
-        self.no_manche = 0  # The attribute is public because it must be able to be modified from the outside
+        self.no_round = 0  # The attribute is public because it must be able to be modified from the outside
 
     def add_carte(self, carte, pos, init_game=0):  # The parameter init_game allows to say if we initialize the game
         """#Method to add a card on the board,
@@ -134,7 +134,7 @@ class Plateau(object):
         # The method returns a boolean which indicates if the operation is successful
         return etat
 
-    def reset_plateau(self):
+    def reset_Board(self):
         """Function that resets the board"""
 
         self.__pathmap = np.ones((30, 30, 5), int)

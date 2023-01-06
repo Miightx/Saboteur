@@ -124,7 +124,7 @@ class Menu(object):
         Calculate golds (points) for each digger """
         self.__state = state
         etat = False
-        score_manche = np.zeros(self.__number)
+        score_round = np.zeros(self.__number)
         card_pull = 0
         self.__current_indice = current_indice
         if self.__state == 1:  # Case where the saboteurs won == 1
@@ -132,10 +132,10 @@ class Menu(object):
             print('')
             for k in range(self.__number):
                 if (self.__count[0] == 1 and self.__roles[k] == 'S'):
-                    score_manche[k] = 4  # 1 Saboteur = 4 points
+                    score_round[k] = 4  # 1 Saboteur = 4 points
                 elif (self.__count[0] == 2 or self.__count[0] == 3):
                     if self.__roles[k] == 'S':  # 2 or 3 Saboteurs = 3 points
-                        score_manche[k] = 3
+                        score_round[k] = 3
         elif (self.__state == 2):  # Case where Diggers won == 2
             print('Diggers won this game!')
             self.__sharing_gold = np.random.randint(1, 4, size=self.__number)  # Gold card worth between 1 and 3
@@ -157,7 +157,7 @@ class Menu(object):
                                 etat = True
                             else:
                                 print("Please choose another value")
-                    score_manche[self.__current_indice] += self.__sharing_gold[
+                    score_round[self.__current_indice] += self.__sharing_gold[
                         self.__choice - 1]  # Storage of scores to calculate at the end of the game
                     print(
                         f"{self.__players_name[self.__current_indice]} choose {self.__sharing_gold[(self.__choice) - 1]}")
@@ -171,8 +171,8 @@ class Menu(object):
                     self.__current_indice += 1
             print("Here are the values of the gold cards")
             print(self.__sharing_gold)
-        print(f"The score of this game is {score_manche}")
-        self.__spm.append(score_manche)
+        print(f"The score of this game is {score_round}")
+        self.__spm.append(score_round)
 
     def start_game(self):
         """Used in SABOOTERS.py to get information before the start"""
@@ -184,7 +184,7 @@ class Menu(object):
         self.__cartes_roles()
         self.__affichage_debut_fin()
 
-    def fin_de_manche(self, state, current_indice):
+    def fin_de_round(self, state, current_indice):
         """Used in SABOOTTERS.py to get the score of each set"""
         self.count_winner()
         self.winner(state, current_indice)
