@@ -26,7 +26,7 @@ class Human(Player):
 
         # Displays which round we are on
         print("+-----------+")
-        print("| ROUND : {0} |".format(board.no_round))
+        print("| ROUND : {0} |".format(board.nb_round))
         print("+-----------+")
 
         # Display the board: board.affiche()
@@ -96,7 +96,7 @@ class Human(Player):
         return change
 
     # Method to ask the player which card he wants to play
-    def __choix_carte(self, board, choix_action):
+    def __choix_card(self, board, choix_action):
 
         # We make sure that a board has been set up
         if not isinstance(board, Board):
@@ -115,15 +115,15 @@ class Human(Player):
             self.__print_game_state_player(board)
             print("What card would you like to chose (1 to {0})?".format(len(self.hand.cards)))
 
-            no_carte = input()
-            if no_carte.isdecimal() == True:
-                no_carte = int(no_carte)
-                if (no_carte > 0 and no_carte <= len(self.hand.cards)):
+            no_card = input()
+            if no_card.isdecimal() == True:
+                no_card = int(no_card)
+                if (no_card > 0 and no_card <= len(self.hand.cards)):
                     if choix_action == 2 or (
                             choix_action == 1 and self.hand.tools[0] == 1 and self.hand.tools[1] == 1 and
-                            self.hand.tools[2] == 1) or isinstance(self.hand.cards[no_carte - 1], Action_card):
+                            self.hand.tools[2] == 1) or isinstance(self.hand.cards[no_card - 1], Action_card):
                         etat = True
-                        no_carte = no_carte - 1
+                        no_card = no_card - 1
                     else:
                         self.__print_game_state_player(board)
                         print("One of the tools is broken, this card cannot be used.")
@@ -139,15 +139,15 @@ class Human(Player):
 
         if change == 0:
             # We get the card that the player has chosen
-            choix_carte = self.hand.cards[no_carte]
+            choix_card = self.hand.cards[no_card]
         else:
             # We create a card that will not be used
-            choix_carte = Action_card(1)
+            choix_card = Action_card(1)
 
         # The value change allows the player to change the action
-        return change, choix_carte
+        return change, choix_card
 
-    def choix_sens_carte(self,board,choix_carte):
+    def choix_sens_card(self,board,choix_card):
         """Method that allows the player to choose the direction of the card"""
 
         #We check the nature of the parameters
@@ -155,8 +155,8 @@ class Human(Player):
             print("Erreur: Le joueur a besoin du board pour prendre une decision")
             sys.exit()
 
-        if not isinstance (choix_carte , Path_card ) :
-            print("Erreur: Le joueur a besoin d'une carte pour prendre une decision")
+        if not isinstance (choix_card , Path_card ) :
+            print("Erreur: Le joueur a besoin d'une card pour prendre une decision")
             sys.exit()
 
         #Make sure the player chooses sens=0 or sens=1
@@ -165,10 +165,10 @@ class Human(Player):
         while (etat == False and change == 0):
             self.__print_game_state_player(board)
             print("Which way do you want to orient the card (0 or 1)?")
-            choix_carte.sens=0
-            print(choix_carte,end="\n\n")
-            choix_carte.sens=1
-            print(choix_carte)
+            choix_card.sens=0
+            print(choix_card,end="\n\n")
+            choix_card.sens=1
+            print(choix_card)
             sens=input()
             if (sens.isdecimal()==True):
                 sens=int(sens)
@@ -182,7 +182,7 @@ class Human(Player):
                 self.__print_game_state_player(board)
                 print("It's a card, there are only two possibilities...")
                 change=self.__change_action(board)
-        choix_carte.sens=sens
+        choix_card.sens=sens
         return change
         
     # Method to choose a position where to place the map
@@ -247,7 +247,7 @@ class Human(Player):
         return change, pos
 
     # Method to use an action_tools card
-    def __use_tools_card(self, players, choix_carte):
+    def __use_tools_card(self, players, choix_card):
         """Allow a player to use a tool card"""
         # Erase the content of the console, we check if we are on Windows
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -290,16 +290,16 @@ class Human(Player):
 
         if change == 0:
             # The tools of the chosen player are repaired
-            if choix_carte.vectapparence[0] == 2:
-                players[choix_player].hand.tools[choix_carte.vectapparence[1] - 4] = 1
-                if choix_carte.vectapparence[2] != 0:
-                    players[choix_player].hand.tools[choix_carte.vectapparence[2] - 4] = 1
+            if choix_card.vectapparence[0] == 2:
+                players[choix_player].hand.tools[choix_card.vectapparence[1] - 4] = 1
+                if choix_card.vectapparence[2] != 0:
+                    players[choix_player].hand.tools[choix_card.vectapparence[2] - 4] = 1
 
             # The tools of the chosen player are destroyed
-            if choix_carte.vectapparence[0] == 3:
-                players[choix_player].hand.tools[choix_carte.vectapparence[1] - 4] = 0
-                if choix_carte.vectapparence[2] != 0:
-                    players[choix_player].hand.tools[choix_carte.vectapparence[2] - 4] = 0
+            if choix_card.vectapparence[0] == 3:
+                players[choix_player].hand.tools[choix_card.vectapparence[1] - 4] = 0
+                if choix_card.vectapparence[2] != 0:
+                    players[choix_player].hand.tools[choix_card.vectapparence[2] - 4] = 0
 
         # The value change allows the player to change the action
         return change
@@ -313,32 +313,32 @@ class Human(Player):
 
             if choix_action == 1:
                 #The player is asked which card he wants to play
-                change, choix_carte=self.__choix_carte(board,choix_action)
+                change, choix_card=self.__choix_card(board,choix_action)
             
                 if change==1 :pass
 
                 else:
                     #The map is a path
-                    if choix_carte.typ==0:
+                    if choix_card.typ==0:
                         #The player is asked which direction he wants to put his card
-                        change=self.choix_sens_carte(board, choix_carte)
+                        change=self.choix_sens_card(board, choix_card)
 
                         if change==0:
                             #The player is asked where he wants to put his card
-                            change, pos=self.__choix_pos(board,choix_carte)
+                            change, pos=self.__choix_pos(board,choix_card)
 
                             if change==0:
                                 #The card is placed on the board
-                                board.add_carte(choix_carte,pos)
+                                board.add_card(choix_card,pos)
 
 
                     #The card is a tool action card
-                    if choix_carte.typ==1:
-                        self.__use_tools_card(players,choix_carte)
+                    if choix_card.typ==1:
+                        self.__use_tools_card(players,choix_card)
                 
 
                     #The card is a secret plan 
-                    if choix_carte.typ==2: 
+                    if choix_card.typ==2: 
                         print("Which card do you want to reveal? ")
                         etat = False
                         while etat == False:
@@ -362,7 +362,7 @@ class Human(Player):
                             print("The old scroll tells you that there is absolutely nothing at this location and that it really sucks.")
                             a = input("Press any button to continue.")
 
-                    if choix_carte.typ == 6:                        # The map is a crumbling map
+                    if choix_card.typ == 6:                        # The map is a crumbling map
                         etat = False
                         while (etat == False and change == 0):
                             self.__print_game_state_player(board)
@@ -382,15 +382,15 @@ class Human(Player):
                                 self.__print_game_state_player(board)
                                 print("Please choose a position on the board")
             elif choix_action == 2:   #  The player is asked which card he wants to discard
-                change, choix_carte = self.__choix_carte(board, choix_action)
+                change, choix_card = self.__choix_card(board, choix_action)
                 if change == 0:
                     # The card is placed in the discard pile
-                    defausse.append(choix_carte)
+                    defausse.append(choix_card)
         # The card is removed from the player's hand
-        self.hand.remove_card(choix_carte)
+        self.hand.remove_card(choix_card)
         # Player draws a new card if there are any cards left
         if len(pioche) > 0:
-            self.piocher_carte(pioche)
+            self.piocher_card(pioche)
 
 
 """

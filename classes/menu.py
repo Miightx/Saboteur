@@ -69,7 +69,7 @@ class Menu(object):
                     print("Please select 0 (AI) or 1 (Human):")
                     etat = False
 
-    def __cartes_roles(self):  # Saboteur or Digger
+    def __cards_roles(self):  # Saboteur or Digger
         """Role of each player"""
         personnage = []
         if self.__number == 3:
@@ -144,7 +144,7 @@ class Menu(object):
                 if self.__current_indice == self.__number:
                     self.__current_indice = 0
                 if self.__roles[self.__current_indice] == 'C':
-                    # while (current_indice < self.count[1]):  # Addition des pts des mineurs quand il y a plus de cartes or que de mineurs
+                    # while (current_indice < self.count[1]):  # Addition des pts des mineurs quand il y a plus de cards or que de mineurs
                     print("It is the remaining gold cards")
                     print(self.__sharing_gold)
                     print(f"To {self.__players_name[self.__current_indice]} to choose the card he/she wishes")
@@ -181,7 +181,7 @@ class Menu(object):
         self.__aff_wel()
         self.__get_number()
         self.__players()
-        self.__cartes_roles()
+        self.__cards_roles()
         self.__affichage_debut_fin()
 
     def fin_de_round(self, state, current_indice):
@@ -198,7 +198,7 @@ class Menu(object):
 
     def change_role(self):
         """Assigning roles to players"""
-        self.__cartes_roles()
+        self.__cards_roles()
 
     @property
     def number(self):

@@ -105,7 +105,7 @@ class Path_card(Carte):
     def sens(self,sens):
         if sens == 1:
             self.__sens=sens
-        #On défini un sens par default à la carte
+        #On défini un sens par default à la card
         else:
             self.__sens=0
 

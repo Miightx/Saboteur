@@ -14,7 +14,7 @@ class Player(ABC):
         self.__name = name
         self.__role = role    # the role is of the class menu.character[i]
         self.__hand = Hand(nb_players)   # to display the hand: player.hand.display_hand()
-    def piocher_carte(self, pioche):
+    def piocher_card(self, pioche):
         """Method that allows the player to draw a card"""
         if len(pioche) <= 0:
             print("Error: the deck is empty")
@@ -23,7 +23,7 @@ class Player(ABC):
         self.__hand.add_card(pioche[0])
         pioche.remove(pioche[0])
 
-    def defausse_carte(self, card, defausse):
+    def defausse_card(self, card, defausse):
         """Method to remove a card from the player"""
         defausse.append(card)
         self.__hand.remove_card(card)
@@ -69,5 +69,5 @@ class Player(ABC):
 • à 7 joueurs : 3 Saboteurs et 5 Chercheurs
 • à 8 joueurs : 3 Saboteurs et 6 Chercheurs
 • à 9 joueurs : 3 Saboteurs et 7 Chercheurs
-• à 10 joueurs : toutes les cartes Rôle (4 Saboteurs et 7 Chercheurs)
+• à 10 joueurs : toutes les cards Rôle (4 Saboteurs et 7 Chercheurs)
 """

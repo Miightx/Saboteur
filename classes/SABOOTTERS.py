@@ -35,28 +35,28 @@ class SABOOTERS(object):
             joueur.role = self.__menu.roles[i]
             i += 1
 
-        self.__deck.random_cartes()     # Shuffle the cards
+        self.__deck.random_cards()     # Shuffle the cards
 
         set_pos_gold = random.sample([[0, 2], [2, 2], [4, 2]], 3)   # Define the positions of the "END" cards
 
         # Card distribution
         k = 0
-        for carte in self.__deck.cartes:
+        for card in self.__deck.cards:
             # Place the arrival/departure cards on the board
-            if carte.typ == 3 or carte.typ == 4 or carte.typ == 5:
-                if carte.typ == 3:
-                    self.__board.add_carte(carte, [2, 0], 1)
+            if card.typ == 3 or card.typ == 4 or card.typ == 5:
+                if card.typ == 3:
+                    self.__board.add_card(card, [2, 0], 1)
                 else:
-                    self.__board.add_carte(carte, set_pos_gold[k], 1)
+                    self.__board.add_card(card, set_pos_gold[k], 1)
                     k = k + 1
             # Create the deck with the action and path cards
             else:
-                self.__pioche.append(carte)
+                self.__pioche.append(card)
         print(len(self.__pioche))
         # Players draw their cards
         for i in range(self.__menu.number):
             for j in range(self.__joueurs[i].hand.hand_size):
-                self.__joueurs[i].piocher_carte(self.__pioche)
+                self.__joueurs[i].piocher_card(self.__pioche)
 
     def __round(self):
         """How a round unfolds"""
@@ -112,7 +112,7 @@ class SABOOTERS(object):
         # The game is played in three rounds
         for i in range(3):
             # We display on the board which round we are at
-            self.__board.no_round = i + 1
+            self.__board.nb_round = i + 1
             # A round is going on
             self.__round()
         self.__menu.fin_de_partie()
