@@ -5,16 +5,16 @@ from abc import ABC, abstractmethod
 
 
 class Card(ABC):
-    """Card du jeu SABOOTERS
-    • Type 0 : Card chemin
+    """SABOOTERS Game Card
+    • Type 0 : path card
     • Type 1 : action_tools card
     • Type 2 : map card
-    • Type 3 : Card start
-    • Type 4 : Card gold
-    • Type 5 : Card pierre 
+    • Type 3 : start card 
+    • Type 4 : gold card 
+    • Type 5 : stone card
     • Type 6 : collapse card"""
 
-    # Board containing the content of the cards
+    # Table containing the content of the cards
                 #   0          1         2         3         4         5         6         7         8         9         10        11
     tablechemin=[('(   )'),('( | )'),('(---)'),('( x )'),('(-x )'),('( x-)'),('(-+ )'),('( +-)'),('(-+-)'),('(-S-)'),('($$$)'),('(STO)')]
     tableaction=[('(   )'),('(XXX)'),('(REP)'),('(BRK)'),('( P )'),('( L )'),('( W )'),('( M )'),('(MAP)')]
@@ -70,7 +70,7 @@ class Card(ABC):
         self.__typ = typ
 
         # Define by default that the card is face down
-        self.face = 0
+        self.__face = 0
 
     @abstractmethod
     def part_st(self, x): pass

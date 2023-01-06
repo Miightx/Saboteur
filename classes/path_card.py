@@ -6,7 +6,7 @@ import sys
 
 
 class Path_card(Card):
-    """Cards chemin du jeu SABOOTERS
+    """SABOOTERS Path cards
     • Type 0 : path card
     • Type 3 : start card 
     • Type 4 : gold card 
@@ -19,13 +19,13 @@ class Path_card(Card):
         self.__direction=0 #The attribute is private because we want to control its modification
 
         # Appearance is randomly drawn on the card according to its type
-        if typ == 0:  # Path Map
+        if typ == 0:  # Path card
             chemin = np.random.choice(np.array([0, 1, 2, 3, 4, 5, 6, 7]))
             self.__vectlook = Card.matchemin[chemin]
             self.__vectrecto = Card.matrecto[0]
             self.__path = Card.matpath[chemin]
         elif typ == 3:
-            # Map start
+            # start card
             self.__vectlook = Card.matchemin[8]
             self.__vectrecto = Card.matrecto[0]
             self.__path = Card.matpath[8]
@@ -42,7 +42,7 @@ class Path_card(Card):
         else:
             print("Error: the value of the card type is incorrect, initialization by default of a path card")
             a = input("press any bouton to continue")
-            # Path Map
+            # Path card
             chemin = np.random.choice(np.array([0, 1, 2, 3, 4, 5, 6, 7]))
             self.__vectlook = Card.matchemin[chemin]
             self.__vectrecto = Card.matrecto[0]
@@ -79,7 +79,7 @@ class Path_card(Card):
              Card.tablechemin[self.__vectlook[self.__direction][2]]
         return st
 
-    # Fonction de comparaison
+    # Equals
     def __eq__(self, other):
 
         if not isinstance(other, Path_card):
@@ -105,7 +105,7 @@ class Path_card(Card):
     def direction(self,direction):
         if direction == 1:
             self.__direction=direction
-        #On défini un direction par default à la card
+        #We define a default direction for the card
         else:
             self.__direction=0
 
