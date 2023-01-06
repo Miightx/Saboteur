@@ -97,7 +97,7 @@ class Menu(object):
             personnage = ['S', 'S', 'S', 'S', 'C', 'C', 'C', 'C', 'C', 'C', 'C']
             self.__roles = random.sample(personnage, 10)
 
-    def __affichage_debut_fin(self):
+    def __display_start_end(self):
         """Show the total number of players"""
         total = []
         for k in range(self.__number - 1):
@@ -182,7 +182,7 @@ class Menu(object):
         self.__get_number()
         self.__players()
         self.__cards_roles()
-        self.__affichage_debut_fin()
+        self.__display_start_end()
 
     def end_round(self, state, current_indice):
         """Used in SABOOTTERS.py to get the score of each set"""
@@ -236,7 +236,7 @@ class Menu(object):
 
     @property
     def game_start(self):
-        return self.__aff_wel(), self.__get_number(), self.__players(), self.__affichage_debut_fin()
+        return self.__aff_wel(), self.__get_number(), self.__players(), self.__display_start_end()
 
     @property
     def total_score(self):

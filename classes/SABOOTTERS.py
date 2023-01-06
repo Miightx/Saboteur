@@ -52,7 +52,6 @@ class SABOOTERS(object):
             # Create the deck with the action and path cards
             else:
                 self.__unplayed_deck.append(card)
-        print(len(self.__unplayed_deck))
         # Players draw their cards
         for i in range(self.__menu.number):
             for j in range(self.__players[i].hand.hand_size):
@@ -118,8 +117,8 @@ class SABOOTERS(object):
         while state == False:
             name = input()
             for i in range(len(self.__menu.players_name)):
-                if name == str(self.__menu.players_name[k]):
-                    nb_player_turn = k
+                if name == str(self.__menu.players_name[i]):
+                    nb_player_turn = i
                     state = True
             else:
                 print('Please write a correct name')
