@@ -37,7 +37,7 @@ class SABOOTERS(object):
 
         self.__deck.random_cards()     # Shuffle the cards
 
-        set_pos_gold = random.sample([[0, 2], [2, 2], [4, 2]], 3)   # Define the positions of the "END" cards
+        set_pos_gold = random.sample([[-1, 5], [2, 5], [5, 5]], 3)   # Define the positions of the "END" cards
 
         # Card distribution
         k = 0
