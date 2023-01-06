@@ -128,7 +128,7 @@ class Menu(object):
         card_pull = 0
         self.__current_indice = current_indice
         if self.__state == 1:  # Case where the saboteurs won == 1
-            print('Saboteurs won this game!')
+            print('Saboteurs won this round!')
             print('')
             for k in range(self.__number):
                 if (self.__count[0] == 1 and self.__roles[k] == 'S'):
@@ -137,7 +137,7 @@ class Menu(object):
                     if self.__roles[k] == 'S':  # 2 or 3 Saboteurs = 3 points
                         score_manche[k] = 3
         elif (self.__state == 2):  # Case where Diggers won == 2
-            print('Diggers won this game!')
+            print('Diggers won this round!')
             self.__sharing_gold = np.random.randint(1, 4, size=self.__number)  # Gold card worth between 1 and 3
             self.__sharing_gold = self.__sharing_gold.tolist()
             while len(self.__sharing_gold) != 0:  # Until when there are more pts to give away
@@ -157,7 +157,7 @@ class Menu(object):
                             else:
                                 print("Please choose another value")
                     score_manche[self.__current_indice] += self.__sharing_gold[
-                        self.__choice - 1]  # Storage of scores to calculate at the end of the game
+                        self.__choice - 1]  # Storage of scores to calculate at the end of the round
                     print(
                         f"{self.__players_name[self.__current_indice]} choose {self.__sharing_gold[(self.__choice) - 1]}")
                     del self.__sharing_gold[self.__choice - 1]  # Remove the gold card chooses
@@ -170,7 +170,7 @@ class Menu(object):
                     self.__current_indice += 1
             print("Here are the values of the gold cards")
             print(self.__sharing_gold)
-        print(f"The score of this game is {score_manche}")
+        print(f"The score of this round is {score_manche}")
         self.__spm.append(score_manche)
 
     def start_game(self):
@@ -193,7 +193,15 @@ class Menu(object):
         for i in range(self.__number):
             score_for_one_player = self.__spm[0][i] + self.__spm[1][i] + self.__spm[2][i]
             self.__total_score.append(score_for_one_player)
-        print(f' Le score final est de {self.__total_score}')
+        print(f' The final score of this game is  {self.__total_score}')
+        print('')
+        max = np.max(self.__total_score)
+        for k in range(len(self.__total_score)):
+            if self.__total_score[k] == max:
+                k_max = k
+                print(f"The winner of this game is {self.__players_name[k_max]} with {max} points")
+        for k in range(len(self.__total_score)):
+            print(f"{self.__players_name[k]}'s score is {self.__total_score[k]} points")
 
     def change_role(self):
         """Assigning roles to players"""
