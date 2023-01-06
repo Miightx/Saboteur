@@ -82,7 +82,7 @@ class SABOOTERS(object):
             for k in range(len(self.__players)):
                 self.__players[self.nb_player_turn].player_turn(self.__board, self.__unplayed_deck, self.__played_deck, self.__players)
                 nb_card_player = nb_card_player + len(self.__players[self.nb_player_turn].hand.cards)
-                gold_found = self.__plateau.gold_found
+                gold_found = self.__board.gold_found
                 self.nb_player_turn += 1
                 # Re-loop to allow every player to play
                 if self.nb_player_turn > len(self.__players) - 1:
@@ -117,9 +117,10 @@ class SABOOTERS(object):
         k = 0
         while state == False:
             name = input()
-            if name == str(self.__menu.players_name[k]):
-                nb_player_turn = k
-                state = True
+            for i in range(len(self.__menu.players_name)):
+                if name == str(self.__menu.players_name[k]):
+                    nb_player_turn = k
+                    state = True
             else:
                 print('Please write a correct name')
         self.__board.nb_round = 1
