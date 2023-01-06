@@ -7,12 +7,12 @@ from abc import ABC, abstractmethod
 class Card(ABC):
     """Card du jeu SABOOTERS
     • Type 0 : Card chemin
-    • Type 1 : Card action
-    • Type 2 : Card map
+    • Type 1 : action_tools card
+    • Type 2 : map card
     • Type 3 : Card start
     • Type 4 : Card gold
     • Type 5 : Card pierre 
-    • Type 6 : Card éboulement """
+    • Type 6 : collapse card"""
 
     # Board containing the content of the cards
                 #   0          1         2         3         4         5         6         7         8         9         10        11
@@ -74,6 +74,9 @@ class Card(ABC):
 
     @abstractmethod
     def part_st(self, x): pass
+
+    @abstractmethod
+    def __str__(self): pass
 
     @property
     def typ(self): return self.__typ

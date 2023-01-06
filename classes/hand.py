@@ -36,7 +36,7 @@ class Hand(object):#0       1       2       3       4       5       6       7   
             st+="\n"
         return st
 
-    def affiche_tools(self):
+    def print_tools(self):
         """Function that displays the player's tools"""
         print("")
         for x in range(0, 3):

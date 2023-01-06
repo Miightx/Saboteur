@@ -56,7 +56,7 @@ class SABOOTERS(object):
         # Players draw their cards
         for i in range(self.__menu.number):
             for j in range(self.__joueurs[i].hand.hand_size):
-                self.__joueurs[i].piocher_card(self.__pioche)
+                self.__joueurs[i].pick_card(self.__pioche)
 
     def __round(self):
         """How a round unfolds"""
@@ -80,7 +80,7 @@ class SABOOTERS(object):
             # Variable to know who to play
             current_indice = 0
             for joueur in self.__joueurs:
-                joueur.tourjoueur(self.__board, self.__pioche, self.__defausse, self.__joueurs)
+                joueur.player_turn(self.__board, self.__pioche, self.__defausse, self.__joueurs)
                 nb_card_player = nb_card_player + len(joueur.hand.cards)
                 gold_found = self.__board.gold_found
                 # If gold has been found it is the end of the round, the diggers win

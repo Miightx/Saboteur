@@ -100,7 +100,7 @@ class Board(object):
             self.__sizes[1][1] = pos[1] + 1
 
         # Indicates that a card is placed at the card's position
-        self.__pathmap[card.pos[0] + 15][card.pos[1] + 15] = card.path[card.sens]
+        self.__pathmap[card.pos[0] + 15][card.pos[1] + 15] = card.path[card.direction]
 
         if init_game == 0:
             # Check if the card has been placed next to an END card
