@@ -144,7 +144,6 @@ class Menu(object):
                 if self.__current_indice == self.__number:
                     self.__current_indice = 0
                 if self.__roles[self.__current_indice] == 'C':
-                    # while (current_indice < self.count[1]):  # Addition des pts des mineurs quand il y a plus de cartes or que de mineurs
                     print("It is the remaining gold cards")
                     print(self.__sharing_gold)
                     print(f"To {self.__players_name[self.__current_indice]} to choose the card he/she wishes")
@@ -153,7 +152,7 @@ class Menu(object):
                         self.__choice = input()
                         if self.__choice.isdecimal() == True:
                             self.__choice = np.abs(int(self.__choice))
-                            if self.__choice < self.__number - card_pull:
+                            if 0 < self.__choice <= self.__number - card_pull:
                                 state = True
                             else:
                                 print("Please choose another value")
