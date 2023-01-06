@@ -134,7 +134,7 @@ class Board(object):
         # The method returns a boolean which indicates if the operation is successful
         return etat
 
-    def reset_Board(self):
+    def reset_board(self):
         """Function that resets the board"""
 
         self.__pathmap = np.ones((30, 30, 5), int)

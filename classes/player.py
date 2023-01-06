@@ -15,23 +15,23 @@ class Player(ABC):
         self.__role = role    # the role is of the class menu.character[i]
         self.__hand = Hand(nb_players)   # to display the hand: player.hand.display_hand()
 
-    def pick_card(self, pioche):
+    def pick_card(self, unplayed_deck):
         """Method that allows the player to draw a card"""
-        if len(pioche) <= 0:
+        if len(unplayed_deck) <= 0:
             print("Error: the deck is empty")
             sys.exit()
         
-        self.__hand.add_card(pioche[0])
-        pioche.remove(pioche[0])
+        self.__hand.add_card(unplayed_deck[0])
+        unplayed_deck.remove(unplayed_deck[0])
 
-    def defausse_card(self, card, defausse):
+    def discard_card(self, card, played_deck):
         """Method to remove a card from the player"""
-        defausse.append(card)
+        played_deck.append(card)
         self.__hand.remove_card(card)
 
     # Abstract method that allows a human or an AI to play during a round
     @abstractmethod
-    def player_turn(self, Board, pioche, defausse): pass
+    def player_turn(self, Board, unplayed_deck, played_deck): pass
 
 
     @property

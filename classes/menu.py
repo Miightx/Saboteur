@@ -51,8 +51,8 @@ class Menu(object):
             self.__aff_wel()
             print('Please enter the name of player', k + 1)
             print('')
-            joueur = input()
-            self.__players_name.append(joueur)
+            player = input()
+            self.__players_name.append(player)
             print('The name of the player is:', self.__players_name[k])
             print('Please press 0 if the player is an AI and press 1 if the player is an Human')
             etat = False
@@ -184,12 +184,12 @@ class Menu(object):
         self.__cards_roles()
         self.__affichage_debut_fin()
 
-    def fin_de_round(self, state, current_indice):
+    def end_round(self, state, current_indice):
         """Used in SABOOTTERS.py to get the score of each set"""
         self.count_winner()
         self.winner(state, current_indice)
 
-    def fin_de_partie(self):
+    def end_game(self):
         """Used in SABOOTTERS.py to get the final score"""
         for i in range(self.__number):
             score_for_one_player = self.__spm[0][i] + self.__spm[1][i] + self.__spm[2][i]

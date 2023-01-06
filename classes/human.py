@@ -152,11 +152,11 @@ class Human(Player):
 
         #We check the nature of the parameters
         if not isinstance ( board , Board ) :
-            print("Erreur: Le joueur a besoin du board pour prendre une decision")
+            print("Erreur: Le player a besoin du board pour prendre une decision")
             sys.exit()
 
         if not isinstance (choice_card , Path_card ) :
-            print("Erreur: Le joueur a besoin d'une card pour prendre une decision")
+            print("Erreur: Le player a besoin d'une card pour prendre une decision")
             sys.exit()
 
         #Make sure the player chooses direction=0 or direction=1
@@ -282,7 +282,7 @@ class Human(Player):
             except ValueError:
                 # Erase the content of the console, we check if we are on Windows
                 os.system('cls' if os.name == 'nt' else 'clear')
-                # On print les outils des joueurs
+                # On print les outils des players
                 for player in players:
                     print(f"{players.name}'s tools:")
                     player.hand.print_tools()
@@ -306,7 +306,7 @@ class Human(Player):
         # The value change allows the player to change the action
         return change
 
-    def player_turn(self, board, pioche, defausse, players):
+    def player_turn(self, board, unplayed_deck, played_deck, players):
         """Allow a player to play for one turn"""
         change = 1
         while change==1:
@@ -387,12 +387,12 @@ class Human(Player):
                 change, choice_card = self.__choice_card(board, choice_action)
                 if change == 0:
                     # The card is placed in the discard pile
-                    defausse.append(choice_card)
+                    played_deck.append(choice_card)
         # The card is removed from the player's hand
         self.hand.remove_card(choice_card)
         # Player draws a new card if there are any cards left
-        if len(pioche) > 0:
-            self.pick_card(pioche)
+        if len(unplayed_deck) > 0:
+            self.pick_card(unplayed_deck)
 
 
 """
